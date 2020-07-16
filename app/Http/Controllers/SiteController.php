@@ -19,7 +19,7 @@ class SiteController extends Controller
      */
     public function index(Request $request)
     {
-       $sites= Site::with('clients')->get();
+       $sites= Site::with('clients')->where("active",1)->get();
 	   $clients=Client::all();
 	 
 	   if($request->ajax())
@@ -119,6 +119,7 @@ class SiteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Site::where("id", $id)->update(["active" => 0]);
+		return response()->json(['success'=>'Site deleted!']);
     }
 }

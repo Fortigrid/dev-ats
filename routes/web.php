@@ -21,9 +21,6 @@ Route::get('/', function(){
 
 //Route::get('/{any}', 'SinglePageController@index')->where('any', '^(?!login|register|home|welcome|logout|password|api).*$');
 //Route::post('/{any}', 'SinglePageController@index')->where('any', '^(?!login|register|home|welcome|logout|password|api).*$');
-
-
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -33,4 +30,5 @@ Route::resource('/role', 'RoleController');
 Route::resource('/client', 'ClientController');
 Route::resource('/site', 'SiteController');
 Route::resource('/agency', 'AgencyController');
+
 });

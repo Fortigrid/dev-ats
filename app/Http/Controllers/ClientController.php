@@ -19,7 +19,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
 		//echo $bb= Auth::user()->id;
-       $clients= Client::with('locations')->get();
+       $clients= Client::with('locations')->where("active",1)->get();
 	   $locations=Location::all();
 	   if($request->ajax())
 		{
@@ -120,6 +120,9 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Client::find($id)->delete();
+		Client::where("id", $id)->update(["active" => 0]);
+
+        return response()->json(['success'=>'Client deleted!']);
     }
 }

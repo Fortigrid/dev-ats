@@ -167,12 +167,12 @@ $(document).ready(function(){
   });
   
   $('body').on('click', '.delete', function () {
-        var Locations_id = $(this).attr('id');
+        var Site_id = $(this).attr('id');
         var ok =confirm("Are You sure want to delete !");
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "location"+'/'+Locations_id,
+            url: "site"+'/'+Site_id,
             success: function (data) {
                 table.draw();
             },

@@ -20,7 +20,7 @@ class AgencyController extends Controller
      */
     public function index(Request $request)
     {
-       $agencies= Agency::with('sites')->get();
+       $agencies= Agency::with('sites')->where("active",1)->get();
 	   $sites=Site::all();
 	   if($request->ajax())
 		{
@@ -119,6 +119,7 @@ class AgencyController extends Controller
      */
     public function destroy($id)
     {
-        //
+       Agency::where("id", $id)->update(["active" => 0]);
+	   return response()->json(['success'=>'Agency deleted!']);
     }
 }

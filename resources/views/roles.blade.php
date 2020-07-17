@@ -181,7 +181,14 @@ $(document).ready(function(){
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			onChange: function(option, checked, select) {
+                //alert('Changed option ' + $(option).val() + '.');
+				$('#location').val('');
+		$('#client').val('');
+		$('#site').val('');
+		$('#agency').val('');
+            }
         }); 
 	$('#location').multiselect({
             includeSelectAllOption: true,

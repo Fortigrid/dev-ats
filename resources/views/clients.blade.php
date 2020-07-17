@@ -79,7 +79,12 @@
         </div>
     </div>
 </div>
-
+<style>
+ul.dropdown-menu{
+	overflow-y:scroll !important;
+	height:300px !important;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -128,7 +133,7 @@ $(document).ready(function(){
     });
 	var table = $('#client').DataTable();
 	if($('#multiselect').val()==''){
-	 $('#saveBtn2').prop('disabled', true);
+	 //$('#saveBtn2').prop('disabled', true);
 	}
 	
 	$('#addNew').click(function () {
@@ -142,28 +147,34 @@ $(document).ready(function(){
 		$(".error1").html("");
 		 $('#multiselect').multiselect('refresh');
 		 if($('#multiselect').val()==''){
-			$('#saveBtn2').prop('disabled', true);
+			//$('#saveBtn2').prop('disabled', true);
 		 }
     });
 
   $('body').on('click', '.edit', function () {
 	  $('#multiselect').val('');
+	  $('#multiselect').multiselect('refresh');
+	  
 	  var Client_id = $(this).attr('id');
 	  if($('#multiselect').val()==''){
-			$('#saveBtn2').prop('disabled', false);
+			//$('#saveBtn2').prop('disabled', false);
 	  }
-	  $("input[id=locations]").attr('checked',false);
+	  //$("input[id=locations]").attr('checked',false);
 	  $(".error").html("");
+	  console.log($('#multiselect').val());
+	    
       $.get("client" +'/' + Client_id +'/edit', function (data) {
+		 
           $('#modelHeading').html("Edit Client");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel1').modal('show');
           $('#client_id').val(data.id);
 		  $('#clients').val(data.client_name);
-		  var values = data.locationss;
-		  if(values.indexOf(',') > -1) var aFirst = values.split(','); else var aFirst= data.locationss;
+		  values = data.locationss;
+		  if(values.indexOf(',') > -1) aFirst = values.split(','); else aFirst= data.locationss;
 		  $('#multiselect').multiselect('select', aFirst);
       })
+	  
   });
   
   $('body').on('click', '.delete', function () {
@@ -175,6 +186,7 @@ $(document).ready(function(){
             url: "client"+'/'+Client_id,
             success: function (data) {
                 table.draw();
+				$('.error2').text('Record Deleted');
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -185,7 +197,7 @@ $(document).ready(function(){
 	
 	$('#multiselect').change(function(){
 		if($('#multiselect').val()!=''){
-			$('#saveBtn2').prop('disabled', false);
+			//$('#saveBtn2').prop('disabled', false);
 		}
 	});
 	
@@ -193,7 +205,7 @@ $(document).ready(function(){
         e.preventDefault();
 	    $(".error").html("");
 	    if($('#multiselect').val()==''){
-			$(".error1").html("<ul style='list-style-type:none'><li class='first'>Please select atleast one Location</li></ul>");
+			//$(".error1").html("<ul style='list-style-type:none'><li class='first'>Please select atleast one Location</li></ul>");
 		}
 		else { $(".error1").html("");}
 		var selectArray1 =$('#multiselect').val();
@@ -217,7 +229,9 @@ $(document).ready(function(){
 			   if(typeof(err.errors)!= "undefined" && err.errors !== null){
 			    if(typeof(err.errors.client_name) != "undefined" && err.errors.client_name !== null)
 			    var busi=err.errors.client_name; else busi='';
-			       $(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li></ul>");
+			    if(typeof(err.errors.client_location) != "undefined" && err.errors.client_location !== null)
+			    var busi1=err.errors.client_location; else busi1='';
+			       $(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li><li class='first'>"+busi1+"</li></ul>");
 			   }
 			   else{
 				   $(".error").html("<ul style='list-style-type:none'><li class='first'>'Client already added '</li></ul>");

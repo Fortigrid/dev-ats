@@ -14,6 +14,7 @@ class Client extends Model
 
     ];
 	public $timestamps = false;
+	
 	public function locations(){
 		return $this->belongsToMany('App\Location');
 		

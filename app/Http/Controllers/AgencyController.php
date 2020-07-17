@@ -62,14 +62,15 @@ class AgencyController extends Controller
     {
        $request->validate([
 		'agency_name'=> 'required|unique:agencies,agency_name,'.$request->id,
-		
+		'agency_site'=> 'required'
 		]);
-		
+		if(Auth::user()){
 		$agenSite=[];
         $agency=Agency::updateOrCreate(['id' => $request->id],['agency_name' => $request->agency_name, 'created_by'=>Auth::user()->id]); 
 		$agenSite=$request->agency_site;
 		$agency->sites()->sync($agenSite);
 		return response()->json(['success'=>'Agency Sucessfully Updated']);
+		}
     }
 
     /**
@@ -91,12 +92,16 @@ class AgencyController extends Controller
      */
     public function edit($id)
     {
+		if(Auth::user()){
+		$lid=array();
         $Agency = Agency::find($id);
 	    $agen11=$Agency->sites()->get()->pluck('pivot')->toArray();
 		foreach($agen11 as $cliid){ $lid[]=$cliid['site_id'];}
 		$sitess=implode(',',$lid);
 		$Agency['sitess'] = $sitess;
         return response()->json($Agency);
+		}
+		else return redirect('/404');
     }
 
     /**
@@ -119,7 +124,9 @@ class AgencyController extends Controller
      */
     public function destroy($id)
     {
+	 if(Auth::user()){
        Agency::where("id", $id)->update(["active" => 0]);
 	   return response()->json(['success'=>'Agency deleted!']);
+	 }
     }
 }

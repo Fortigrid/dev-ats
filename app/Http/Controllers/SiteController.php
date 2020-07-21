@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -64,13 +68,13 @@ class SiteController extends Controller
 		'site_name'=> 'required|unique:sites,site_name,'.$request->id,
 		'site_client'=> 'required'
 		]);
-		if(Auth::user()){
+		
 		$siteCli=[];
         $site=Site::updateOrCreate(['id' => $request->id],['site_name' => $request->site_name, 'created_by'=>Auth::user()->id]); 
 		$siteCli=$request->site_client;
 		$site->clients()->sync($siteCli);
 		return response()->json(['success'=>'Site Sucessfully Updated']);
-		}
+		
     }
 
     /**
@@ -92,7 +96,7 @@ class SiteController extends Controller
      */
     public function edit($id)
     {
-		if(Auth::user()){
+		
 		$lid=array();
         $Site = Site::find($id);
 	    $site11=$Site->clients()->get()->pluck('pivot')->toArray();
@@ -100,8 +104,7 @@ class SiteController extends Controller
 		$clientss=implode(',',$lid);
 		$Site['clientss'] = $clientss;
         return response()->json($Site);
-		}
-		else return redirect('/404');
+		
     }
 
     /**
@@ -124,9 +127,8 @@ class SiteController extends Controller
      */
     public function destroy($id)
     {
-		if(Auth::user()){
         Site::where("id", $id)->update(["active" => 0]);
 		return response()->json(['success'=>'Site deleted!']);
-		}
+		
     }
 }

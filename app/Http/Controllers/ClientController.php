@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +22,7 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-		//echo $bb= Auth::user()->id;
+		
        $clients= Client::with('locations')->where("active",1)->get();
 	   $locations=Location::all();
 	   if($request->ajax())
@@ -39,6 +43,7 @@ class ClientController extends Controller
 					->make(true);
 		}
 		return view('clients',compact('locations'));
+		
     }
 
     /**
@@ -65,13 +70,13 @@ class ClientController extends Controller
 		'client_name'=> 'required|unique:clients,client_name,'.$request->id,
 		'client_location' => 'required'
 		]);
-		if(Auth::user()){
+		
 		$cliLoc=[];
         $client=Client::updateOrCreate(['id' => $request->id],['client_name' => $request->client_name, 'created_by'=>Auth::user()->id ]);
 		$cliLoc=$request->client_location;
 		$client->locations()->sync($cliLoc);
 		return response()->json(['success'=>'Client Sucessfully Updated']);
-		}
+		
     }
 
     /**
@@ -93,7 +98,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-		if(Auth::user()){
+		
 		$lid=array();
 		//Getting client and its location from pivot table
         $Client = Client::find($id);
@@ -103,8 +108,8 @@ class ClientController extends Controller
 		$locationss=implode(',',$lid);
 		$Client['locationss'] = $locationss;
         return response()->json($Client);
-		}
-		else return redirect('/404');
+		
+		
     }
 
     /**
@@ -127,11 +132,11 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-		if(Auth::user()){
+		
         //Client::find($id)->delete();
 		Client::where("id", $id)->update(["active" => 0]);
 
         return response()->json(['success'=>'Client deleted!']);
-		}
+		
     }
 }

@@ -26,8 +26,8 @@
 					<button type="submit" class="btn btn-primary" id="addNew" value="create" style="float:right">Add New</button>
 					
 					</div>
-					<div class="table-responsive"> 
-						<table id="role">
+					<div class="table-responsive" > 
+						<table id="role" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
 								<th>ID</th>
@@ -139,10 +139,7 @@
     </div>
 </div>
 <style>
-ul.dropdown-menu{
-	overflow-y:scroll !important;
-	height:300px !important;
-}
+
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -195,28 +192,32 @@ $(document).ready(function(){
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         });
 	$('#client').multiselect({
             includeSelectAllOption: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	$('#site').multiselect({
             includeSelectAllOption: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	$('#agency').multiselect({
             includeSelectAllOption: true,
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	 
 	 $.ajaxSetup({

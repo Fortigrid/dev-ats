@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +26,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+		
 		$business_ids= BusinessUnit::all(['id','business_unit'])->toArray();
 		$locations=Location::all(['id','location']);
 		$clients= Client::with('locations')->where("active",1)->get();
@@ -47,6 +52,7 @@ class RoleController extends Controller
 					->make(true);
 		}
 		return view('roles',compact('business_ids','locations','clients','sites','agencies'));
+		
     }
     
 
@@ -76,7 +82,7 @@ class RoleController extends Controller
 		'role_site'=> 'required',
 		'role_agency'=> 'required'
 		]);
-		if(Auth::user()){
+		
 		$roleLoc=[];
 		$roleCli=[];
 		$roleSite=[];
@@ -100,7 +106,7 @@ class RoleController extends Controller
 		$role->business_units()->sync($roleBus);
 		
 		return response()->json(['success'=>'Role Sucessfully Updated']);
-		}
+		
     }
 
     /**
@@ -122,7 +128,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-       if(Auth::user()){
+      
 		$lid=$cid=$sid=$aid=$bid=[];
 		//Getting client and its location from pivot table
         $Role = Role::find($id);
@@ -158,8 +164,8 @@ class RoleController extends Controller
 		
 		
         return response()->json($Role);
-		}
-		else return redirect('/404');
+		
+		
     }
 
     /**
@@ -172,8 +178,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
 		
-        $vv=Location::whereIN('buisness_unit_id',$request->business_unit)->get();
-		return response()->json($vv);
+       
     }
 
     /**
@@ -184,11 +189,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-       if(Auth::user()){
+     
         //Client::find($id)->delete();
 		Role::where("id", $id)->update(["active" => 0]);
 
         return response()->json(['success'=>'Role deleted!']);
-		}
+		
     }
 }

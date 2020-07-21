@@ -80,10 +80,7 @@
     </div>
 </div>
 <style>
-ul.dropdown-menu{
-	overflow-y:scroll !important;
-	height:300px !important;
-}
+
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -123,7 +120,8 @@ $(document).ready(function(){
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	 
 	 $.ajaxSetup({
@@ -170,9 +168,17 @@ $(document).ready(function(){
           $('#ajaxModel1').modal('show');
           $('#client_id').val(data.id);
 		  $('#clients').val(data.client_name);
-		  values = data.locationss;
-		  if(values.indexOf(',') > -1) aFirst = values.split(','); else aFirst= data.locationss;
-		  $('#multiselect').multiselect('select', aFirst);
+		 
+		  if(data.locationss != ''){
+			   //alert(data.locationss);
+			values = data.locationss;
+			if(values.indexOf(',') > -1) aFirst = values.split(','); else aFirst= data.locationss;
+				$('#multiselect').multiselect('select', aFirst);
+		  }
+		  else{
+			 // alert(data.locationss);
+			  $('.error').text("The Location which was selected, doesn't exist. Please select another location.");
+		  }
       })
 	  
   });

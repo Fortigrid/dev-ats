@@ -80,10 +80,7 @@
 </div>
 
 <style>
-ul.dropdown-menu{
-	overflow-y:scroll !important;
-	height:300px !important;
-}
+
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -123,7 +120,8 @@ $(document).ready(function(){
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	 
 	 $.ajaxSetup({

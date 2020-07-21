@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +51,7 @@ class LocationController extends Controller
 					->make(true);
 		}
 		return view('locations',compact('business_ids'));
+	  
     }
 
     /**
@@ -75,11 +80,11 @@ class LocationController extends Controller
 		'state'=> 'required',
 		'location' => 'required|unique:locations,location,'.$request->id
 		]);
-        if(Auth::user()){
+        
 		$location = new Location;
-		Location::updateOrCreate(['id' => $request->id],['business_unit_id' => $request->business_unit_id, 'state' => $request->state, 'location' => $request->location, 'created_at'=>Auth::user()->id]);        
+		Location::updateOrCreate(['id' => $request->id],['business_unit_id' => $request->business_unit_id, 'state' => $request->state, 'location' => $request->location, 'created_by'=>Auth::user()->id]);        
         return response()->json(['success'=>'Location saved successfully!']);
-		}
+		
     }
 
     /**
@@ -101,10 +106,10 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-		if(Auth::user()){
+		
         $Location = Location::find($location->id);
         return response()->json($Location);
-		}
+		
     }
 
     /**
@@ -127,10 +132,10 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-		if(Auth::user()){
+		
         #Location::find($location->id)->delete();
 		Location::where("id", $location->id)->update(["active" => 0]);
         return response()->json(['success'=>'Location deleted!']);
-		}
+		
     }
 }

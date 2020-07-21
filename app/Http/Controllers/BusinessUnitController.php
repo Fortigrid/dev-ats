@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class BusinessUnitController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +20,7 @@ class BusinessUnitController extends Controller
      */
     public function index(Request $request)
     {
+		
 		$data= BusinessUnit::where('active',1)->latest()->get();
 		
         if($request->ajax())
@@ -37,6 +42,7 @@ class BusinessUnitController extends Controller
 					->make(true);
 		}
 		return view('business_units',compact('data'));
+		
     }
 
     /**
@@ -60,10 +66,10 @@ class BusinessUnitController extends Controller
 		$request->validate([
         'business_unit' => 'required|unique:business_units,business_unit,'.$request->id      
 		]);
-        if(Auth::user()){
+        
 		BusinessUnit::updateOrCreate(['id' => $request->id],['business_unit' => $request->business_unit, 'created_by' => Auth::user()->id]);
 		return response()->json(['success'=>'Bsuiness saved successfully!']);
-		}
+		
     }
 
     /**
@@ -85,11 +91,11 @@ class BusinessUnitController extends Controller
      */
     public function edit(BusinessUnit $businessUnit)
     {
-		if(Auth::user()){
+		
 		$id = explode('/', $_SERVER['REQUEST_URI']);
         $Business = BusinessUnit::find($id[2]);
         return response()->json($Business);
-		}
+		
     }
 
     /**
@@ -112,11 +118,11 @@ class BusinessUnitController extends Controller
      */
     public function destroy(BusinessUnit $businessUnit)
     {
-		if(Auth::user()){
+		
 		$id = explode('/', $_SERVER['REQUEST_URI']);
         //BusinessUnit::find($id[2])->delete();
 		BusinessUnit::where("id", $id[2])->update(["active" => 0]);
         return response()->json(['success'=>'Customer deleted!']);
-		}
+		
     }
 }

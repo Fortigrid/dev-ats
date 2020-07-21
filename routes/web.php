@@ -31,5 +31,6 @@ Route::resource('/role', 'RoleController');
 Route::resource('/client', 'ClientController');
 Route::resource('/site', 'SiteController');
 Route::resource('/agency', 'AgencyController');
+Route::resource('/job-template', 'JobTemplateController');
 
 });

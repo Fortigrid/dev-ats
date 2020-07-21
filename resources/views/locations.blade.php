@@ -181,9 +181,10 @@ $(document).ready(function(){
             url: "location"+'/'+Locations_id,
             success: function (data) {
                 table.draw();
+				$('.error2').text('Record Deleted');
             },
             error: function (data) {
-                console.log('Error:', data);
+				 console.log('Error:', data);
             }
         });
 		}

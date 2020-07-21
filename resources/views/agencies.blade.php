@@ -77,7 +77,9 @@
         </div>
     </div>
 </div>
+<style>
 
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -116,7 +118,8 @@ $(document).ready(function(){
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	 
 	 $.ajaxSetup({
@@ -127,7 +130,7 @@ $(document).ready(function(){
 	var table = $('#agency').DataTable();
 	
 	if($('#multiselect').val()==''){
-	 $('#saveBtn2').prop('disabled', true);
+	 //$('#saveBtn2').prop('disabled', true);
 	}
 	
 	$('#addNew').click(function () {
@@ -140,15 +143,16 @@ $(document).ready(function(){
 		$(".error1").html("");
 		$('#multiselect').multiselect('refresh');
 		if($('#multiselect').val()==''){
-			$('#saveBtn2').prop('disabled', true);
+			//$('#saveBtn2').prop('disabled', true);
 		}
     });
 
    $('body').on('click', '.edit', function () {
 	  $('#multiselect').val('');
+	  $('#multiselect').multiselect('refresh');
 	  var Agency_id = $(this).attr('id');
 	  if($('#multiselect').val()==''){
-		$('#saveBtn2').prop('disabled', false);
+		//$('#saveBtn2').prop('disabled', false);
 	  }
 	  $(".error").html("");
       $.get("agency" +'/' + Agency_id +'/edit', function (data) {
@@ -159,7 +163,7 @@ $(document).ready(function(){
 		  $('#agencys').val(data.agency_name);
 		  var values = data.sitess;
 		  //check if comma is there
-		  if(values.indexOf(',') > -1) var aFirst = values.split(','); else var aFirst= data.clientss;
+		  if(values.indexOf(',') > -1) var aFirst = values.split(','); else var aFirst= data.sitess;
 		  $('#multiselect').multiselect('select', aFirst);
       })
   });
@@ -174,6 +178,7 @@ $(document).ready(function(){
             url: "agency"+'/'+Agency_id,
             success: function (data) {
                 table.draw();
+				$('.error2').text('Record Deleted');
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -184,7 +189,7 @@ $(document).ready(function(){
 	
 	$('#multiselect').change(function(){
 		if($('#multiselect').val()!=''){
-			$('#saveBtn2').prop('disabled', false);
+			//$('#saveBtn2').prop('disabled', false);
 		}
 	});
 
@@ -192,7 +197,7 @@ $(document).ready(function(){
        e.preventDefault();
 	   $(".error").html("");
 	   if($('#multiselect').val()==''){
-			$(".error1").html("<ul style='list-style-type:none'><li class='first'>Please select atleast one Site</li></ul>");
+			//$(".error1").html("<ul style='list-style-type:none'><li class='first'>Please select atleast one Site</li></ul>");
 		}
 		else { $(".error1").html(""); }
 		var selectArray1 =$('#multiselect').val(); 
@@ -217,7 +222,9 @@ $(document).ready(function(){
 			   if(typeof(err.errors)!= "undefined" && err.errors !== null){
 			   if(typeof(err.errors.agency_name) != "undefined" && err.errors.agency_name !== null)
 					var busi=err.errors.agency_name; else busi='';
-					$(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li></ul>");
+				if(typeof(err.errors.agency_site) != "undefined" && err.errors.agency_site !== null)
+					var busi1=err.errors.agency_site; else busi1='';
+					$(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li><li class='first'>"+busi1+"</li></ul>");
 			   }
 			   else{
 				   $(".error").html("<ul style='list-style-type:none'><li class='first'>'Agency already added '</li></ul>");

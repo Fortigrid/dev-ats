@@ -7,9 +7,14 @@ use App\BusinessUnit;
 use Illuminate\Http\Request;
 use DataTables;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +31,7 @@ class LocationController extends Controller
 			'state',
 			'location'])
 			->join('business_units', DB::raw("find_in_set(business_units.id, locations.business_unit_id)"),">",DB::raw("'0'"))
+			->where('locations.active',1)
 			->groupBy('locations.id')
 			->get();
 			
@@ -45,6 +51,7 @@ class LocationController extends Controller
 					->make(true);
 		}
 		return view('locations',compact('business_ids'));
+	  
     }
 
     /**
@@ -75,8 +82,9 @@ class LocationController extends Controller
 		]);
         
 		$location = new Location;
-		Location::updateOrCreate(['id' => $request->id],['business_unit_id' => $request->business_unit_id, 'state' => $request->state, 'location' => $request->location]);        
+		Location::updateOrCreate(['id' => $request->id],['business_unit_id' => $request->business_unit_id, 'state' => $request->state, 'location' => $request->location, 'created_by'=>Auth::user()->id]);        
         return response()->json(['success'=>'Location saved successfully!']);
+		
     }
 
     /**
@@ -98,8 +106,10 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
+		
         $Location = Location::find($location->id);
         return response()->json($Location);
+		
     }
 
     /**
@@ -122,8 +132,10 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        Location::find($location->id)->delete();
-
+		
+        #Location::find($location->id)->delete();
+		Location::where("id", $location->id)->update(["active" => 0]);
         return response()->json(['success'=>'Location deleted!']);
+		
     }
 }

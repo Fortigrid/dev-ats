@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BusinessUnit extends Model
 {
-    protected $fillable = ['business_unit'];
+    protected $fillable = ['business_unit','created_by'];
 	
-	public function locations(){
+	/*public function locations(){
 		return $this->hasMany(Location::class);
 		
-	}
+	}*/
 }

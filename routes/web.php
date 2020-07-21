@@ -24,11 +24,13 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/home', 'HomeController@getval');
 Route::resource('/business', 'BusinessUnitController');
 Route::resource('/location', 'LocationController');
 Route::resource('/role', 'RoleController');
 Route::resource('/client', 'ClientController');
 Route::resource('/site', 'SiteController');
 Route::resource('/agency', 'AgencyController');
+Route::resource('/job-template', 'JobTemplateController');
 
 });

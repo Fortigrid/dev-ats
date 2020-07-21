@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -62,7 +66,7 @@ class SiteController extends Controller
     {
         $request->validate([
 		'site_name'=> 'required|unique:sites,site_name,'.$request->id,
-		
+		'site_client'=> 'required'
 		]);
 		
 		$siteCli=[];
@@ -70,6 +74,7 @@ class SiteController extends Controller
 		$siteCli=$request->site_client;
 		$site->clients()->sync($siteCli);
 		return response()->json(['success'=>'Site Sucessfully Updated']);
+		
     }
 
     /**
@@ -91,12 +96,15 @@ class SiteController extends Controller
      */
     public function edit($id)
     {
+		
+		$lid=array();
         $Site = Site::find($id);
 	    $site11=$Site->clients()->get()->pluck('pivot')->toArray();
 		foreach($site11 as $cliid){ $lid[]=$cliid['client_id'];}
 		$clientss=implode(',',$lid);
 		$Site['clientss'] = $clientss;
         return response()->json($Site);
+		
     }
 
     /**
@@ -121,5 +129,6 @@ class SiteController extends Controller
     {
         Site::where("id", $id)->update(["active" => 0]);
 		return response()->json(['success'=>'Site deleted!']);
+		
     }
 }

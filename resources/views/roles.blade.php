@@ -20,44 +20,18 @@
 					</div>
 				   @endif
 				   <div >
-					<form action="" method="post" id="RolesForm" name="RolesForm">
+					
 					@csrf
-					@error('business_unit_id')<div class="error" style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
-					@error('state')<div class="error" style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
-					@error('location')<div class="error" style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
+					<div class="error2" style="color:red;font-weight:bold"></div>
+					<button type="submit" class="btn btn-primary" id="addNew" value="create" style="float:right">Add New</button>
 					
-					<div class="error" style="color:red;font-weight:bold"></div>
-					<select name="business_unit_id" id="business_id">
-					<option value="">Select Business ID</option>
-					@foreach($business_ids as $business_id)
-						<option value="{{$business_id['id']}}" @if( old('business_unit_id')  == $business_id['id']) selected="selected" @endif>{{$business_id['business_unit']}}</option>
-					@endforeach
-					</select>
-					
-					<select name="state" id="states">
-					 <option value="">Select State</option>
-					 <option value="ACT" @if( old('state')  == 'ACT') selected="selected" @endif>ACT</option>
-					 <option value="NSW" @if( old('state')  == 'NSW') selected="selected" @endif>NSW</option>
-					 <option value="NT" @if( old('state')  == 'NT') selected="selected" @endif>NT</option>
-					 <option value="QLD" @if( old('state')  == 'QLD') selected="selected" @endif>QLD</option>
-					 <option value="SA" @if( old('state')  == 'SA') selected="selected" @endif>SA</option>
-					 <option value="TAS" @if( old('state')  == 'TAS') selected="selected" @endif>TAS</option>
-					 <option value="VIC" @if( old('state')  == 'VIC') selected="selected" @endif>VIC</option>
-					 <option value="WA" @if( old('state')  == 'WA') selected="selected" @endif>WA</option>
-					</select>
-					
-					<input type="text" id="locationss" name="location" placeholder="Location">  <button type="submit" class="btn btn-primary" id="saveBtn1" value="create">Save changes
-                     </button>
-					</form>
 					</div>
-					<div class="table-responsive"> 
-						<table id="role">
+					<div class="table-responsive" > 
+						<table id="role" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
 								<th>ID</th>
-								<th>Business Unit </th>
-								<th>State</th>
-								<th>Location</th>
+								<th>Role Name</th>
 								<th>Action</th>
 							</tr>
 							</thead>
@@ -69,21 +43,28 @@
     </div>
 </div>
 
-<div class="modal fade" id="ajaxModel" aria-hidden="true">
+<div class="modal fade" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
             </div>
             <div class="modal-body">
-                <form id="LocationForm" name="LocationForm" class="form-horizontal">
-                   <input type="hidden" name="id" id="location_id">
-				   
+                <form id="RoleForm" name="RoleForm" class="form-horizontal">
+				@csrf
+                   <input type="hidden" name="id" id="role_id">
+				   <div class="error" style="color:red;font-weight:bold"></div>
+				   <div class="form-group">
+                        <label class="col-sm-6 control-label">Role Name</label>
+                        <div class="col-sm-12">
+                           <input class="form-control" type="text" id="roles"  name="role_name" placeholder="Role Name" value="" maxlength="50" required=""> 
+                        </div>
+                    </div>
 				   <div class="form-group">
                         <label class="col-sm-2 control-label">Business_Unit</label>
                         <div class="col-sm-12">
-                           <select name="business_unit_id" id="business_unit_id">
-					<option>Select Business ID</option>
+                           <select name="business_unit" id="business_unit" multiple="multiple">
+					
 					@foreach($business_ids as $business_id)
 						<option value="{{$business_id['id']}}">{{$business_id['business_unit']}}</option>
 					@endforeach
@@ -92,31 +73,64 @@
                     </div>
 					
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">State</label>
+                        <label for="name" class="col-sm-2 control-label">Location</label>
                         <div class="col-sm-12">
-							<select name="state" id="state">
-								<option>Select State</option>
-								<option value="ACT">ACT</option>
-								<option value="NSW">NSW</option>
-								<option value="NT">NT</option>
-								<option value="QLD">QLD</option>
-								<option value="SA">SA</option>
-								<option value="TAS">TAS</option>
-								<option value="VIC">VIC</option>
-								<option value="WA">WA</option>
-							</select>
+							 <select name="location" id="location" multiple="multiple">
+					
+					@foreach($locations as $location)
+						<option value="{{$location['id']}}">{{$location['location']}}</option>
+					@endforeach
+					</select>
                         </div>
                     </div>
+					
+					<div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Client</label>
+                        <div class="col-sm-12">
+							 <select size="10" name="client" id="client" multiple="multiple">
+					
+					@foreach($clients as $client)
+						<option value="{{$client['id']}}">{{$client['client_name']}}</option>
+					@endforeach
+					</select>
+                        </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Site</label>
+                        <div class="col-sm-12">
+							 <select name="site" id="site" multiple="multiple">
+					
+					@foreach($sites as $site)
+						<option value="{{$site['id']}}">{{$site['site_name']}}</option>
+					@endforeach
+					</select>
+                        </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label for="name" class="col-sm-2 control-label">Agency</label>
+                        <div class="col-sm-12">
+							 <select name="agency" id="agency" multiple="multiple">
+					
+					@foreach($agencies as $agency)
+						<option value="{{$agency['id']}}">{{$agency['agency_name']}}</option>
+					@endforeach
+					</select>
+                        </div>
+                    </div>
+					
 
-                    <div class="form-group">
+
+                    <!--<div class="form-group">
                         <label class="col-sm-2 control-label">Location</label>
                         <div class="col-sm-12">
                            <input class="form-control" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
+                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
                      </button>
                     </div>
                 </form>
@@ -124,7 +138,9 @@
         </div>
     </div>
 </div>
+<style>
 
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -141,16 +157,8 @@ $(document).ready(function(){
 				name: 'id',
 			},
 			{
-				data: 'business_unit',
-				name: 'business_unit',
-			},
-			{
-				data: 'state',
-				name: 'state',
-			},
-			{
-				data: 'location',
-				name: 'location',
+				data: 'role_name',
+				name: 'role_name',
 			},
 			{
 				data: 'action',
@@ -165,39 +173,134 @@ $(document).ready(function(){
 <script type="text/javascript">
  $(function () {
 	 
-  $.ajaxSetup({
+   $('#business_unit').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+			enableHTML: false,
+            filterPlaceholder: 'Search for something...',
+			onChange: function(option, checked, select) {
+                //alert('Changed option ' + $(option).val() + '.');
+				$('#location').val('');
+		$('#client').val('');
+		$('#site').val('');
+		$('#agency').val('');
+            }
+        }); 
+	$('#location').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+			enableHTML: false,
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
+        });
+	$('#client').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+			enableHTML: false,
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
+        }); 
+	$('#site').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+			enableHTML: false,
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
+        }); 
+	$('#agency').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+			enableHTML: false,
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
+        }); 
+	 
+	 $.ajaxSetup({
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
     });
-	var table = $('#location').DataTable();
+	var table = $('#role').DataTable();
+	if($('#multiselect').val()==''){
+	 //$('#saveBtn2').prop('disabled', true);
+	}
 	
-  $('body').on('click', '.edit', function () {
-	 
-	  var Locations_id = $(this).attr('id');
-	  
-      $.get("location" +'/' + Locations_id +'/edit', function (data) {
+	$('#addNew').click(function () {
+		$('#business_unit').val('');
+	    $('#location').val('');
+		$('#client').val('');
+		$('#site').val('');
+		$('#agency').val('');
+		$('#business_unit').multiselect('refresh');
+		$('#location').multiselect('refresh'); 
+		$('#client').multiselect('refresh');
+		$('#site').multiselect('refresh');
+		$('#agency').multiselect('refresh');
+        $('#saveBtn2').val("create-user");
+        $('#role_id').val('');
+        $('#RoleForm').trigger("reset");
+        $('#modelHeading').html("Create New Role");
+        $('#ajaxModel1').modal('show');
+		//$("input[id=locations]").attr('checked',false);
+		$(".error").html("");
+		$(".error1").html("");
+		 //$('#multiselect').multiselect('refresh');
 		
-          $('#modelHeading').html("Edit Location");
+    });
+
+  $('body').on('click', '.edit', function () {
+		$('#business_unit').val('');
+		$('#location').val('');
+		$('#client').val('');
+		$('#site').val('');
+		$('#agency').val('');
+	    $('#business_unit').multiselect('refresh');
+		$('#location').multiselect('refresh'); 
+		$('#client').multiselect('refresh');
+		$('#site').multiselect('refresh');
+		$('#agency').multiselect('refresh');
+	  var Role_id = $(this).attr('id');
+	 
+	  $(".error").html("");
+      $.get("role" +'/' + Role_id +'/edit', function (data) {
+          $('#modelHeading').html("Edit Role");
           $('#saveBtn').val("edit-user");
-          $('#ajaxModel').modal('show');
-          $('#location_id').val(data.id);
-		  $('#business_unit_id').val(data.business_unit_id);
-          $('#state').val(data.state);
-          $('#locations').val(data.location);
+          $('#ajaxModel1').modal('show');
+          $('#role_id').val(data.id);
+		  $('#roles').val(data.role_name);
+		  var values = data.business;
+		  var values1 = data.locations;
+		  var values2 = data.clients;
+		  var values3 = data.sites;
+		  var values4 = data.agencies;
+		  if(values.indexOf(',') > -1) var aFirst = values.split(','); else var aFirst= data.business;
+		  if(values1.indexOf(',') > -1) var aFirst1 = values1.split(','); else var aFirst1= data.locations;
+		  if(values2.indexOf(',') > -1) var aFirst2 = values2.split(','); else var aFirst2= data.clients;
+		  if(values3.indexOf(',') > -1) var aFirst3 = values3.split(','); else var aFirst3= data.sites;
+		  if(values4.indexOf(',') > -1) var aFirst4 = values4.split(','); else var aFirst4= data.agencies;
+		  $('#business_unit').multiselect('select', aFirst);
+		  $('#location').multiselect('select', aFirst1);
+		  $('#client').multiselect('select', aFirst2);
+		  $('#site').multiselect('select', aFirst3);
+		  $('#agency').multiselect('select', aFirst4);
       })
   });
   
   $('body').on('click', '.delete', function () {
-
-        var Locations_id = $(this).attr('id');
+        var Role_id = $(this).attr('id');
         var ok =confirm("Are You sure want to delete !");
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "location"+'/'+Locations_id,
+            url: "role"+'/'+Role_id,
             success: function (data) {
                 table.draw();
+				$('.error2').text('Record Deleted');
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -205,66 +308,112 @@ $(document).ready(function(){
         });
 		}
     });
-  
-  $('#saveBtn').click(function (e) {
-        e.preventDefault();
-        $.ajax({
-          data: $('#LocationForm').serialize(),
-          url: "{{ route('location.store') }}",
-          type: "POST",
-          dataType: 'json',
-          success: function (data) {
-
-              $('#LocationForms').trigger("reset");
-              $('#ajaxModel').modal('hide');
-              table.draw();
-
-          },
-          error: function (data) {
-			  
-              console.log('Error:', data);
-              $('#saveBtn').html('Save Changes');
-          }
-      });
-    });
 	
-	$('#saveBtn1').click(function (e) {
-        e.preventDefault();
-        var business_unit_id = $('#business_id').val();
-	    var state = $('#states').val();
-	    var location = $('#locationss').val();
-		//alert(business_unit_id + state + location);
-        $.ajax({
+	$('#business_unit').change(function(){
+
+		var businessArray =$('#business_unit').val();
+		$('#business_unit').multiselect('refresh');
+		 $('#location').multiselect('refresh');
+		 $('#client').multiselect('refresh');
+		 $('#site').multiselect('refresh');
+		 $('#agency').multiselect('refresh');
+		var data1='';
+		$('#location').val();
+		$.ajax({
           data: {
-            business_unit_id: business_unit_id,
-            state: state,
-            location: location
+			  business_unit: businessArray
+			  },
+              url: "/home",
+              type: "POST",
+              dataType: 'json',
+          success: function (data1) {
+			 
+			  if(data1 !=''){ 
+			 
+			 $('#business_unit').multiselect('refresh');
+			  $('#location').multiselect('refresh'); 
+			  $('#client').multiselect('refresh');
+				$('#site').multiselect('refresh');
+				$('#agency').multiselect('refresh');
+              $('#location').multiselect('select',data1.loc.split(','));
+			   $('#client').multiselect('select',data1.client.split(','));
+			    $('#site').multiselect('select',data1.site.split(','));
+				$('#agency').multiselect('select',data1.agency.split(','));
+			  }
+		      else { //alert('notok'); 
+			  $('#business_unit').val('');
+			  $('#location').val('');
+			  $('#client').val('');
+				$('#site').val('');
+				$('#agency').val('');
+			  $('#business_unit').multiselect('refresh');
+			  $('#location').multiselect('refresh'); 
+			  $('#client').multiselect('refresh');
+				$('#site').multiselect('refresh');
+				$('#agency').multiselect('refresh');
+			  }
+			  //$('#location').multiselect('select',data.getv);
+			  //$(".error2").text('Changes Updated !!!');
           },
-          url: "{{ route('location.store') }}",
-          type: "POST",
-          dataType: 'json',
+          error: function (xhr) {
+			  console.log('Error:', err);
+		  }
+		});
+	});
+	
+	$('#saveBtn2').click(function (e) {
+        e.preventDefault();
+	    $(".error").html("");
+	    
+		var businessArray =$('#business_unit').val();
+		var locationArray =$('#location').val();
+		var clientArray =$('#client').val();
+		var siteArray =$('#site').val();
+		var agencyArray =$('#agency').val();
+		var role_name = $('#roles').val();
+		var id= $('#role_id').val();
+        $.ajax({
+          data: {id:id,
+			  role_business_unit: businessArray,
+			  role_location: locationArray,
+			  role_client: clientArray,
+			  role_site: siteArray,
+			  role_agency: agencyArray,
+              role_name: role_name},
+              url: "{{ route('role.store') }}",
+              type: "POST",
+              dataType: 'json',
           success: function (data) {
-
-              $('#LocationForms').trigger("reset");
-              $('#ajaxModel').modal('hide');
+              $('#RoleForm').trigger("reset");
+              $('#ajaxModel1').modal('hide');
               table.draw();
-
+			  $(".error2").text('Changes Updated !!!');
           },
           error: function (xhr) {
 			   var err = JSON.parse(xhr.responseText);
-			   if(typeof(err.errors.business_unit_id) != "undefined" && err.errors.business_unit_id !== null)
-			   var busi=err.errors.business_unit_id; else busi='';
-		       if(typeof(err.errors.state) != "undefined" && err.errors.state !== null)
-			   var stat=err.errors.state; else stat='';
-		       if(typeof(err.errors.location) != "undefined" && err.errors.location !== null)
-			   var loca=err.errors.location; else loca='';
-			   $(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li><li class='mid'>"+stat+"</li><li class='first'>"+loca+"</li></ul>");
-			    console.log('Error:', err);
-              $('#saveBtn').html('Save Changes');
+			   if(typeof(err.errors)!= "undefined" && err.errors !== null){
+			    if(typeof(err.errors.role_name) != "undefined" && err.errors.role_name !== null)
+			    var busi=err.errors.role_name; else busi='';
+			    if(typeof(err.errors.role_business_unit) != "undefined" && err.errors.role_business_unit !== null)
+			    var busi1=err.errors.role_business_unit; else busi1='';
+			    if(typeof(err.errors.role_location) != "undefined" && err.errors.role_location !== null)
+			    var busi2=err.errors.role_location; else busi2='';
+			    if(typeof(err.errors.role_client) != "undefined" && err.errors.role_client !== null)
+			    var busi3=err.errors.role_client; else busi3='';
+				if(typeof(err.errors.role_site) != "undefined" && err.errors.role_site !== null)
+			    var busi4=err.errors.role_site; else busi4='';
+				if(typeof(err.errors.role_agency) != "undefined" && err.errors.role_agency !== null)
+			    var busi5=err.errors.role_agency; else busi5='';
+			       $(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li><li class='first'>"+busi1+"</li><li class='first'>"+busi2+"</li><li class='first'>"+busi3+"</li><li class='first'>"+busi4+"</li><li class='first'>"+busi5+"</li></ul>");
+			   }
+			   else{
+				   $(".error").html("<ul style='list-style-type:none'><li class='first'>'Client already added '</li></ul>");
+			   }
+			  console.log('Error:', err);
+              $('#saveBtn2').html('Save Changes');
           }
       });
     });
-	
 	
 
  });

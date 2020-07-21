@@ -79,7 +79,9 @@
     </div>
 </div>
 
+<style>
 
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -118,7 +120,8 @@ $(document).ready(function(){
             enableFiltering: true,
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
-            filterPlaceholder: 'Search for something...'
+            filterPlaceholder: 'Search for something...',
+			maxHeight: 300
         }); 
 	 
 	 $.ajaxSetup({
@@ -129,7 +132,7 @@ $(document).ready(function(){
 	var table = $('#site').DataTable();
 	
 	if($('#multiselect').val()==''){
-	 $('#saveBtn2').prop('disabled', true);
+	 //$('#saveBtn2').prop('disabled', true);
 	}
 	
 	$('#addNew').click(function () {
@@ -142,15 +145,16 @@ $(document).ready(function(){
 		$(".error1").html("");
 		 $('#multiselect').multiselect('refresh');
 		 if($('#multiselect').val()==''){
-			$('#saveBtn2').prop('disabled', true);
+			//$('#saveBtn2').prop('disabled', true);
 		}
     });
 
    $('body').on('click', '.edit', function () {
 	  $('#multiselect').val('');
+	  $('#multiselect').multiselect('refresh');
 	  var Site_id = $(this).attr('id');
 	  if($('#multiselect').val()==''){
-		$('#saveBtn2').prop('disabled', false);
+		//$('#saveBtn2').prop('disabled', false);
 	  }
 	  $(".error").html("");
       $.get("site" +'/' + Site_id +'/edit', function (data) {
@@ -175,6 +179,7 @@ $(document).ready(function(){
             url: "site"+'/'+Site_id,
             success: function (data) {
                 table.draw();
+				$('.error2').text('Record Deleted');
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -185,7 +190,7 @@ $(document).ready(function(){
 	
 	$('#multiselect').change(function(){
 		if($('#multiselect').val()!=''){
-			$('#saveBtn2').prop('disabled', false);
+			//$('#saveBtn2').prop('disabled', false);
 		}
 	});
 	
@@ -193,7 +198,7 @@ $(document).ready(function(){
        e.preventDefault();
 	   $(".error").html("");
 	   if($('#multiselect').val()==''){
-			$(".error1").html("<ul style='list-style-type:none'><li class='first'>Please select atleast one Client</li></ul>"); 
+			//$(".error1").html("<ul style='list-style-type:none'><li class='first'>Please select atleast one Client</li></ul>"); 
 		}
 	   else { $(".error1").html(""); }
 	   var selectArray1 =$('#multiselect').val();
@@ -217,7 +222,9 @@ $(document).ready(function(){
 			   if(typeof(err.errors)!= "undefined" && err.errors !== null){
 			   if(typeof(err.errors.site_name) != "undefined" && err.errors.site_name !== null)
 					var busi=err.errors.site_name; else busi='';
-					$(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li></ul>");
+				if(typeof(err.errors.site_client) != "undefined" && err.errors.site_client !== null)
+			    var busi1=err.errors.site_client; else busi1='';
+					$(".error").html("<ul style='list-style-type:none'><li class='first'>"+busi+"</li><li class='first'>"+busi1+"</li></ul>");
 			   }
 			   else{
 				   $(".error").html("<ul style='list-style-type:none'><li class='first'>'Site already added '</li></ul>");

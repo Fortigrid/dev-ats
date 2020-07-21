@@ -267,6 +267,12 @@
                   <p>Agency</p>
                 </a>
               </li>
+			  <li class="nav-item" style="padding-left:20px;">
+                <a href="/job-template" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Job Template</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">

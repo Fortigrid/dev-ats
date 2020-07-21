@@ -129,8 +129,10 @@ $(document).ready(function(){
             url: "business"+'/'+Business_id,
             success: function (data) {
                 table.draw();
+				$('.error').text('Record Deleted');
             },
             error: function (data) {
+				 
                 console.log('Error:', data);
             }
         });

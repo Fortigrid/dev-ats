@@ -92,8 +92,9 @@ class BusinessUnitController extends Controller
     public function edit(BusinessUnit $businessUnit)
     {
 		
-		$id = explode('/', $_SERVER['REQUEST_URI']);
-        $Business = BusinessUnit::find($id[2]);
+		preg_match_all('!\d+!', $_SERVER['REQUEST_URI'], $matches);
+		$getId=implode($matches[0]);
+        $Business = BusinessUnit::find($getId);
         return response()->json($Business);
 		
     }
@@ -119,10 +120,11 @@ class BusinessUnitController extends Controller
     public function destroy(BusinessUnit $businessUnit)
     {
 		
-		$id = explode('/', $_SERVER['REQUEST_URI']);
+		
+		preg_match_all('!\d+!', $_SERVER['REQUEST_URI'], $matches);
         //BusinessUnit::find($id[2])->delete();
-		BusinessUnit::where("id", $id[2])->update(["active" => 0]);
-        return response()->json(['success'=>'Customer deleted!']);
+		BusinessUnit::where("id", $matches)->update(["active" => 0]);
+        return response()->json(['success'=>'Business unit deleted!']);
 		
     }
 }

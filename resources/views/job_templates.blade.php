@@ -271,7 +271,7 @@ $(document).ready(function(){
 	  var Job_id = $(this).attr('id');
 	  //$("input[id=business_unit_id]").attr('checked',false);
 	  $(".print-error-msg").css('display','none');
-      $.get("/job-template" +'/' + Job_id +'/edit', function (data) {
+      $.get("job-template" +'/' + Job_id +'/edit', function (data) {
           $('#modelHeading').html("Edit Job Template");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel1').modal('show');
@@ -281,8 +281,8 @@ $(document).ready(function(){
           $('#content_bg_color').val(data.content_bg_color);
 		  $('#imghead').show();
 		  $('#imgfoot').show();
-		  $('#imghead').attr("src", "/storage/uploads/"+data.header_image);
-		   $('#imgfoot').attr("src", "/storage/uploads/"+data.footer_image);
+		  $('#imghead').attr("src", "storage/uploads/"+data.header_image);
+		   $('#imgfoot').attr("src", "storage/uploads/"+data.footer_image);
 		  //$('.stat').val(data.status);
 		  $("input[name=status][value=" + data.status + "]").prop('checked', true);
 		  if(data.status=='0'){
@@ -308,7 +308,7 @@ $(document).ready(function(){
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "/job-template"+'/'+Job_id,
+            url: "job-template"+'/'+Job_id,
             success: function (data) {
                 table.draw();
 				$('.error2').text('Record Deleted');

@@ -229,14 +229,14 @@
             </a>
 			
             <ul class="nav nav-treeview">
-			<!--@can('view-user')-->
+			
               <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/business') }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Business Unit</p>
                 </a>
               </li>
-			  <!--@endcan-->
+			  
               <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/location') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

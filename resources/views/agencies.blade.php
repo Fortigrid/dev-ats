@@ -155,7 +155,7 @@ $(document).ready(function(){
 		//$('#saveBtn2').prop('disabled', false);
 	  }
 	  $(".error").html("");
-      $.get("agency" +'/' + Agency_id +'/edit', function (data) {
+      $.get("/agency" +'/' + Agency_id +'/edit', function (data) {
           $('#modelHeading').html("Edit Agency");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel1').modal('show');
@@ -175,7 +175,7 @@ $(document).ready(function(){
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "agency"+'/'+Agency_id,
+            url: "/agency"+'/'+Agency_id,
             success: function (data) {
                 table.draw();
 				$('.error2').text('Record Deleted');

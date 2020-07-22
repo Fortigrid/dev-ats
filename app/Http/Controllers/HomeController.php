@@ -42,6 +42,8 @@ class HomeController extends Controller
 			$data= User::latest()->get(['id', 'name', 'email', 'user_role']);
 		    elseif($user->user_role=='client')
 			$data= User::latest()->where('user_role','client')->get(['id', 'name', 'email', 'user_role']);
+			else
+			$data= User::latest()->get(['id', 'name', 'email', 'user_role']);
 			return DataTables::of($data)
 					->addColumn('action', function($data){
 						$button ='<button type="button"

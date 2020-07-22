@@ -109,7 +109,7 @@ $(document).ready(function(){
 	 
 	  var Business_id = $(this).attr('id');
 	  
-      $.get("business" +'/' + Business_id +'/edit', function (data) {
+      $.get("/business" +'/' + Business_id +'/edit', function (data) {
 		
           $('#modelHeading').html("Edit Business");
           $('#saveBtn').val("edit-user");
@@ -126,7 +126,7 @@ $(document).ready(function(){
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "business"+'/'+Business_id,
+            url: "/business"+'/'+Business_id,
             success: function (data) {
                 table.draw();
 				$('.error').text('Record Deleted');

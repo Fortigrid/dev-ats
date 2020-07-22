@@ -156,7 +156,7 @@ $(document).ready(function(){
   $('body').on('click', '.edit', function () {
 	  var Locations_id = $(this).attr('id');
 	  $("input[id=business_unit_id]").attr('checked',false);
-      $.get(location.hostname+"/location" +'/' + Locations_id +'/edit', function (data) {
+      $.get("/location" +'/' + Locations_id +'/edit', function (data) {
           $('#modelHeading').html("Edit Location");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel1').modal('show');

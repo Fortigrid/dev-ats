@@ -10,7 +10,7 @@
 
 
   <!-- Google Font: Source Sans Pro -->
-  <link href="/css/app.css" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -229,14 +229,14 @@
             </a>
 			
             <ul class="nav nav-treeview">
-			@can('view-user')
+			<!--@can('view-user')-->
               <li class="nav-item" style="padding-left:20px;">
                 <a href="/business" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Business Unit</p>
                 </a>
               </li>
-			  @endcan
+			  <!--@endcan-->
               <li class="nav-item" style="padding-left:20px;">
                 <a href="/location" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

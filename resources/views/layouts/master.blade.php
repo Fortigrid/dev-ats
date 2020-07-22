@@ -231,44 +231,44 @@
             <ul class="nav nav-treeview">
 			<!--@can('view-user')-->
               <li class="nav-item" style="padding-left:20px;">
-                <a href="/business" class="nav-link ">
+                <a href="{{ url('/business') }}" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Business Unit</p>
                 </a>
               </li>
 			  <!--@endcan-->
               <li class="nav-item" style="padding-left:20px;">
-                <a href="/location" class="nav-link">
+                <a href="{{ url('/location') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Location</p>
                 </a>
               </li>
 			   <li class="nav-item" style="padding-left:20px;">
-                <a href="/role" class="nav-link">
+                <a href="{{ url('/role') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Roles</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
-                <a href="/client" class="nav-link">
+                <a href="{{ url('/client') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Clients</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
-                <a href="/site" class="nav-link">
+                <a href="{{ url('/site') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sites</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
-                <a href="/agency" class="nav-link">
+                <a href="{{ url('/agency') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agency</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
-                <a href="/job-template" class="nav-link">
+                <a href="{{ url('/job-template') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Job Template</p>
                 </a>

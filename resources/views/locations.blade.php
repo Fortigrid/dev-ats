@@ -156,7 +156,7 @@ $(document).ready(function(){
   $('body').on('click', '.edit', function () {
 	  var Locations_id = $(this).attr('id');
 	  $("input[id=business_unit_id]").attr('checked',false);
-      $.get("location" +'/' + Locations_id +'/edit', function (data) {
+      $.get(location.hostname+"/location" +'/' + Locations_id +'/edit', function (data) {
           $('#modelHeading').html("Edit Location");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel1').modal('show');
@@ -178,7 +178,7 @@ $(document).ready(function(){
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "location"+'/'+Locations_id,
+            url: "/location"+'/'+Locations_id,
             success: function (data) {
                 table.draw();
 				$('.error2').text('Record Deleted');

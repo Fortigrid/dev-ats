@@ -267,7 +267,7 @@ $(document).ready(function(){
 	  var Role_id = $(this).attr('id');
 	 
 	  $(".error").html("");
-      $.get("role" +'/' + Role_id +'/edit', function (data) {
+      $.get("/role" +'/' + Role_id +'/edit', function (data) {
           $('#modelHeading').html("Edit Role");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel1').modal('show');
@@ -297,7 +297,7 @@ $(document).ready(function(){
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "role"+'/'+Role_id,
+            url: "/role"+'/'+Role_id,
             success: function (data) {
                 table.draw();
 				$('.error2').text('Record Deleted');

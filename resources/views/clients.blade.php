@@ -161,7 +161,7 @@ $(document).ready(function(){
 	  $(".error").html("");
 	  console.log($('#multiselect').val());
 	    
-      $.get("/client" +'/' + Client_id +'/edit', function (data) {
+      $.get("client" +'/' + Client_id +'/edit', function (data) {
 		 
           $('#modelHeading').html("Edit Client");
           $('#saveBtn').val("edit-user");
@@ -189,7 +189,7 @@ $(document).ready(function(){
         if(ok == true){
         $.ajax({
             type: "DELETE",
-            url: "/client"+'/'+Client_id,
+            url: "client"+'/'+Client_id,
             success: function (data) {
                 table.draw();
 				$('.error2').text('Record Deleted');

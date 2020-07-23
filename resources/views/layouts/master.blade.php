@@ -243,12 +243,7 @@
                   <p>Location</p>
                 </a>
               </li>
-			   <li class="nav-item" style="padding-left:20px;">
-                <a href="{{ url('/role') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Roles</p>
-                </a>
-              </li>
+			  
 			  <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/client') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -265,6 +260,12 @@
                 <a href="{{ url('/agency') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agency</p>
+                </a>
+              </li>
+			   <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/role') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Roles</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">

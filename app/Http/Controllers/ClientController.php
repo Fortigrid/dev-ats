@@ -24,7 +24,7 @@ class ClientController extends Controller
     {
 		
        $clients= Client::with('locations')->where("active",1)->get();
-	   $locations=Location::all();
+	   $locations=Location::where("active",1)->get();
 	   if($request->ajax())
 		{
 			return DataTables::of($clients)

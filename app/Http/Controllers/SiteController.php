@@ -24,7 +24,7 @@ class SiteController extends Controller
     public function index(Request $request)
     {
        $sites= Site::with('clients')->where("active",1)->get();
-	   $clients=Client::all();
+	   $clients=Client::where("active",1)->get();
 	 
 	   if($request->ajax())
 		{

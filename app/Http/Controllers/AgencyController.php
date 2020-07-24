@@ -25,7 +25,7 @@ class AgencyController extends Controller
     public function index(Request $request)
     {
        $agencies= Agency::with('sites')->where("active",1)->get();
-	   $sites=Site::all();
+	   $sites=Site::where("active",1)->get();
 	   if($request->ajax())
 		{
 			return DataTables::of($agencies)

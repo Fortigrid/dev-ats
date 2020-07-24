@@ -27,8 +27,8 @@ class RoleController extends Controller
     public function index(Request $request)
     {
 		
-		$business_ids= BusinessUnit::all(['id','business_unit'])->toArray();
-		$locations=Location::all(['id','location']);
+		$business_ids= BusinessUnit::where("active",1)->get()->toArray();
+		$locations=Location::where("active",1)->get();
 		$clients= Client::with('locations')->where("active",1)->get();
 		$sites= Site::with('clients')->where("active",1)->get();
 		$agencies= Agency::with('sites')->where("active",1)->get();

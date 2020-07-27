@@ -64,7 +64,7 @@ class BusinessUnitController extends Controller
     public function store(Request $request)
     {
 		$request->validate([
-        'business_unit' => 'required|unique:business_units,business_unit,'.$request->id      
+        'business_unit' => 'required|regex:/^[a-zA-Z ]+$/|min:3|max:50|unique:business_units,business_unit,'.$request->id     
 		]);
         
 		BusinessUnit::updateOrCreate(['id' => $request->id],['business_unit' => $request->business_unit, 'created_by' => Auth::user()->id]);

@@ -67,7 +67,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
 		$request->validate([
-		'client_name'=> 'required|unique:clients,client_name,'.$request->id,
+		'client_name'=> 'required|regex:/^[a-zA-Z0-9 ]+$/|min:3|max:50|unique:clients,client_name,'.$request->id,
 		'client_location' => 'required'
 		]);
 		

@@ -24,7 +24,7 @@ class JobTemplateController extends Controller
      */
     public function index(Request $request)
     {
-        $business_ids= BusinessUnit::all(['id','business_unit'])->toArray();
+        $business_ids= BusinessUnit::where('active','1')->get()->toArray();
 		$jobtemplates=JobTemplate::select([
 		'job_templates.id',
 		'business_units.business_unit',

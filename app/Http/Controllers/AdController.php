@@ -161,7 +161,7 @@ class AdController extends Controller
 					->addColumn('action', function($ads){
 						$button ='<button type="button"
 						name="edit" id="'.$ads->id.'"
-						class="edit btn btn-primary btn-sm edit
+						class="edit btn btn-primary btn-sm edits
 						">Quick view</button> ';
 					
 						return $button;
@@ -245,7 +245,8 @@ class AdController extends Controller
 			$bindus[]=$board['industry'];
 			$bclassi[]=$board['job_class'];
 		}
-		
+		$bindus=isset($bindus) ? $bindus : [];
+		$bclassi=isset($bclassi) ? $bclassi : [];
 		return view('recruitment.editaddetail',compact('disAd','bindus','bclassi'));
 		}
 	     else  return redirect("/recruitment/managead/$rid/edit");
@@ -385,7 +386,7 @@ class AdController extends Controller
 		session()->forget('temp');
 		return redirect('/recruitment/managead');
 		}
-	    else return redirect('/recruitment/adpost');
+	    else return redirect("/recruitment/managead/$rid/edit");
 	}
 	
 	public function getValue($val,$rid){

@@ -43,7 +43,41 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="ajaxModel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading"></h4>
+            </div>
+            <div class="modal-body">
+			
+                
+				<div class="alert alert-danger print-error-msg" style="display:none">
+        <ul></ul>
+    </div>
+                   <input type="hidden" name="id" id="id">
+				   <input type="hidden" name="val" id="val">
+					
+					
+					<div class="form-group ">
+					<label class="col-sm-8 control-label">Status</label>
+					<p class="field switch" style="padding-left:8px;">
+					<input type="checkbox" class="mode" id="radio1" name="status" value="email" />Adzuna ->response
+					<input type="checkbox" class="mode" id="radio2" name="status" value="text"/>Jora ->response
+					<input type="checkbox" class="mode" id="radio2" name="status" value="msg"/>Seek ->response
+					</p></div>  
 
+                    <div class="col-sm-offset-2 col-sm-10">
+                     <button type="submit" class="btn btn-primary edit" id="saveBtn2" value="create">Save changes
+                     </button>
+                    </div>
+                
+				
+			
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -94,10 +128,23 @@ $(document).ready(function(){
 	});*/
 	
 	
+	
+	
 	$('.appli').attr('id','liveads')
 	
 	
 	$('#liveads').show();
+	
+	var bb= $('.appli').attr('id');
+	//alert(bb);
+	//$('#liveads tbody').on('click', 'a[class="edits"]' , function () {
+		$('body').on('click', '.edits', function () {
+		//alert('test');
+		$('#ajaxModel1').modal('show');
+	});
+	
+	
+	
 	
 	$('#liveads').DataTable({
 		destroy: true,

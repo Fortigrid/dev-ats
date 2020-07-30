@@ -58,5 +58,6 @@ Route::get('/recruitment/managead/{rid}/edit/step2','AdController@editPub');
 Route::post('/recruitment/managead/{rid}/edit/step2','AdController@editPubPost');
 Route::get('/recruitment/managead/{rid}/edit/step3','AdController@editJobPub');
 Route::post('/recruitment/managead/{rid}/edit/step3','AdController@editJobPubPost');
+Route::get('/recruitment/manageappli','ApplicantController@appliIndex')->name('appall');
 });
 //URL::forceScheme('https');

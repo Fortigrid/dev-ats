@@ -65,7 +65,7 @@ class SiteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-		'site_name'=> 'required|unique:sites,site_name,'.$request->id,
+		'site_name'=> 'required|regex:/^[a-zA-Z0-9 ]+$/|min:3|max:50|unique:sites,site_name,'.$request->id,
 		'site_client'=> 'required'
 		]);
 		

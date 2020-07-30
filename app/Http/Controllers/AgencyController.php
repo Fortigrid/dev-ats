@@ -65,7 +65,7 @@ class AgencyController extends Controller
     public function store(Request $request)
     {
        $request->validate([
-		'agency_name'=> 'required|unique:agencies,agency_name,'.$request->id,
+		'agency_name'=> 'required|regex:/^[a-zA-Z0-9 ]+$/|min:3|max:50|unique:agencies,agency_name,'.$request->id,
 		'agency_site'=> 'required'
 		]);
 		

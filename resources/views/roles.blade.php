@@ -179,6 +179,7 @@ $(document).ready(function(){
             enableCaseInsensitiveFiltering: true,
 			enableHTML: false,
             filterPlaceholder: 'Search for something...',
+			maxHeight: 300,
 			onChange: function(option, checked, select) {
                 //alert('Changed option ' + $(option).val() + '.');
 				$('#location').val('');

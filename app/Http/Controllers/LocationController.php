@@ -78,7 +78,7 @@ class LocationController extends Controller
 		$request->validate([
 		'business_unit_id'=> 'required',
 		'state'=> 'required',
-		'location' => 'required|unique:locations,location,'.$request->id
+		'location' => 'required|regex:/^[a-zA-Z ]+$/|min:3|max:50|unique:locations,location,'.$request->id
 		]);
         
 		$location = new Location;

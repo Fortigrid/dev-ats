@@ -24,7 +24,7 @@ class JobTemplateController extends Controller
      */
     public function index(Request $request)
     {
-        $business_ids= BusinessUnit::all(['id','business_unit'])->toArray();
+        $business_ids= BusinessUnit::where('active','1')->get()->toArray();
 		$jobtemplates=JobTemplate::select([
 		'job_templates.id',
 		'business_units.business_unit',
@@ -72,7 +72,7 @@ class JobTemplateController extends Controller
 		if($request->id ==''){
 		$validator = Validator::make($request->all(), [
 		'business_unit_id'=> 'required',
-		'template_name'=> 'required|unique:job_templates,template_name,'.$request->id,
+		'template_name'=> 'required|regex:/^[a-zA-Z ]+$/|min:3|max:50|unique:job_templates,template_name,'.$request->id,
 		'header_image'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 		'footer_image'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 		

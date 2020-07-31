@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use App\Board;
+use Illuminate\Http\Request;
+
+class adRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+		#print_r(session('job')); exit;
+		#print_r($this->request->all()); 
+		#echo session('rno');
+		#exit;
+        $rules= [
+        'broadcast'=> 'required',
+		'refno'=> 'required|regex:/^[a-zA-Z0-9]+$/|unique:adjobs,reference_no,'.session('rno'),
+		'jobtitle'=>'required|regex:/^[a-zA-Z0-9 ]+$/',
+		'hides'=>'required',
+		'location'=>'required',
+		'jsum'=>'required',
+		'djob'=>'required',
+		'bp1'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'bp2'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'bp3'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'sdate'=>'sometimes|nullable|date_format:Y-m-d',
+		'edate'=>'sometimes|nullable|date_format:Y-m-d',
+		'min'=>'sometimes|nullable|regex:/^[0-9]+$/',
+		'max'=>'sometimes|nullable|regex:/^[0-9]+$/',
+		'sdesc'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'jdesc'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'pcode'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'vurl'=>'sometimes|nullable|regex:/^[a-zA-Z0-9.]+$/',
+        ];
+		foreach(session('job') as $job){
+			$rules[$job.'industry']= 'required';
+			$rules[$job.'classi']= 'required';
+		}
+		
+		
+		return $rules;
+    }
+}

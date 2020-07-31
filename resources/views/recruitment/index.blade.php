@@ -20,9 +20,9 @@
 				 @endif
 				 <div>
 				 <ul>
-				 <li><b><a href="/recruitment/adpost">{{ __('Post Ad') }}</b></a> </li>
-				 <li><a href="/recruitment/managead"><b>{{ __('Manage Ad') }}</b></a> </li>
-				 <li><a href="/recruitment/manageappli"> <b>{{ __('Manage Applicant') }}</b></a></li>
+				 <li><b><a href="{{ url('/recruitment/adpost') }}">{{ __('Post Ad') }}</b></a> </li>
+				 <li><a href="{{ url('/recruitment/managead') }}"><b>{{ __('Manage Ad') }}</b></a> </li>
+				 <li><a href="{{ url('/recruitment/manageappli') }}"> <b>{{ __('Manage Applicant') }}</b></a></li>
 				 </ul>
 				 </div>
               </div>

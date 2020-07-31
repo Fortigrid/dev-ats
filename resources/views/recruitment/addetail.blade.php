@@ -210,9 +210,9 @@
 	 <hr class="col-md-12">
 	 <h5 class="col-md-12">Location Information</h5>
         <label for="inputPassword" class="col-sm-2 col-form-label">Location *</label>
-        <div class="col-sm-5" id="locationField">
+        <div class="col-sm-5" id="locationField1">
 		
-            <input id="autocomplete" type="text" name="location" class="form-control" onFocus="geolocate()" id="reference" value="@if(session('details.location')) {{session('details.location')}} @else {{old('location')}} @endif">
+            <input id="autocomplete" type="text" name="location" class="form-control"  id="reference" value="@if(session('details.location')) {{session('details.location')}} @else {{old('location')}} @endif">
         </div>
     </div>
     <div class="form-group row">
@@ -250,7 +250,8 @@
 	
     <div class="form-group row">
         <div class="col-sm-10 offset-sm-2">
-            <button type="submit" class="btn btn-primary">Prev</button> <button type="submit" class="btn btn-primary">Next</button>
+		   
+            <button type="submit" class="btn btn-primary" name="back" value="back">Prev</button> <button type="submit" class="btn btn-primary" name="next">Next</button>
         </div>
     </div>
 					</form>

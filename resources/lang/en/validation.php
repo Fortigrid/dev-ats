@@ -146,6 +146,18 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+		'bp1' => 'Bullet Point1 will not accept special character, the',
+		'bp2' => 'Bullet Point2 will not accept special character, the',
+		'bp3' => 'Bullet Point3 will not accept special character, the',
+		'sdate'=> 'Start date field should have Correct Date format (2020-01-01)',
+		'edate'=> 'End date field should have Correct Date format (2020-01-01)',
+		'min'=> 'Minimum salary field is required if necessary!',
+			'max'=> 'Maximum salary field is required if necessary!',
+			'sdesc'=> 'Salary description field is required if necessary!',
+			'jdesc'=> 'Job description field is required if necessary!',
+			'pcode'=> 'Postcode field is required if necessary!',
+			'vurl'=> 'Video URL field is required if necessary!',
+	],
 
 ];

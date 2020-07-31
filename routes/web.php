@@ -67,5 +67,6 @@ Route::post('/recruitment/managead/{rid}/resend/step2','AdController@resendPubPo
 Route::get('/recruitment/managead/{rid}/resend/step3','AdController@resendJobPub');
 Route::post('/recruitment/managead/{rid}/resend/step3','AdController@resendJobPubPost');
 Route::get('/recruitment/manageappli','ApplicantController@appliIndex')->name('appall');
+Route::get('/recruitment/cvsearch','ApplicantController@cvSearch');
 });
 //URL::forceScheme('https');

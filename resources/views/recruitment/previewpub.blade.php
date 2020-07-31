@@ -18,6 +18,11 @@
 						</ul>
 					</div>
 				 @endif
+				 @if(empty(session('errorMessage')))
+					 <div class="alert alert-danger">
+						{{ session('errorMessage') }}
+					 </div>
+				 @endif
 				 <div>
 				   <b>Choose job-> Ad details -> Publish</b>
 				   <form method="POST">
@@ -116,15 +121,15 @@
 	@foreach(Session::get('job') as $board)
 	<div class="form-group row">
 	 <label for="inputPassword" class="col-sm-2 col-form-label">{{$board}} Industry *</label>
-        <div class="col-sm-5">
-            {{session('details.industry')}}
+        <div class="col-sm-5" id="">
+            {{session('details.'.$board.'industry')}}
         </div>
     </div>
     <div class="form-group row">
         <label for="inputPassword" class="col-sm-2 col-form-label">Job Classification *</label>
         <div class="col-sm-5">
             
-				 {{session('details.classi')}}
+				 {{session('details.'.$board.'classi')}}
 			
         </div>
     </div>
@@ -246,12 +251,12 @@
             <select name="posttime">
 				
 				<option value="<?php echo now();?>">Now</option>
-				<option value="Part-time">Part-time</option>
+				
 			</select>
 			 <select name="posttime1">
 				
 				<option value="<?php echo date('Y-m-d');?>">Today</option>
-				<option value="Part-time">Part-time</option>
+				
 			</select>
         </div>
     </div>

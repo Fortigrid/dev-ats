@@ -30,7 +30,7 @@
 						<div class="form-group row">
 	 <hr class="col-md-12">
 	 <h5 class="col-md-12">Details</h5>
-	  <div style="width:100%;text-align:right;"><a href="/recruitment/managead/{{$disAd['id']}}/edit" style="text-decoration:underline">Edit</a> <a id="del" href="#" style="text-decoration:underline">Delete</a> <a href="#" style="text-decoration:underline">Resend</a></div>
+	  <div style="width:100%;text-align:right;"><a href="/recruitment/managead/{{$disAd['id']}}/edit" style="text-decoration:underline">Edit</a> <a id="del" href="#" style="text-decoration:underline">Delete</a> <a href="/recruitment/managead/{{$disAd['id']}}/resend" style="text-decoration:underline">Resend</a></div>
 	  <hr class="col-md-12">
         <label for="inputPassword"  class="col-sm-2 col-form-label">Consultant:</label>
         <div class="col-sm-5">

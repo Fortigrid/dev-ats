@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'web'], function() {
 Route::get('/', function(){
-	return view ('welcome');
+	return view ('auth.login');
 });
 
 //Route::get('/{any}', 'SinglePageController@index')->where('any', '^(?!login|register|home|welcome|logout|password|api).*$');
@@ -58,6 +58,14 @@ Route::get('/recruitment/managead/{rid}/edit/step2','AdController@editPub');
 Route::post('/recruitment/managead/{rid}/edit/step2','AdController@editPubPost');
 Route::get('/recruitment/managead/{rid}/edit/step3','AdController@editJobPub');
 Route::post('/recruitment/managead/{rid}/edit/step3','AdController@editJobPubPost');
+Route::get('/recruitment/managead/{rid}/resend','AdController@resendChange');
+Route::post('/recruitment/managead/{rid}/resend','AdController@resendChangePost');
+Route::get('/recruitment/managead/{rid}/resend/step1','AdController@resendDetail');
+Route::post('/recruitment/managead/{rid}/resend/step1','AdController@resendDetailPost');
+Route::get('/recruitment/managead/{rid}/resend/step2','AdController@resendPub');
+Route::post('/recruitment/managead/{rid}/resend/step2','AdController@resendPubPost');
+Route::get('/recruitment/managead/{rid}/resend/step3','AdController@resendJobPub');
+Route::post('/recruitment/managead/{rid}/resend/step3','AdController@resendJobPubPost');
 Route::get('/recruitment/manageappli','ApplicantController@appliIndex')->name('appall');
 });
 //URL::forceScheme('https');

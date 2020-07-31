@@ -13,6 +13,10 @@ use App\Board;
 
 class ApplicantController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
      public function appliIndex(Request $request){
 		$aps= Applicant::with('adjob')->latest('id')->get();
 		if($request->ajax())

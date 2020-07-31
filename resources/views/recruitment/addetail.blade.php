@@ -145,7 +145,7 @@
 			<div class="col-sm-2">
 			<input type="text" name="max" class="form-control" id="job" value="@if(session('details.max')) {{session('details.max')}} @else {{old('max')}} @endif ">
 			</div>
-			<div class="col-sm-1">min
+			<div class="col-sm-1">
 			<select name="stype">
 				<option value="">Select</option>
 				<option value="Annum">Annum</option>
@@ -210,8 +210,9 @@
 	 <hr class="col-md-12">
 	 <h5 class="col-md-12">Location Information</h5>
         <label for="inputPassword" class="col-sm-2 col-form-label">Location *</label>
-        <div class="col-sm-5">
-            <input type="text" name="location" class="form-control" id="reference" value="@if(session('details.location')) {{session('details.location')}} @else {{old('location')}} @endif">
+        <div class="col-sm-5" id="locationField">
+		
+            <input id="autocomplete" type="text" name="location" class="form-control" onFocus="geolocate()" id="reference" value="@if(session('details.location')) {{session('details.location')}} @else {{old('location')}} @endif">
         </div>
     </div>
     <div class="form-group row">
@@ -235,14 +236,14 @@
 	 <h5 class="col-md-12">Main Description Details</h5>
         <label for="inputPassword" class="col-sm-2 col-form-label">Job Summary/Introduction *</label>
         <div class="col-sm-7">
-             <textarea name="jsum">@if(session('details.jsum')) {{session('details.jsum')}} @else {{old('jsum')}} @endif</textarea>
+             <textarea name="jsum" class="ckeditor">@if(session('details.jsum')) {{session('details.jsum')}} @else {{old('jsum')}} @endif</textarea>
         </div>
     </div>
 	<div class="form-group row">
 	
         <label for="inputPassword" class="col-sm-2 col-form-label">Detailed Job Description *</label>
         <div class="col-sm-7">
-            <textarea name="djob">@if(session('details.djob')) {{session('details.djob')}} @else {{old('djob')}} @endif</textarea>
+            <textarea name="djob" class="ckeditor">@if(session('details.djob')) {{session('details.djob')}} @else {{old('djob')}} @endif</textarea>
         </div>
     </div>
 	
@@ -259,7 +260,90 @@
         </div>
     </div>
 </div><br>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4tCB1eAaR4AcLCp5Mq0RTY6hffyIZU_g&libraries=places"></script>
+        <script>
+		
+		
+            var autocomplete;
+            function initialize() {
+              autocomplete = new google.maps.places.Autocomplete(
+                  /** @type {HTMLInputElement} */(document.getElementById('autocomplete')),
+                  { types: ['geocode'] });
+              google.maps.event.addListener(autocomplete, 'place_changed', function() {
+              });
+            }
+			
+			
+			
+			var placeSearch, autocomplete;
 
+var componentForm = {
+  street_number: 'short_name',
+  route: 'long_name',
+  locality: 'long_name',
+  administrative_area_level_1: 'short_name',
+  country: 'long_name',
+  postal_code: 'short_name'
+};
+
+function initAutocomplete() {
+  // Create the autocomplete object, restricting the search predictions to
+  // geographical location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'), {types: ['geocode']});
+
+  // Avoid paying for data that you don't need by restricting the set of
+  // place fields that are returned to just the address components.
+  autocomplete.setFields(['address_component']);
+
+  // When the user selects an address from the drop-down, populate the
+  // address fields in the form.
+  autocomplete.addListener('place_changed', fillInAddress);
+}
+
+function fillInAddress() {
+  // Get the place details from the autocomplete object.
+  var place = autocomplete.getPlace();
+
+  for (var component in componentForm) {
+    document.getElementById(component).value = '';
+    document.getElementById(component).disabled = false;
+  }
+
+  // Get each component of the address from the place details,
+  // and then fill-in the corresponding field on the form.
+  for (var i = 0; i < place.address_components.length; i++) {
+    var addressType = place.address_components[i].types[0];
+    if (componentForm[addressType]) {
+      var val = place.address_components[i][componentForm[addressType]];
+      document.getElementById(addressType).value = val;
+    }
+  }
+}
+
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle(
+          {center: geolocation, radius: position.coords.accuracy});
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+        </script>
+<script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.ckeditor').ckeditor();
+		
+    });
+</script>
 
 
 @endsection

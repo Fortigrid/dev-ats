@@ -62,15 +62,11 @@
 					<div class="form-group ">
 					<label class="col-sm-8 control-label">Status</label>
 					<p class="field switch" style="padding-left:8px;">
-					<input type="checkbox" class="mode" id="radio1" name="status" value="email" />Adzuna ->response
-					<input type="checkbox" class="mode" id="radio2" name="status" value="text"/>Jora ->response
-					<input type="checkbox" class="mode" id="radio2" name="status" value="msg"/>Seek ->response
+					<ul><li style='float:left;list-style:none;width:50px;'><b>Name</b></li><li style='float:left;list-style:none;margin-left:10px;'><b>Response</b></li></ul>
+					<div class="drow" style="float:left;width:100%"></div>
 					</p></div>  
 
-                    <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary edit" id="saveBtn2" value="create">Save changes
-                     </button>
-                    </div>
+                    
                 
 				
 			
@@ -139,8 +135,31 @@ $(document).ready(function(){
 	//alert(bb);
 	//$('#liveads tbody').on('click', 'a[class="edits"]' , function () {
 		$('body').on('click', '.edits', function () {
+			$(".drow").html("");
 		//alert('test');
+		var id=$(this).attr('id');
+		//alert(id);
 		$('#ajaxModel1').modal('show');
+		$.ajax({
+            type: "POST",
+			data:{adid:id},
+            url: "/recruitment/managead",
+			dataType: 'json',
+            success: function (data) {
+				
+			$.each(data, function(key, value) {
+    
+			console.log(value['board_name']);
+			$(".drow").append("<ul style='float:left;width:100%'><li style='float:left;list-style:none;width:50px;'>"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:10px'>_"+value["response"]+"</li></ul>");
+		
+			});
+				
+               
+            },
+            error: function (data) {
+               console.log(JSON.stringify(data));
+            }
+		});
 	});
 	
 	

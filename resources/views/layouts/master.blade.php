@@ -26,7 +26,7 @@
   <script src="{{ asset('js/multiselect.js') }}"></script>
 	
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" onload="initialize()">
 <div class="wrapper" >
 
   <!-- Navbar -->

@@ -18,6 +18,11 @@
 						</ul>
 					</div>
 				 @endif
+				 @if(!empty(session('errorMessage')))
+					 <div class="alert alert-danger">
+						{{ session('errorMessage') }}
+					 </div>
+				 @endif
 				 <div>
 				   <b>Choose job-> Ad details -> Publish</b>
 				   <form method="POST">
@@ -259,7 +264,7 @@
 	
     <div class="form-group row">
         <div class="col-sm-10 offset-sm-2">
-            <button type="submit" class="btn btn-primary">Post Ad</button> 
+            <button type="submit" class="btn btn-primary" name="back" value="back">Prev</button> <button type="submit" class="btn btn-primary" name="next">Next</button>
         </div>
     </div>
 					</form>

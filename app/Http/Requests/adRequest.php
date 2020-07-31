@@ -28,7 +28,12 @@ class adRequest extends FormRequest
 		#print_r(session('job')); exit;
 		#print_r($this->request->all()); 
 		#echo session('rno');
+		#$bal= $this->request->get('back');
 		#exit;
+		if($this->request->get('back')=='back'){
+			return $rules=[];
+		}
+		else{
         $rules= [
         'broadcast'=> 'required',
 		'refno'=> 'required|regex:/^[a-zA-Z0-9]+$/|unique:adjobs,reference_no,'.session('rno'),
@@ -56,5 +61,20 @@ class adRequest extends FormRequest
 		
 		
 		return $rules;
+		}
+    }
+	
+	public function messages()
+    {
+        return [
+            'broadcast.required' => 'Please select the Broadcast as',
+            'refno.required' => 'Reference No. is required!',
+            'jobtitle.required' => 'Job Title is required!',
+			'hides.required'=> 'Hide Numeric Salary field is required!',
+			'location.required'=> 'Location field is required!',
+			'jsum.required'=> 'Job Summary field is required!',
+			'djob.required'=> 'Detailed Job Description field is required!',
+			
+        ];
     }
 }

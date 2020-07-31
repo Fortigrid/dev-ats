@@ -87,7 +87,7 @@
 				<div class="card-body" id="displayalls" >
                    
 					
-					
+					<div class="error" style="font-weight:bold;color:red"></div>
 					<div class="table-responsive"> 
 					
 						<table id="displayall" class="cell-border stripe hover row-border appli">
@@ -146,7 +146,7 @@
 					
 					
 					<div class="form-group ">
-					<label class="col-sm-8 control-label">Status</label>
+					<label class="col-sm-8 control-label">Mode</label>
 					<p class="field switch" style="padding-left:8px;">
 					<input type="radio" class="mode" id="radio1" name="status" value="email" />Email
 					<input type="radio" class="mode" id="radio2" name="status" value="text"/>Text
@@ -280,7 +280,8 @@ $(document).ready(function(){
 				 $('#displayqual').DataTable().draw();
 				 $('#displaystar').DataTable().draw();
 				 $('#displayinvite').DataTable().draw();
-				$('.error2').text('Record updated');
+				 //console.log(data.success);
+				$('.error').text(data.success);
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -301,12 +302,13 @@ $(document).ready(function(){
 		 //alert('test');
 		var id= $('#id').val();
 		var val= $('#val').val();
+		var mode= $('.mode').val();
 		if($('.mode').is(':checked')){
 			var modes=$('.mode').val();
 			//alert(modes);
 			$.ajax({
             type: "POST",
-			data:{valUrl:id, id:val},
+			data:{valUrl:id, id:val, mode:mode},
             url: "/recruitment/managead" +'/' + rno +'/statChange',
 			dataType: 'json',
             success: function (data) {
@@ -316,7 +318,7 @@ $(document).ready(function(){
 				 $('#displayqual').DataTable().draw();
 				 $('#displaystar').DataTable().draw();
 				 $('#displayinvite').DataTable().draw();
-				$('.error2').text('Record updated');
+				$('.error').text(data.success);
             },
             error: function (data) {
 				$('#ajaxModel1').modal('show');

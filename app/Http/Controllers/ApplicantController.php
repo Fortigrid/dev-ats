@@ -33,6 +33,24 @@ class ApplicantController extends Controller
 					->rawColumns(['action'])
 					->make(true);
 		}
-		return view('recruitment/manageappli');
+		return view('recruitment.manageappli');
+	}
+	public function cvSearch(Request $request){
+		$aps= Applicant::with('adjob')->latest('id')->get();
+		if($request->ajax())
+		{
+			return DataTables::of($aps)
+					->addColumn('action', function($aps){
+						$button ='<button type="button"
+						name="view" id="'.$aps->id.'"
+						class="edit btn btn-primary btn-sm edit
+						">View</button> ';
+					
+						return $button;
+					})
+					->rawColumns(['action'])
+					->make(true);
+		}
+		return view('recruitment.cvsearch');
 	}
 }

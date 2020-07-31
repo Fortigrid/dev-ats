@@ -10,7 +10,7 @@
 
 
   <!-- Google Font: Source Sans Pro -->
-  
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@
   <script src="{{ asset('js/multiselect.js') }}"></script>
 	
 </head>
-<body class="hold-transition sidebar-mini" onload="initialize()">
+<body class="hold-transition sidebar-mini" >
 <div class="wrapper" >
 
   <!-- Navbar -->

@@ -45,11 +45,16 @@ class AdController extends Controller
 	     else  return redirect('/recruitment/adpost');
 	}
 	public function adDetailPost(adRequest $request){
-		
+		if($request->has('back') && $request->back=='back'){
+			return redirect('/recruitment/adpost');
+		}
+		else{
 		session(['details'=>$request->except('_token')]);
 		if(count($request->session()->get('details',[]))>0) return redirect('/recruitment/adpost/2');
 		else  return redirect('/recruitment/adpost/1');
+		}
 	}
+	
 	public function previewPub(Request $request){
 		//dd(session()->all());
 		if($request->session()->get('details')){
@@ -65,10 +70,14 @@ class AdController extends Controller
 		//session(['details'=>$request->except('_token')]);
 		//echo session('job.0'); #for job
 		//dd(session()->all());
+		#print_r($request->all());exit;
+		if($request->has('back') && $request->back=='back'){
+			return redirect('/recruitment/adpost/1');
+		}else{
 		$request->validate([
 		'jtemp'=> 'required',
 		
-		]);
+		],['jtemp.required'=>'Please select the Job Template']);
 		if($request->session()->get('details')){
 		session(['temp'=>$request->except('_token')]);
 		#session()->forget('details');
@@ -76,6 +85,7 @@ class AdController extends Controller
 		return redirect('/recruitment/adpost/3');
 		}
 	    else return redirect('/recruitment/adpost');
+		}
 		
 	}
 	public function jobPub(Request $request){
@@ -262,10 +272,14 @@ class AdController extends Controller
 	}
 	
 	public function editDetailPost(adRequest $request,$rid){
+		if($request->has('back') && $request->back=='back'){
+			return redirect("/recruitment/managead/$rid/edit");
+		}
+		else{
 		session(['details'=>$request->except('_token')]);
 		if(count($request->session()->get('details',[]))>0) return redirect("/recruitment/managead/$rid/edit/step2");
 		else  return redirect("/recruitment/managead/$rid/edit/step1");
-		
+		}
 	}
 	
 	public function editPub(Request $request,$rid){
@@ -280,6 +294,9 @@ class AdController extends Controller
 	}
 	
 	public function editPubPost(Request $request,$rid){
+		if($request->has('back') && $request->back=='back'){
+			return redirect("/recruitment/managead/$rid/edit/step1");
+		}else{
 		if($request->jtemp!=''){
 		if($request->session()->get('details')){
 		session(['temp'=>$request->except('_token')]);
@@ -291,6 +308,7 @@ class AdController extends Controller
 		}
 		else{
 			return redirect("/recruitment/managead/$rid/edit/step2")->with('errorMessage', 'Please select template');
+		}
 		}
 	}
 	
@@ -452,10 +470,14 @@ class AdController extends Controller
 	}
 	
 	public function resendDetailPost(adRequest $request,$rid){
+		if($request->has('back') && $request->back=='back'){
+			return redirect("/recruitment/managead/$rid/resend");
+		}
+		else{
 		session(['details'=>$request->except('_token')]);
 		if(count($request->session()->get('details',[]))>0) return redirect("/recruitment/managead/$rid/resend/step2");
 		else  return redirect("/recruitment/managead/$rid/resend/step1");
-		
+		}
 	}
 	
 	public function resendPub(Request $request,$rid){
@@ -470,6 +492,9 @@ class AdController extends Controller
 	}
 	
 	public function resendPubPost(Request $request,$rid){
+		if($request->has('back') && $request->back=='back'){
+			return redirect("/recruitment/managead/$rid/resend/step1");
+		}else{
 		if($request->jtemp!=''){
 		if($request->session()->get('details')){
 		session(['temp'=>$request->except('_token')]);
@@ -481,6 +506,7 @@ class AdController extends Controller
 		}
 		else{
 			return redirect("/recruitment/managead/$rid/resend/step2")->with('errorMessage', 'Please select template');
+		}
 		}
 	}
 	
@@ -673,23 +699,32 @@ class AdController extends Controller
 	public function statChange(Request $request,$rid){
 		
 		session(['rno'=>$rid]);
-		
+		$status='';
 		if($request->valUrl=='qual'){
 		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'qualify']);
+		$status='Status changed to Qualify';
 		}
 		if($request->valUrl=='poten'){
 		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'potential']);
+		$status='Status changed to Potential';
 		}
 	    if($request->valUrl=='stars'){
 		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'starr']);
+		$status='Status changed to Starred';
 		}
 	    if($request->valUrl=='insc'){
-		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'inteviewschedule']);
+		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'inteviewschedule',"mode"=>$request->mode]);
+		$status='Status changed to Interview Scheduled';
 		}
 	    if($request->valUrl=='invites'){
+		$getStat=Applicant::where([["adjob_id", $rid],["id",$request->id]])->get()->toArray();
+		if($getStat[0]=='inteviewschedule'){
 		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'invited']);
+		$status='Status changed to Invited';
 		}
-		return response()->json(['success'=>'Updated']);
+		else $status='Please schedule the interview to invite';
+		}
+		return response()->json(['success'=>$status]);
 	
 	}
 	

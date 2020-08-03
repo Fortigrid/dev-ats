@@ -725,7 +725,7 @@ class AdController extends Controller
 		}
 	    if($request->valUrl=='invites'){
 		$getStat=Applicant::where([["adjob_id", $rid],["id",$request->id]])->get()->toArray();
-		if($getStat[0]=='inteviewschedule'){
+		if($getStat[0]['status']=='inteviewschedule'){
 		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => 'invited']);
 		$status='Status changed to Invited';
 		}

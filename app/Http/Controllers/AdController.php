@@ -195,6 +195,13 @@ class AdController extends Controller
 		return response()->json($aps);
 		}
 		
+		if($request->deleids !=''){
+		$request->deleids=explode(',',$request->deleids);
+		$delad= Adjob::whereIn('id',$request->deleids)->update(['active'=>0]);
+		
+		return response()->json('deleted');
+		}
+		
 		if($request->ajax())
 		{
 			return DataTables::of($ads)

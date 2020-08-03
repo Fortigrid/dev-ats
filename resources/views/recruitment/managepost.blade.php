@@ -22,13 +22,14 @@
 
                 <div class="card-body">
                    
-					<div >
-					
+					<div style="float:right">
+					<button class="mdelete">Delete</button>
 					</div>
 					<div class="table-responsive"> 
 						<table id="" class="cell-border stripe hover row-border appli">
 							<thead>
 							<tr>
+							    <th><input type="checkbox" id="ckbCheckAll" /></th>
 								<th>Responses</th>
 								<th>Date</th>
 								<th>Job Title</th>
@@ -84,9 +85,27 @@ $(document).ready(function(){
           }
     });
 	
+	$("#ckbCheckAll").click(function () {
+        $(".checkBoxClass").prop('checked', $(this).prop('checked'));
+    });
+    
+    $(".checkBoxClass").change(function(){
+        if (!$(this).prop("checked")){
+            $("#ckbCheckAll").prop("checked",false);
+        }
+    });
+	
 	var cols=[];
 	
 	cols= [
+			{
+				data: 'id',
+				render: function (dataField) { return ''; },
+				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+				$(nTd).html("<input type='checkbox' class='checkBoxClass' name='jobs[]' value='"+oData.id+"'>");
+				},
+				orderable: false
+			},
 			{
 				data: 'response',
 				name: 'response',
@@ -112,7 +131,41 @@ $(document).ready(function(){
 				orderable: false
 			}
 		];
-	
+		
+		$('.mdelete').show();
+		$('#liveads tbody .checkBoxClass').show();
+		
+		$('.mdelete').click(function(){
+			var checkbox_value=[];
+			
+			var myTable = $('#liveads').dataTable();
+
+			
+			var rowcollection = myTable.$(".checkBoxClass:checked", {"page": "all"});
+			rowcollection.each(function(index,elem){
+    
+			checkbox_value += $(elem).val()+',';
+    
+			});
+			//alert(checkbox_value);
+			var ok =confirm("Are you sure want to delete !");
+        if(ok == true){
+			$.ajax({
+			type: "POST",
+			data:{deleids:checkbox_value},
+			url: "/recruitment/managead",
+			dataType: 'json',
+				success: function (data) {
+					$('#liveads').DataTable().draw();
+				},
+				error: function (data) {
+               console.log(JSON.stringify(data));
+				}
+			});
+		}
+			});
+		
+		
 	/*$('#managepost').DataTable({
 		processing: true,
 		serverSide: true,
@@ -169,7 +222,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 1, "desc" ]],
+		order: [[ 2, "desc" ]],
 		ajax: {
 			data:{ids:'liveads'},
 			url: "/recruitment/managead"
@@ -183,12 +236,13 @@ $(document).ready(function(){
 	
 	
 	$('#liveads').show();
-	
+	$('.mdelete').show();
+	$('#liveads tbody .checkBoxClass').show();
 	$('#liveads').DataTable({
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 1, "desc" ]],
+		order: [[ 2, "desc" ]],
 		ajax: {
 			type: "POST",
 			data:{ids:'liveads'},
@@ -204,12 +258,13 @@ $(document).ready(function(){
 	
 	
 	$('#expads').show();
-	
+	$('.mdelete').hide();
+	$('#expads tbody tr td input.checkBoxClass').hide();
 	$('#expads').DataTable({
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 0, "desc" ]],
+		order: [[ 2, "desc" ]],
 		ajax: {
 			type: "POST",
 			data:{ids:'expads'},

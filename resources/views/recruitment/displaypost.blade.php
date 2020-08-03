@@ -304,11 +304,11 @@ $(document).ready(function(){
 		var val= $('#val').val();
 		var mode= $('.mode').val();
 		if($('.mode').is(':checked')){
-			var modes=$('.mode').val();
+			var modes=$('input[class="mode"]:checked').val();
 			//alert(modes);
 			$.ajax({
             type: "POST",
-			data:{valUrl:id, id:val, mode:mode},
+			data:{valUrl:id, id:val, mode:modes},
             url: "/recruitment/managead" +'/' + rno +'/statChange',
 			dataType: 'json',
             success: function (data) {
@@ -350,7 +350,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 0, "desc" ]],
+		order: [[ 3, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/all'
@@ -370,7 +370,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 0, "desc" ]],
+		order: [[ 3, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/qual'
@@ -391,7 +391,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 0, "desc" ]],
+		order: [[ 3, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/star'
@@ -412,7 +412,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 0, "desc" ]],
+		order: [[ 3, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/invite'

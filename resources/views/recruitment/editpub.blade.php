@@ -129,7 +129,7 @@
         <label for="inputPassword" class="col-sm-2 col-form-label">Job Classification *</label>
         <div class="col-sm-5">
             
-				 {{session('details.'.$board.'industry')}}
+				 {{session('details.'.$board.'classi')}}
 			
         </div>
     </div>

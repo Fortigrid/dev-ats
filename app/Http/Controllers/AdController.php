@@ -11,12 +11,15 @@ use DataTables;
 use App\Applicant;
 use App\JobTemplate;
 use App\Board;
+use App\Services\RecruitService;
 
 class AdController extends Controller
 {
-	public function __construct()
+	protected $rservice;
+	public function __construct(RecruitService $rservice)
     {
         $this->middleware('auth');
+		$this->rservice=$rservice;
     }
 	public function recruit(){
 		return view('recruitment.index');
@@ -67,10 +70,6 @@ class AdController extends Controller
 	}
 	public function previewPubPost(Request $request){
 		//dd(session()->all());
-		//session(['details'=>$request->except('_token')]);
-		//echo session('job.0'); #for job
-		//dd(session()->all());
-		#print_r($request->all());exit;
 		if($request->has('back') && $request->back=='back'){
 			return redirect('/recruitment/adpost/1');
 		}else{
@@ -80,8 +79,6 @@ class AdController extends Controller
 		],['jtemp.required'=>'Please select the Job Template']);
 		if($request->session()->get('details')){
 		session(['temp'=>$request->except('_token')]);
-		#session()->forget('details');
-		#session()->forget('job');
 		return redirect('/recruitment/adpost/3');
 		}
 	    else return redirect('/recruitment/adpost');
@@ -100,59 +97,7 @@ class AdController extends Controller
 	public function jobPubPost(Request $request){
 		
 		if($request->session()->get('details') && $request->session()->get('temp')){
-		 $data = [
-        'broadcast'                   => session('details.broadcast')??'',
-        'reference_no'                  => session('details.refno')??'', 
-        'job_title'               => session('details.jobtitle')??'',
-        'job_type'              => session('details.jobtype')??'',
-		'job_time'              => session('details.jobtime')??'',
-		'bp1'              		=> session('details.bp1')??'',
-		'bp2'              => session('details.bp2')??'',
-		'bp3'              => session('details.bp3')??'',
-		'sdate'              => session('details.sdate')??'',
-		'edate'              => session('details.edate')??'',
-		'board'              => '',
-		'industry'              => '',
-		'job_class'              => '',
-		'currency'              => session('details.salary')??'',
-		'min'              => session('details.min')??'',
-		'max'              => session('details.max')??'',
-		'salary_per'              => session('details.stype')??'',
-		'salary_desc'              => session('details.sdesc')??'',
-		'hide_salary'              => session('details.hides')??'',
-		'job_requirement'              => session('details.jdesc')??'',
-		'min_exp'              => session('details.mexp')??'',
-		'edu_level'              => session('details.elevel')??'',
-		'local_resident'              => session('details.lresi')??'',
-		'location'              => session('details.location')??'',
-		'postcode'              => session('details.pcode')??'',
-		'video_url'              => session('details.vurl')??'',
-		'job_summary'              => session('details.jsum')??'',
-		'detail_job_summary'              => session('details.djob')??'',
-		'location_city'              => '',
-        'job_template'              => session('temp.jtemp')??'',
-		'post_time'              => session('temp.posttime')??'',
-		'contact_email'              => '',
-		'contact_phone'              => '',
-		'cost'              => '',
-		'created_by'              => Auth::user()->id
-		];
-		$adjob=Adjob::create($data);
-		foreach(session('job') as $job){
-			
-			$jobi=$job.'industry';
-			$jobc=$job.'classi';
-			#echo $adjob->id.'test'.$job.'test1'.session("details.$jobi").session("details.$jobc");
-			
-			$datas[]=[
-			  'adjob_id'=>$adjob->id,
-			  'board_name'=>$job,
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")
-			];
-		}
-		
-		Board::insert($datas);
+		$this->rservice->addAd(session()->all());
 		session()->forget('details');
 		session()->forget('job');
 		session()->forget('temp');
@@ -242,8 +187,6 @@ class AdController extends Controller
 			$bname[]=$board['board_name'];
 		}
 		$bname=isset($bname) ? $bname : [];
-		//echo $vv=implode(',',$dd);
-		//print_r(array_values($dd)); exit;
 		return view('recruitment.editpost',compact('disAd','bname'));
 	}	
 	
@@ -253,8 +196,6 @@ class AdController extends Controller
 		]);
 		
 		session(['job'=>$request->job_board]);
-		//dd(session()->all());
-		//echo $rid; exit;
 		if($request->session()->has('job')) return redirect("/recruitment/managead/$rid/edit/step1");
 		else  return redirect("/recruitment/managead/$rid/edit");
 	}	
@@ -334,91 +275,7 @@ class AdController extends Controller
 	public function editJobPubPost(Request $request,$rid){
 		
 		if($request->session()->get('details') && $request->session()->get('temp')){
-		 $data = [
-        'broadcast'                   => session('details.broadcast')??'',
-        'reference_no'                  => session('details.refno')??'', 
-        'job_title'               => session('details.jobtitle')??'',
-        'job_type'              => session('details.jobtype')??'',
-		'job_time'              => session('details.jobtime')??'',
-		'bp1'              		=> session('details.bp1')??'',
-		'bp2'              => session('details.bp2')??'',
-		'bp3'              => session('details.bp3')??'',
-		'sdate'              => session('details.sdate')??'',
-		'edate'              => session('details.edate')??'',
-		'board'              => '',
-		'industry'              => '',
-		'job_class'              => '',
-		'currency'              => session('details.salary')??'',
-		'min'              => session('details.min')??'',
-		'max'              => session('details.max')??'',
-		'salary_per'              => session('details.stype')??'',
-		'salary_desc'              => session('details.sdesc')??'',
-		'hide_salary'              => session('details.hides')??'',
-		'job_requirement'              => session('details.jdesc')??'',
-		'min_exp'              => session('details.mexp')??'',
-		'edu_level'              => session('details.elevel')??'',
-		'local_resident'              => session('details.lresi')??'',
-		'location'              => session('details.location')??'',
-		'postcode'              => session('details.pcode')??'',
-		'video_url'              => session('details.vurl')??'',
-		'job_summary'              => session('details.jsum')??'',
-		'detail_job_summary'              => session('details.djob')??'',
-		'location_city'              => '',
-        'job_template'              => session('temp.jtemp')??'',
-		'post_time'              => session('temp.posttime')??'',
-		'contact_email'              => '',
-		'contact_phone'              => '',
-		'cost'              => ''
-		];
-		
-		$adjob=Adjob::where('id',$rid)->update($data);
-		
-		$bod=Board::where('adjob_id',$rid)->get()->toArray();
-		foreach($bod as $jobs){
-			$bb[]=$jobs['board_name'];
-		}
-		
-		$cc=array_diff(session('job'),$bb);
-		if(count($cc)>0)
-		{
-		foreach($cc as $job){
-		$jobi=$job.'industry';
-			$jobc=$job.'classi';
-			#echo $adjob->id.'test'.$job.'test1'.session("details.$jobi").session("details.$jobc");
-			
-			$datas[]=[
-			  'adjob_id'=>$rid,
-			  'board_name'=>$job,
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")
-			];
-		}
-		
-		Board::insert($datas);
-		}
-		foreach($bod as $job){
-			
-			$jobi=$job['board_name'].'industry';
-			$jobc=$job['board_name'].'classi';
-			#echo $adjob->id.'test'.$job.'test1'.session("details.$jobi").session("details.$jobc");
-			
-			/*$datas[]=[
-			  'board_name'=>$job,
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")
-			];*/
-			
-			Board::where([['adjob_id',$rid],['id',$job['id']]])->update(
-			  ['board_name'=>$job['board_name'],
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")]
-			);
-		}
-		Board::where([['adjob_id',$rid],['industry','']])->delete();
-		
-		#Board::insert($datas);
-		#$udata = collect($datas); 
-		#Board::where('adjob_id',$rid)->update($udata);
+		$this->rservice->editAd(session()->all(),$rid);
 		session()->forget('details');
 		session()->forget('job');
 		session()->forget('temp');
@@ -532,107 +389,7 @@ class AdController extends Controller
 	public function resendJobPubPost(Request $request,$rid){
 		
 		if($request->session()->get('details') && $request->session()->get('temp')){
-		 $data = [
-        'broadcast'                   => session('details.broadcast')??'',
-        'reference_no'                  => session('details.refno')??'', 
-        'job_title'               => session('details.jobtitle')??'',
-        'job_type'              => session('details.jobtype')??'',
-		'job_time'              => session('details.jobtime')??'',
-		'bp1'              		=> session('details.bp1')??'',
-		'bp2'              => session('details.bp2')??'',
-		'bp3'              => session('details.bp3')??'',
-		'sdate'              => session('details.sdate')??'',
-		'edate'              => session('details.edate')??'',
-		'board'              => '',
-		'industry'              => '',
-		'job_class'              => '',
-		'currency'              => session('details.salary')??'',
-		'min'              => session('details.min')??'',
-		'max'              => session('details.max')??'',
-		'salary_per'              => session('details.stype')??'',
-		'salary_desc'              => session('details.sdesc')??'',
-		'hide_salary'              => session('details.hides')??'',
-		'job_requirement'              => session('details.jdesc')??'',
-		'min_exp'              => session('details.mexp')??'',
-		'edu_level'              => session('details.elevel')??'',
-		'local_resident'              => session('details.lresi')??'',
-		'location'              => session('details.location')??'',
-		'postcode'              => session('details.pcode')??'',
-		'video_url'              => session('details.vurl')??'',
-		'job_summary'              => session('details.jsum')??'',
-		'detail_job_summary'              => session('details.djob')??'',
-		'location_city'              => '',
-        'job_template'              => session('temp.jtemp')??'',
-		'post_time'              => session('temp.posttime')??'',
-		'contact_email'              => '',
-		'contact_phone'              => '',
-		'cost'              => '',
-		'created_by'              => Auth::user()->id
-		];
-		
-		$adjob=Adjob::create($data);
-		foreach(session('job') as $job){
-			
-			$jobi=$job.'industry';
-			$jobc=$job.'classi';
-			#echo $adjob->id.'test'.$job.'test1'.session("details.$jobi").session("details.$jobc");
-			
-			$datas[]=[
-			  'adjob_id'=>$adjob->id,
-			  'board_name'=>$job,
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")
-			];
-		}
-		
-		Board::insert($datas);
-		
-		$bod=Board::where('adjob_id',$adjob->id)->get()->toArray();
-		foreach($bod as $jobs){
-			$bb[]=$jobs['board_name'];
-		}
-		
-		$cc=array_diff(session('job'),$bb);
-		if(count($cc)>0)
-		{
-		foreach($cc as $job){
-		$jobi=$job.'industry';
-			$jobc=$job.'classi';
-			#echo $adjob->id.'test'.$job.'test1'.session("details.$jobi").session("details.$jobc");
-			
-			$datas[]=[
-			  'adjob_id'=>$rid,
-			  'board_name'=>$job,
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")
-			];
-		}
-		
-		Board::insert($datas);
-		}
-		foreach($bod as $job){
-			
-			$jobi=$job['board_name'].'industry';
-			$jobc=$job['board_name'].'classi';
-			#echo $adjob->id.'test'.$job.'test1'.session("details.$jobi").session("details.$jobc");
-			
-			/*$datas[]=[
-			  'board_name'=>$job,
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")
-			];*/
-			
-			Board::where([['adjob_id',$adjob->id],['id',$job['id']]])->update(
-			  ['board_name'=>$job['board_name'],
-			  'industry'=>session("details.$jobi"),
-			  'job_class'=> session("details.$jobc")]
-			);
-		}
-		Board::where([['adjob_id',$adjob->id],['industry','']])->delete();
-		
-		#Board::insert($datas);
-		#$udata = collect($datas); 
-		#Board::where('adjob_id',$rid)->update($udata);
+		$this->rservice->resendAd(session()->all(),$rid);
 		session()->forget('details');
 		session()->forget('job');
 		session()->forget('temp');
@@ -642,24 +399,13 @@ class AdController extends Controller
 	}
 	
 	
-	
-	
-	public function getValue($val,$rid){
-		
-		if($val=='all') return Applicant::with('adjob')->where('adjob_id',$rid)->latest('id')->get();
-		if($val=='qual') return Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', ['qualify', 'potential', 'starr', 'inteviewschedule', 'invited'])->latest('id')->get();
-		if($val=='star') return Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', [ 'starr', 'inteviewschedule', 'invited'])->latest('id')->get();
-		if($val=='invite') return Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', ['invited'])->latest('id')->get();
-	}
-	
-	
 	public function displayAll(Request $request,$rid){
 		
 		$valUrl= request()->segment(4); 
 		
 		session(['rno'=>$rid]);
 		
-		$disAd1= $this->getValue($valUrl,$rid);
+		$disAd1= $this->rservice->getValue($valUrl,$rid);
 		
 		if($request->ajax())
 		{
@@ -675,33 +421,10 @@ class AdController extends Controller
 					->rawColumns(['action'])
 					->make(true);
 		}
-		//return view('recruitment.displayall',compact('disAd'));
+		
 	
 	}
 	
-	/*public function displayQual(Request $request,$rid){
-		
-		session(['rno'=>$rid]);
-		
-		$disAd1= Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', ['qualify', 'potential'])->get();
-		
-		if($request->ajax())
-		{
-			return DataTables::of($disAd1)
-					->addColumn('action', function($disAd1){
-						$button ='<button type="button"
-						name="edit" id="'.$disAd1->id.'"
-						class="edit btn btn-primary btn-sm edit
-						">Eligible</button> ';
-					
-						return $button;
-					})
-					->rawColumns(['action'])
-					->make(true);
-		}
-		//return view('recruitment.displayall',compact('disAd'));
-	
-	}*/
 	
 	public function statChange(Request $request,$rid){
 		

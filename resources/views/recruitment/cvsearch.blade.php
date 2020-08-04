@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Manage Applicants') }}</div>
+                <div class="card-header">{{ __('CV Search') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -38,6 +38,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
+	
+	
+	
 	$('#manageappli').DataTable({
 		processing: true,
 		serverSide: true,
@@ -63,7 +66,7 @@ $(document).ready(function(){
 			},
 			{
 				data: 'cv',
-				render: function (dataField) { return ''; },
+				name: 'cv',
 			},
 			{
 				data: 'action',
@@ -72,6 +75,18 @@ $(document).ready(function(){
 			}
 		]
 	});
+	
+	
+// For hiding column
+if ( $.fn.dataTable.isDataTable( '#manageappli' ) ) {
+    table = $('#manageappli').DataTable();
+	table.column(4).visible(false);
+}
+else {
+    table = $('#example').DataTable( {
+        paging: false
+    } );
+	}
 	
 	
 });

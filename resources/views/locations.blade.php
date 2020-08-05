@@ -18,7 +18,7 @@
 				  @endif
 				  <div >
 					<div class="error2" style="color:red;font-weight:bold"></div>
-					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
+						<div style="margin:20px 0px;"><button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button></div>
 					</div>
 					<div class="table-responsive"> 
 						<table id="location" class="cell-border stripe hover row-border">
@@ -39,11 +39,12 @@
     </div>
 </div><br>
 
-<div class="modal fade" id="ajaxModel1" aria-hidden="true">
+<div class="modal fade loc" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="LocationForm" name="LocationForm" class="form-horizontal">
@@ -51,18 +52,21 @@
                    <input type="hidden" name="id" id="location_id">
 				   <div class="error" style="color:red;font-weight:bold"></div>
 				   <div class="form-group">
-                        <label class="col-sm-2 control-label">Business_Unit</label>
-                        <div class="col-sm-12">
+                        <label class="col-sm-4 unit_label btn btn-light control-label"data-toggle="collapse" data-target="#demo">Select a Business_Unit</label>
+						<div id="demo" class="collapse">
+                        <div class="col-sm-6">
 							@foreach($business_ids as $business_id)
-							<input type="checkbox" id="business_unit_id" name="business_unit_id" value="{{$business_id['id']}}"> {{$business_id['business_unit']}}
+							<div><input type="checkbox" id="business_unit_id" name="business_unit_id" value="{{$business_id['id']}}"> {{$business_id['business_unit']}}</div>
 							@endforeach
                         </div>
+						</div>
                     </div>
 					
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">State</label>
                         <div class="col-sm-12">
-							<select name="state" id="state">
+							<div class="box"></div>
+							<select name="state" id="state" class="box_1">
 								<option value="">Select State</option>
 								<option value="ACT">ACT</option>
 								<option value="NSW">NSW</option>
@@ -76,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group loc">
                         <label class="col-sm-2 control-label">Location</label>
                         <div class="col-sm-12">
                            <input class="form-control" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 

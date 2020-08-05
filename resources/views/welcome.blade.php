@@ -66,7 +66,7 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height" id="app">
-            @if (Route::has('login'))
+           @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
@@ -80,8 +80,8 @@
                 </div>
             @endif
 
-            <div class="content">
-			<div class="floatleft logo">
+            <div class="content ">
+			<div class="text-center logo">
 			<img src="https://apply.dev.apptra.com.au/skin/default/images/inventory-logo.png" alt="Logo">
 			<img src="https://apply.dev.apptra.com.au/skin/default/images/action-apply.png" alt="Logo">
         </div>

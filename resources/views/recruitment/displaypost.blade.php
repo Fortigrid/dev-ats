@@ -4,30 +4,51 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card" style="margin-top:20px;">
                 <div class="card-header">{{ $disAd['job_title']}}</div>
 				
-				<div class="table-responsive"> 
+				<div class="btn-group btn-group-justified" id="managepost">
+					<a id="detail"  data-toggle="pill" href="#menu1" class="btn btn-light">Ad Details</a> 
+					<a  id="all" data-toggle="pill" href="#menu2" class="btn btn-light">All Applicants</a> 
+					<a  id="qauls"data-toggle="pill" href="#menu3" class="btn btn-light">Qualified Applicants</a> 
+					<a id="star" data-toggle="pill" href="#menu4"class="btn btn-light">Starred Applicants </a> 
+					<a  id="invite"data-toggle="pill" href="#menu5"class="btn btn-light">Invited Applicants</a> 
+				</div>
+			<!--	<div class="table-responsive"> 
 						<table id="managepost" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
 								<th><a id="detail">Ad Details </a> &nbsp;&nbsp;&nbsp;</th>
 								<th><a  id="all">All Applicants </a> &nbsp;&nbsp;&nbsp;</th>
 								<th><a id="qauls">Qualified Applicants </a> &nbsp;&nbsp;&nbsp;</th>
-								<th><a id="star">Starred Applicants </a> &nbsp;&nbsp;&nbsp;</th>
+								<th><a >Starred Applicants </a> &nbsp;&nbsp;&nbsp;</th>
 								<th><a id="invite">Invited Applicants </a> &nbsp;&nbsp;</th>
 							</tr>
 							</thead>
 						</table>
-					</div>
+					</div>-->
 
                 <div class="card-body" id="manageposts">
-                   
-					
-					
-					<div >
+					<div>
+							<div class="clearfix">
+								<div class="float-md-left">Details</div>
+								<div class="float-md-right">
+									<div class="btn-group">
+									  <button type="button" class="btn btn-primary">Sony</button>
+									  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu" role="menu">
+										<li><a href="#">Tablet</a></li>
+										<li><a href="#">Smartphone</a></li>
+									  </ul>
+									</div>
+								</div>
+							 </div>
+							
 						<div class="form-group row">
+						
 	 <hr class="col-md-12">
 	 <h5 class="col-md-12">Details</h5>
 	  <div style="width:100%;text-align:right;"><a href="/recruitment/managead/{{$disAd['id']}}/edit" style="text-decoration:underline">Edit</a> <a id="del" href="#" style="text-decoration:underline">Delete</a> <a href="/recruitment/managead/{{$disAd['id']}}/resend" style="text-decoration:underline">Resend</a></div>

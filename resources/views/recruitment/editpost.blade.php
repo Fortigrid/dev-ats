@@ -8,8 +8,6 @@
             <div class="card" style="margin-top:20px;">
                 <div class="card-header">{{ $disAd['job_title']}}</div>
 				
-				
-
                 <div class="card-body" id="manageposts">
  @if($errors->any())
 					<div class="alert alert-danger">
@@ -21,16 +19,18 @@
 						</ul>
 					</div>
 				 @endif
-				 <div>
+				 <div class="col-md-6">
 				   <b>Choose Job Boards</b>
 				   <form method="POST">
 				   @csrf
 				   <div class="row">
-				   <div class="col-md-6"><input type="checkbox" id="ckbCheckAll" /> Select All</div><div class="col-md-6"></div>
-				   <div class="col-md-6"><input type="checkbox" class="checkBoxClass" name="job_board[]" value="Adjuna" @if(in_array('Adjuna',$bname)) checked @endif> Adjuna </div>
-				   <div class="col-md-6"><input class="checkBoxClass" type="checkbox" name="job_board[]" value="Jora" @if(in_array('Jora',$bname)) checked @endif> Jora</div>
-				   <div class="col-md-6"><input class="checkBoxClass" type="checkbox" name="job_board[]" value="Seek" @if(in_array('Seek',$bname)) checked @endif> Seek </div>
-				   <div><br></div>
+				   <div class="col-md-6">
+						<div><input type="checkbox" id="ckbCheckAll" /> Select All</div>
+						<div><input type="checkbox" class="checkBoxClass" name="job_board[]" value="Adjuna" @if(in_array('Adjuna',$bname)) checked @endif> Adjuna </div>
+						<div><input class="checkBoxClass" type="checkbox" name="job_board[]" value="Jora" @if(in_array('Jora',$bname)) checked @endif> Jora</div>
+						<div><input class="checkBoxClass" type="checkbox" name="job_board[]" value="Seek" @if(in_array('Seek',$bname)) checked @endif> Seek </div>
+					</div>
+				   <div><br>
 				   <input type="submit" value="next">
 				   </div>
 				   </form>

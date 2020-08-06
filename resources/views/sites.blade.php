@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card" style="margin-top:20px;">
+            <div class="card recruitment">
                 <div class="card-header">{{ __('Manage Site') }}</div>
                 <div class="card-body">
                   @if($errors->any())
@@ -22,7 +22,7 @@
 					<div class="error2" style="color:red;font-weight:bold"></div>
 					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
 				 </div>
-				 <div class="table-responsive"> 
+				 <div class="table-responsive new"> 
 					<table id="site" class="cell-border stripe hover row-border">
 						<thead>
 							<tr>
@@ -39,7 +39,7 @@
     </div>
 </div><br>
 
-<div class="modal fade" id="ajaxModel1" aria-hidden="true">
+<div class="modal fade loc" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

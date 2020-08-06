@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card" style="margin-top:20px;">
+            <div class="card mtop">
                 <div class="card-header">{{ __('Manage Agency') }}</div>
 
                 <div class="card-body">
@@ -21,7 +21,7 @@
 						<div class="error2" style="color:red;font-weight:bold"></div>
 						<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
 					</div>
-					<div class="table-responsive"> 
+					<div class="table-responsive new"> 
 						<table id="agency" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -38,7 +38,7 @@
     </div>
 </div><br>
 
-<div class="modal fade loc" id="ajaxModel1" aria-hidden="true">
+<div class="modal loc fade" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

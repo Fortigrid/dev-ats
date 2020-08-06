@@ -1,8 +1,5 @@
 @extends('layouts.master')
-
-
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -19,8 +16,7 @@
 						</ul>
 					</div>
 				 @endif
-				 <div>
-					<div class="row">
+				 <div class="row">
             <div class="col-lg-3 col-sm-6">
                 <div class="card-box bg-blue">
                     <div class="inner">
@@ -40,7 +36,7 @@
 							<a href="{{ url('/recruitment/managead') }}">View More <i class="arrow right"></i><i class="arrow right"></i></a>
 							</div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
@@ -51,8 +47,8 @@
 					  <a href="{{ url('/recruitment/manageappli') }}">View More <i class="arrow right"></i><i class="arrow right"></i></a>
 					  </div>
                     </div>
-                   
-                   
+
+
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
@@ -63,18 +59,19 @@
 						<a href="{{ url('/recruitment/cvsearch') }}">View More <i class="arrow right"></i><i class="arrow right"></i></a>
 						</div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
-				 <!--<ul>
+				<!-- <div>
+				 <ul>
 				 <li><b><a href="{{ url('/recruitment/adpost') }}">{{ __('Post Ad') }}</b></a> </li>
 				 <li><a href="{{ url('/recruitment/managead') }}"><b>{{ __('Manage Ad') }}</b></a> </li>
 				 <li><a href="{{ url('/recruitment/manageappli') }}"> <b>{{ __('Manage Applicant') }}</b></a></li>
 				 <li><a href="{{ url('/recruitment/cvsearch') }}"> <b>{{ __('CV Search') }}</b></a></li>
-				 </ul>-->
-				 </div>
+				 </ul>
+				 </div>-->
               </div>
            </div>
         </div>

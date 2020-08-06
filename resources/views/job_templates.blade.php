@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card mtop">
                 <div class="card-header">{{ __('Manage Job Template') }}</div>
                 <div class="card-body">
                    @if($errors->any())
@@ -23,7 +23,7 @@
 					<div class="error2" style="color:white;font-weight:bold;display:none"></div>
 					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
 					</div>
-					<div class="table-responsive"> 
+					<div class="table-responsive new"> 
 						<table id="job_template" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>

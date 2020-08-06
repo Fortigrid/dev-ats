@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card mtop">
                 <div class="card-header">{{ __('Manage Client') }}</div>
                 <div class="card-body">
                   @if($errors->any())
@@ -22,7 +22,7 @@
 					<div class="error2" style="color:red;font-weight:bold"></div>
 					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
 				 </div>
-				 <div class="table-responsive"> 
+				 <div class="table-responsive new"> 
 						<table id="client" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -63,7 +63,7 @@
 					<div class="form-group">
                         <label class="col-sm-4 control-label">Location</label>
                         <div class="col-sm-12" >
-							<select class="check" id="multiselect" name="locations" multiple="multiple">
+							<select id="multiselect" name="locations" multiple="multiple">
 							@foreach($locations as $location)
 								<option value="{{$location['id']}}"> {{$location['location']}}</option>
 							@endforeach
@@ -84,7 +84,6 @@
 
 </style>
 <script type="text/javascript">
-
 $(document).ready(function(){
 	
 	$('#client').DataTable({

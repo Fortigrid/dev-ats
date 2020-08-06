@@ -77,8 +77,7 @@
                     </form>
 		</div>
 	</div>
-</div>
-<!--
+</div><!--
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-8" >
@@ -101,13 +100,8 @@
                                     </span>
                                 @enderror
                             </div>
-							
                         </div>
-						<div class="form-group row">
-							<input type="text" class="write"></input>
-      <label class="hello col-form-label text-md-left ">Username</label>
-    <span class="enter"></span>
-						</div>
+
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right" style="font-size:15px;">{{ __('Password') }}</label>
 
@@ -134,7 +128,7 @@
                             </div>
                         </div>-->
 
-                    <!--   <div class="form-group row mb-0">
+                       <!-- <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary col-md-8">
                                     {{ __('Sign In') }}
@@ -153,5 +147,4 @@
         </div>
     </div>
 </div>-->
-</div>
 @endsection

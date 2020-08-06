@@ -18,9 +18,9 @@
 				  @endif
 				  <div >
 					<div class="error2" style="color:red;font-weight:bold"></div>
-						<div style="margin:20px 0px;"><button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button></div>
+					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
 					</div>
-					<div class="table-responsive"> 
+					<div class="table-responsive new"> 
 						<table id="location" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -52,9 +52,10 @@
                    <input type="hidden" name="id" id="location_id">
 				   <div class="error" style="color:red;font-weight:bold"></div>
 				   <div class="form-group">
-                        <label class="col-sm-4 unit_label btn btn-light control-label"data-toggle="collapse" data-target="#demo">Select a Business_Unit</label>
-						<div id="demo" class="collapse">
-                        <div class="col-sm-6">
+                       <!-- <label class="col-sm-2 control-label">Business_Unit</label>-->
+						<button type="button" class=" control-label btn btn-info" data-toggle="collapse" data-target="#demo">Select Business Unit</button>
+						<div id="demo" class="collapse business">
+                        <div class="col-sm-12">
 							@foreach($business_ids as $business_id)
 							<div><input type="checkbox" id="business_unit_id" name="business_unit_id" value="{{$business_id['id']}}"> {{$business_id['business_unit']}}</div>
 							@endforeach
@@ -65,8 +66,7 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">State</label>
                         <div class="col-sm-12">
-							<div class="box"></div>
-							<select name="state" id="state" class="box_1">
+							<select name="state" id="state">
 								<option value="">Select State</option>
 								<option value="ACT">ACT</option>
 								<option value="NSW">NSW</option>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group loc">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">Location</label>
                         <div class="col-sm-12">
                            <input class="form-control" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 

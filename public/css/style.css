@@ -1,0 +1,9 @@
+*{box-sizing:border-box;margin:0;padding:0;}
+.container{background:#71cef5!important;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:10px;}
+.col-md-8{background:#71cef5!;}
+h2{color:red;}
+label{color:green;}
+.sidebar-dark-primary{background:red!important;}
+.card-header{background:#eee!important;}
+tr{background:#fff!important;}
+.card-body{background:#eee!important;}

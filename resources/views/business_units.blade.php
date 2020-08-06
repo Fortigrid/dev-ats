@@ -4,20 +4,25 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card" style="margin-top:20px;">
                 <div class="card-header">{{ __('Manage Business Unit') }}</div>
 
                 <div class="card-body">
                    
 					<div >
-					<form action="" method="post" id="BusinessForms">
+					<form action="" method="post" id="BusinessForms" class="business">
+					<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Add Business Unit</button>
+					<div id="demo" class="collapse">
 					@csrf
 					<div class="error" style="color:red;font-weight:bold"></div>
-					<input type="text" id="business_units" name="business_unit" placeholder="Business Unit" required> <!--<input type="submit" name="submit" value="Add Business Unit">-->
-					<button type="submit" class="btn btn-primary" id="saveBtn1" value="create">Add Business Unit
+					<div class="unit"><input type="text" class="write" id="business_units" name="business_unit" placeholder="Business Unit" required> <!--<input type="submit" name="submit" value="Add Business Unit">-->
+					
+					<button type="submit" class="button" id="saveBtn1" value="create"><img src="{{ asset('css/img/add_icon.png') }}" />
                      </button>
-					@error('business_unit')<div class="error" style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
+					@error('business_unit')<div class="confirmed"style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
+					</div>
+					</div>
 					</form>
 					</div>
 					<div class="table-responsive"> 
@@ -42,6 +47,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+				 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
 			<div class="error1" style="color:red;font-weight:bold"></div>
@@ -52,7 +58,7 @@
 
                     <div class="form-group">
                         <label class="col-sm-6 control-label">Business Unit</label>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 unit_1">
                            
 							  <input class="form-control" type="text" id="business_unit"  name="business_unit" placeholder="Business Unit" value="" maxlength="50"> 
                             
@@ -69,6 +75,7 @@
     </div>
 </div>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	
 	$('#business').DataTable({
@@ -97,6 +104,7 @@ $(document).ready(function(){
 });
 </script>
 <script type="text/javascript">
+
  $(function () {
 	 
   $.ajaxSetup({

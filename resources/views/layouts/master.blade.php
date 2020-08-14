@@ -24,7 +24,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <script src="{{ asset('js/multiselect.js') }}"></script>
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="hold-transition sidebar-mini" >
 <div class="wrapper" >
@@ -34,7 +34,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-bars"></i></a>
       </li>
       <!--<li class="nav-item d-none d-sm-inline-block">
         <a href="index3.html" class="nav-link">Home</a>
@@ -50,7 +50,7 @@
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
+            <i class="fa fa-search"></i>
           </button>
         </div>
       </div>
@@ -61,7 +61,7 @@
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
+          <i class="fa fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -72,10 +72,10 @@
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                  <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
                 </h3>
                 <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                <p class="text-sm text-muted"><i class="fa fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div>
             <!-- Message End -->
@@ -88,7 +88,7 @@
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                  <span class="float-right text-sm text-muted"><i class="fa fa-star"></i></span>
                 </h3>
                 <p class="text-sm">I got your message bro</p>
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
@@ -104,7 +104,7 @@
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                  <span class="float-right text-sm text-warning"><i class="fa fa-star"></i></span>
                 </h3>
                 <p class="text-sm">The subject goes here</p>
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
@@ -157,7 +157,7 @@
     <a href="index3.html" class="brand-link">
       <img src="" alt="" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">ApplyTracker</span>
+      <span class="brand-text font-weight-light text-center">ApplyTracker</span>
     </a>
 
     <!-- Sidebar -->
@@ -165,10 +165,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="" class="img-circle elevation-2" alt="">
+         <!-- <img src="" class="img-circle elevation-2" alt="">	-->
         </div>
         <div class="info">
-          <a href="#" class="d-block">@auth {{ Auth::user()->name }} @endauth</a>
+          <a href="#" class="d-block"><i class="fa fa-user-circle"></i>	@auth {{ Auth::user()->name }} @endauth</a>
         </div>
       </div>
 
@@ -178,14 +178,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 			    <li class="nav-item">
-                 <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
+                 <a href="#" class="nav-link">
+                  <i class="fa fa-th nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
 			   <li class="nav-item">
                  <a href="{{ url('/recruitment') }}" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-search nav-icon"></i>
                   <p>Recruitment</p>
                 </a>
               </li>
@@ -221,10 +221,10 @@
               </li>-->
           <li class="nav-item has-treeview ">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fa fa-gears"></i>
               <p>
                 Configuration
-                <i class="right fas fa-angle-left"></i>
+                <i class="right fa fa-angle-right"></i>
               </p>
             </a>
 			
@@ -232,55 +232,55 @@
 			
               <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/business') }}" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-address-card nav-icon"></i>
                   <p>Business Unit</p>
                 </a>
               </li>
 			  
               <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/location') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-map-marker nav-icon"></i>
                   <p>Location</p>
                 </a>
               </li>
 			  
 			  <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/client') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-users nav-icon"></i>
                   <p>Clients</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/site') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-globe nav-icon"></i>
                   <p>Sites</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/agency') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-building nav-icon"></i>
                   <p>Agency</p>
                 </a>
               </li>
 			   <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/role') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-clipboard nav-icon"></i>
                   <p>Roles</p>
                 </a>
               </li>
 			  <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/job-template') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fa fa-graduation-cap	 nav-icon"></i>
                   <p>Job Template</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item pl-2">
             <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="fa fa-power-off"></i>
               <p>
                 Logout
                

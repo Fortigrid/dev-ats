@@ -10,6 +10,10 @@
 
                 <div class="card-body">
                     @if (session('status'))
+						<!--<div class="alert alert-warning alert-dismissible fade show">
+							<button type="button" class="close remove" data-dismiss="alert">&times;</button>
+							{{ session('status') }}
+					</div>-->
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>

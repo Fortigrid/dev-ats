@@ -21,7 +21,7 @@
 				  @endif
 				  <div >
 					<div class="error2" style="color:white;font-weight:bold;display:none"></div>
-					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
+					<button style="float:right"  type="submit" class="button-3" id="addNew" value="create">Add New</button>
 					</div>
 					<div class="table-responsive new"> 
 						<table id="job_template" class="cell-border stripe hover row-border">
@@ -72,8 +72,9 @@
 
                     <div class="form-group">
                         <label class="col-sm-8 control-label">Template Name</label>
-                        <div class="col-sm-12">
-                           <input class="form-control" type="text" id="template_name"  name="template_name" placeholder="Template Name" value="" maxlength="50" > 
+                        <div class="col-sm-12 unit">
+                           <input class="form-control effect-1" type="text" id="template_name"  name="template_name" placeholder="Template Name" value="" maxlength="50" > 
+						   <span class="focus-border"></span>
                         </div>
                     </div>
 					
@@ -149,7 +150,7 @@
 					</p></div>  
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn2" value="create">Save 
                      </button>
                     </div>
                 </form>

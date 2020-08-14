@@ -1,14 +1,16 @@
 @extends('layouts.master')
-
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card recruitment">
                 <div class="card-header">{{ __('Manage Ads') }}</div>
+				<div class="btn-group nav nav-pills">
+					<button type="button" data-toggle="pill" class="btn btn-info nav-link active" id="lads">Live Ads</button>
+					<button type="button" data-toggle="pill" class="nav-link btn btn-info"id="eads">Expired Ads</button>
+				</div>
 				
-				<div class="table-responsive"> 
+					<!--<div class="table-responsive"> 
 						<table class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -18,11 +20,11 @@
 							</tr>
 							</thead>
 						</table>
-					</div>
+					</div>-->
 
                 <div class="card-body">
-					<div style="float:right">
-					<button class="mdelete">Delete</button>
+					<div style="float:right" class="mt-3 mb-3">
+					<button class="mdelete btn btn-danger dlt"><i class="fa fa-trash"></i></button>
 					</div>
 					<div class="table-responsive"> 
 						<table id="" class="cell-border stripe hover row-border appli">
@@ -47,7 +49,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modelHeading"></h4>
+                <h4 class="modal-title" id="modelHeading">Status</h4>
+				 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
 			
@@ -60,10 +63,20 @@
 					
 					
 					<div class="form-group ">
-					<label class="col-sm-8 control-label">Status</label>
+					<!--<label class="col-sm-8 control-label">Status</label>-->
 					<p class="field switch" style="padding-left:8px;">
-					<ul><li style='float:left;list-style:none;width:50px;'><b>Name</b></li><li style='float:left;list-style:none;margin-left:10px;'><b>Response</b></li></ul>
-					<div class="drow" style="float:left;width:100%"></div>
+					<!--<div class="row">
+						<div class="col-md-2">
+							<b>Name</b>
+						</div>
+						<div class="col-md-4">
+							<b>Response</b>
+							<div class="drow" style="float:left;width:100%"></div>
+						</div>
+					</div>-->
+					
+					<ul><li style='float:left;list-style:none;width:50px;'><b>Name</b></li><li style='float:left;list-style:none;margin-left:30px;'><b>Response</b></li></ul>
+					<div class="drow" style="float:left;width:100%;"></div>
 					</p></div>  
 
                     

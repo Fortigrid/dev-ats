@@ -23,7 +23,7 @@
 					
 					@csrf
 					<div class="error2" style="color:red;font-weight:bold"></div>
-					<button type="submit" class="btn btn-primary" id="addNew" value="create" style="float:right">Add New</button>
+					<button type="submit" class="button-3" id="addNew" value="create" style="float:right">Add New</button>
 					
 					</div>
 					<div class="table-responsive business" > 
@@ -57,8 +57,9 @@
 				   <div class="error" style="color:red;font-weight:bold"></div>
 				   <div class="form-group">
                         <label class="col-sm-6 control-label">Role Name</label>
-                        <div class="col-sm-12">
-                           <input class="form-control" type="text" id="roles"  name="role_name" placeholder="Role Name" value="" maxlength="50" required=""> 
+                        <div class="col-sm-12 unit">
+                           <input class="form-control effect-1" type="text" id="roles"  name="role_name" placeholder="Role Name" value="" maxlength="50" required=""> 
+						  <span class="focus-border"></span>
                         </div>
                     </div>
 				   <div class="form-group">
@@ -131,7 +132,7 @@
                     </div>-->
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn2" value="create">Save
                      </button>
                     </div>
                 </form>

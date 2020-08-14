@@ -18,7 +18,7 @@
 				  @endif
 				  <div >
 					<div class="error2" style="color:red;font-weight:bold"></div>
-					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
+					<button style="float:right"  type="submit" class="button-3" id="addNew" value="create">Add New</button>
 					</div>
 					<div class="table-responsive new"> 
 						<table id="location" class="cell-border stripe hover row-border">
@@ -82,13 +82,14 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Location</label>
-                        <div class="col-sm-12">
-                           <input class="form-control" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 
+                        <div class="col-sm-12 unit">
+                           <input class="form-control effect-1" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 
+						   <span class="focus-border"></span>
                         </div>
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn2" value="create">Save changes
                      </button>
                     </div>
                 </form>

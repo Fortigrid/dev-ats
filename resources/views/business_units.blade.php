@@ -9,21 +9,22 @@
                 <div class="card-header">{{ __('Manage Business Unit') }}</div>
 
                 <div class="card-body">
-                   
-					<div >
+					<div>
 					<form action="" method="post" id="BusinessForms">
 					<div class="business">
-						<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Add Business Unit</button>
+						<button type="button" class="ad_btn" data-toggle="collapse" data-target="#demo">Add Business Unit</button>
 					</div>
 					<div id="demo" class="collapse business">
 					@csrf
 					<div class="error" style="color:red;font-weight:bold"></div>
-					<div class="unit"><input type="text" id="business_units" name="business_unit" placeholder="Business Unit" required> <!--<input type="submit" name="submit" value="Add Business Unit">-->
-					<button type="submit" class="btn btn-primary" id="saveBtn1" value="create">Add
-                     </button>
+					<div class="unit"><input type="text" class="effect-2" id="business_units" name="business_unit" placeholder="Business Unit" required> 
+					<span class="focus-border"></span>
+					<!--<input type="submit" name="submit" value="Add Business Unit">-->
+					<span class="dld" type="submit"  id="saveBtn1" value="create"><img src="{{ asset('css/img/save-icon.png') }}" />
+                     </span>
 					@error('business_unit')<div class="error" style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
 					</div>
-					</div>
+					</div><hr>
 					</form>
 					</div>
 					<div class="table-responsive table-striped"> 
@@ -61,13 +62,13 @@
                         <label class="col-sm-6 control-label">Business Unit</label>
                         <div class="col-sm-12 unit">
                            
-							  <input class="form-control" type="text" id="business_unit"  name="business_unit" placeholder="Business Unit" value="" maxlength="50"> 
-                            
+							  <input class="form-control effect-1" type="text" id="business_unit"  name="business_unit" placeholder="Business Unit" value="" maxlength="50"> 
+								<span class="focus-border"></span>
                         </div>
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn" value="create">Save
                      </button>
                     </div>
                 </form>

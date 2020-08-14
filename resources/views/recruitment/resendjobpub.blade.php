@@ -5,20 +5,28 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card" style="margin-top:20px;">
+            <div class="card">
                 <div class="card-header"><b>{{ __('Preview and Publish Ad') }}</b></div>
                 <div class="card-body">
 				<form method="post">@csrf
 				
 				<div class="form-group row">
-					<div class="col-sm-10 offset-sm-2">
+					<div class="col-md-8 letter">
 					    @foreach(session('job') as $job)
-						<h7>{{$job}}</h7>
-						<div style="border:1px solid black">
-						<img style="width:100px;height:100px" src="/storage/uploads/{{$tempDetail['header_image']}}">
-						<span style="width:100%">{{session('details.jobtitle')}}</span>
-						<span style="width:100%">{{session('details.jsum')}}</span>
-						<img style="width:100px;height:100px" src="/storage/uploads/{{$tempDetail['footer_image']}}">
+						<h1>{{$job}}</h1>
+						<div class="col-md-12 new_card">
+							<div class="col-md-12">
+								<img src="/storage/uploads/{{$tempDetail['header_image']}}">
+							</div>
+							<div class="col-md-12">
+								<h2>{{session('details.jobtitle')}}</h2>
+							</div>
+							<div class="col-md-12">
+								<h4>{{session('details.jsum')}}</h4>
+							</div>
+							<div class="col-md-12">
+								<img src="/storage/uploads/{{$tempDetail['footer_image']}}">
+							</div>
 						</div>
 						<p>&nbsp;</p>
 						@endforeach
@@ -41,7 +49,7 @@
 					</div>
 					
                  <div class="form-group row">
-					<div class="col-sm-10 offset-sm-2">
+					<div class="col-sm-12 text-center">
 						<button type="submit" class="btn btn-primary">Post Ad</button> 
 					</div>
 					</div>

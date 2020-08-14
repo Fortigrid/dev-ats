@@ -41,11 +41,11 @@ class RoleController extends Controller
 						$button ='<button type="button"
 						name="edit" id="'.$rdata->id.'"
 						class="edit btn btn-primary btn-sm edit
-						">Edit</button> ';
+						"><img src="../css/img/edit-icon.png" /></button> ';
 						$button .=' <button type="button"
 						name="delete" id="'.$rdata->id.'"
 						class="delete btn btn-danger btn-sm delete
-						">Delete</button>';
+						"><img src="../css/img/remove-icon.png" /></button>';
 						return $button;
 					})
 					->rawColumns(['action'])

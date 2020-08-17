@@ -318,6 +318,14 @@
 </div><br>
 <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+			$('#adpost').on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    return false;
+  }
+});
     $(document).ready(function () {
         $('.ckeditor').ckeditor();
 		

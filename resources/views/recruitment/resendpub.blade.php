@@ -268,13 +268,14 @@
     </div>
 	
 	<div class="form-group row">
+
 	 
 	 <div class="col-md-12"> <h5>Main Description Details</h5> </div>
 	 <div class="col-md-4">
         <label for="inputPassword" class="col-form-label">Job Summary/Introduction *</label>
 	</div>
         <div class="col-md-5">
-             <textarea name="jsum" rows="4" cols="45"> {{session('details.jsum')}}</textarea>
+             <textarea name="jsum" rows="4" cols="45"> {{strip_tags(session('details.jsum'))}}</textarea>
         </div>
     </div>
 	<div class="form-group row">
@@ -282,7 +283,8 @@
         <label for="inputPassword" class="col-form-label">Detailed Job Description *</label>
 		</div>
       <div class="col-md-4">
-            <textarea name="djob"rows="4" cols="45">{{session('details.djob')}}</textarea>
+            <textarea name="djob"rows="4" cols="45">{{strip_tags(session('details.djob'))}}</textarea>
+
         </div>
     </div>
 	

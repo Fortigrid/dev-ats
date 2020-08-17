@@ -13,6 +13,7 @@
 				<div class="form-group row">
 					<div class="col-md-8 letter">
 					    @foreach(session('job') as $job)
+
 						<h1>{{$job}}</h1>
 						<div class="col-md-12 new_card">
 							<div class="col-md-12">
@@ -22,11 +23,12 @@
 								<h2>{{session('details.jobtitle')}}</h2>
 							</div>
 							<div class="col-md-12">
-								<h4>{{session('details.jsum')}}</h4>
+								<h4>{{strip_tags(session('details.jsum'))}}</h4>
 							</div>
 							<div class="col-md-12">
 								<img src="/storage/uploads/{{$tempDetail['footer_image']}}">
 							</div>
+
 						</div>
 						<p>&nbsp;</p>
 						@endforeach

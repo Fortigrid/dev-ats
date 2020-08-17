@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Adjob;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,19 +21,21 @@ Route::get('/', function(){
 	return view ('auth.login');
 });
 
+
+
 //Route::get('/{any}', 'SinglePageController@index')->where('any', '^(?!login|register|home|welcome|logout|password|api).*$');
 //Route::post('/{any}', 'SinglePageController@index')->where('any', '^(?!login|register|home|welcome|logout|password|api).*$');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@getval');
-Route::resource('/business', 'BusinessUnitController');
-Route::resource('/location', 'LocationController');
-Route::resource('/role', 'RoleController');
-Route::resource('/client', 'ClientController');
-Route::resource('/site', 'SiteController');
-Route::resource('/agency', 'AgencyController');
-Route::resource('/job-template', 'JobTemplateController');
+Route::resource('/business', 'BusinessUnitController')->middleware('can:view-user');
+Route::resource('/location', 'LocationController')->middleware('can:view-user');
+Route::resource('/role', 'RoleController')->middleware('can:view-user');
+Route::resource('/client', 'ClientController')->middleware('can:view-user');
+Route::resource('/site', 'SiteController')->middleware('can:view-user');
+Route::resource('/agency', 'AgencyController')->middleware('can:view-user');
+Route::resource('/job-template', 'JobTemplateController')->middleware('can:view-user');
 Route::get('/recruitment','AdController@recruit');
 Route::get('/recruitment/adpost','AdController@adIndex');
 Route::post('/recruitment/adpost','AdController@adIndexPost');
@@ -68,5 +72,7 @@ Route::get('/recruitment/managead/{rid}/resend/step3','AdController@resendJobPub
 Route::post('/recruitment/managead/{rid}/resend/step3','AdController@resendJobPubPost');
 Route::get('/recruitment/manageappli','ApplicantController@appliIndex')->name('appall');
 Route::get('/recruitment/cvsearch','ApplicantController@cvSearch');
+Route::get('/response','ApplicantController@responses');
+Route::get('/account','ApplicantController@campaign');
 });
 //URL::forceScheme('https');

@@ -24,12 +24,14 @@ class JobTemplateController extends Controller
      */
     public function index(Request $request)
     {
-        $business_ids= BusinessUnit::where('active','1')->get()->toArray();
+        #$business_ids= BusinessUnit::where('active','1')->get()->toArray();
+		$business_ids=DB::connection('tracker')->select('select id,location from office_locations');
+		$business_ids=json_decode(json_encode($business_ids), true);
 		$jobtemplates=JobTemplate::select([
 		'job_templates.id',
-		'business_units.business_unit',
+		'admin_tracker.office_locations.location',
 		'job_templates.template_name'
-		])->join('business_units', 'business_units.id', '=', 'job_templates.business_unit_id')
+		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
 		->where('job_templates.active',1);
 	    if($request->ajax())
 		{

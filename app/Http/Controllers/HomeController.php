@@ -38,12 +38,15 @@ class HomeController extends Controller
 		Session::put('userdetails', $user);
 		 if($request->ajax())
 		{
-			if ($user->user_role=='admin')
-			$data= User::latest()->get(['id', 'name', 'email', 'user_role']);
-		    elseif($user->user_role=='client')
-			$data= User::latest()->where('user_role','client')->get(['id', 'name', 'email', 'user_role']);
+			if ($user->role=='admin')
+			
+			$data= User::latest('id')->where('status','1')->get(['id', 'username', 'email', 'role']);
+		    elseif($user->role=='consult')
+			
+			$data= User::latest('id')->where('role','consult')->get(['id', 'username', 'email', 'role']);
 			else
-			$data= User::latest()->get(['id', 'name', 'email', 'user_role']);
+			
+			$data= User::latest('id')->get(['id', 'username', 'email', 'role']);
 			return DataTables::of($data)
 					->addColumn('action', function($data){
 						$button ='<button type="button"

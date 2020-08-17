@@ -58,12 +58,12 @@
                    <input type="hidden" name="id" id="job_id">
 				   <div class="error alert alert-danger" style="color:white;font-weight:bold;display:none"></div>
 				   <div class="form-group">
-                        <label class="col-sm-2 control-label">Business_Unit</label>
+                        <label class="col-sm-2 control-label">Location</label>
                         <div class="col-sm-12">
 						   <select id="business_unit_id" name="business_unit_id">
-						   <option value="">Select Business ID</option>
+						   <option value="">Select Location</option>
 							@foreach($business_ids as $business_id)
-							<option    value="{{$business_id['id']}}"> {{$business_id['business_unit']}} </option>
+							<option    value="{{$business_id['id']}}"> {{$business_id['location']}} </option>
 							@endforeach
 							</select>
                         </div>
@@ -222,8 +222,8 @@ $(document).ready(function(){
 				name: 'id',
 			},
 			{
-				data: 'business_unit',
-				name: 'business_unit',
+				data: 'location',
+				name: 'location',
 			},
 			{
 				data: 'template_name',

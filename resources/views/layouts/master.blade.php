@@ -219,6 +219,7 @@
                   <p>Reporting</p>
                 </a>
               </li>-->
+			  @can('view-user')
           <li class="nav-item has-treeview ">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-gears"></i>
@@ -276,7 +277,10 @@
               </li>
             </ul>
           </li>
+		  @endcan
+
           <li class="nav-item pl-2">
+
             <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="nav-link">

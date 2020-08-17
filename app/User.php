@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class User extends Authenticatable
 {
     use Notifiable;
+	
+	protected $table= 'acusers';
+	public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -22,9 +25,9 @@ class User extends Authenticatable
 	
 	public function hasRole($role){
      
-	 $vv=User::where('user_role',$role)->first();
+	 $vv=User::where('role',$role)->first();
 	
-     if(User::where([ ['user_role',$role], ['id', Auth::user()->id] ])->first())
+     if(User::where([ ['role',$role], ['id', Auth::user()->id] ])->first())
 	 {
 		
 		return true;
@@ -33,6 +36,7 @@ class User extends Authenticatable
 	return false;
 	
 	}
+
 
     /**
      * The attributes that should be hidden for arrays.

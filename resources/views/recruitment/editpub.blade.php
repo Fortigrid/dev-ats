@@ -255,14 +255,18 @@
 	 <h5 class="col-md-12">Main Description Details</h5>
         <label for="inputPassword" class="col-sm-4 col-form-label">Job Summary/Introduction *</label>
         <div class="col-sm-7">
-             <textarea name="jsum" rows="4" cols="50">  {{session('details.jsum')}}</textarea>
+
+             <textarea name="jsum" rows="4" cols="50">  {{strip_tags(session('details.jsum'))}}</textarea>
+
         </div>
     </div>
 	<div class="form-group row">
 	
         <label for="inputPassword" class="col-sm-4 col-form-label">Detailed Job Description *</label>
         <div class="col-sm-7">
-            <textarea name="djob" rows="4" cols="50">{{session('details.djob')}}</textarea>
+
+            <textarea name="djob" rows="4" cols="50">{{strip_tags(session('details.djob'))}}</textarea>
+
         </div>
     </div>
 	

@@ -16,7 +16,7 @@ class RecruitService
 	
 	public function addAd($vals)
 	{
-		#print_r($vals['details']['broadcast']);
+		
 		$data = [
         'broadcast'               	=> $vals['details']['broadcast']??'',
         'reference_no'            	=> $vals['details']['refno']??'', 
@@ -41,14 +41,17 @@ class RecruitService
 		'min_exp'              		=> $vals['details']['mexp']??'',
 		'edu_level'              	=> $vals['details']['elevel']??'',
 		'local_resident'            => $vals['details']['lresi']??'',
+		'work_permission'           => $vals['details']['work_permissions']??'',
 		'location'              	=> $vals['details']['location']??'',
 		'postcode'              	=> $vals['details']['pcode']??'',
 		'video_url'              	=> $vals['details']['vurl']??'',
+		'video_pos'              	=> $vals['details']['vid_pos']??'',
 		'job_summary'              	=> $vals['details']['jsum']??'',
 		'detail_job_summary'        => $vals['details']['djob']??'',
 		'location_city'             => '',
         'job_template'              => $vals['temp']['jtemp']??'',
 		'post_time'              	=> $vals['temp']['posttime']??'',
+		'post_date'              	=> $vals['temp']['posttime1']??'',
 		'contact_email'             => '',
 		'contact_phone'             => '',
 		'cost'              		=> '',
@@ -261,6 +264,35 @@ class RecruitService
 		if($val=='qual') return Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', ['qualify', 'potential', 'starr', 'inteviewschedule', 'invited'])->latest('id')->get();
 		if($val=='star') return Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', [ 'starr', 'inteviewschedule', 'invited'])->latest('id')->get();
 		if($val=='invite') return Applicant::with('adjob')->where('adjob_id',$rid)->whereIn('status', ['invited'])->latest('id')->get();
+	}
+	
+	public function roleBased($role,$location,$slocation=''){
+		$loc='';
+		$sloc='';
+		$mergLoc='';
+		if($role=="admin"){
+				$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+			}
+			elseif($role=="consult"){
+				$loc=$location;
+				$sloc=$slocation;
+				$mergLoc=$loc.','.$sloc;
+				//string to array
+				$mergLoc=array_filter(explode(',',$mergLoc));
+				if($loc!=''){
+					#$JobTemplate = JobTemplate::where([['business_unit_id',$loc],['active','1']])->get()->toArray();
+					$JobTemplate = JobTemplate::whereIn('business_unit_id',$mergLoc)->where('active','1')->get()->toArray();
+				}
+				else{
+					$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+				}
+			}
+			
+			else{
+				$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+			}
+			
+			return $JobTemplate;
 	}
 	
 }

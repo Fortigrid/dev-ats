@@ -30,6 +30,8 @@ class adRequest extends FormRequest
 		#echo session('rno');
 		#$bal= $this->request->get('back');
 		#exit;
+		#$regex="/^https\\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*$/";
+		$videoregex="/^((?:https?\:\/\/|www\.)(?:[-a-z0-9]+\.)*[-a-z0-9]+.*)$/";
 		if($this->request->get('back')=='back'){
 			return $rules=[];
 		}
@@ -39,20 +41,20 @@ class adRequest extends FormRequest
 		'refno'=> 'required|regex:/^[a-zA-Z0-9]+$/|unique:adjobs,reference_no,'.session('rno'),
 		'jobtitle'=>'required|regex:/^[a-zA-Z0-9 ]+$/',
 		'hides'=>'required',
-		'location'=>'required',
+		'location'=>'required|regex:/^[a-zA-Z0-9, ]+$/',
 		'jsum'=>'required',
 		'djob'=>'required',
-		'bp1'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
-		'bp2'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
-		'bp3'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
+		'bp1'=>'sometimes|nullable|regex:/^[a-zA-Z0-9., ]+$/',
+		'bp2'=>'sometimes|nullable|regex:/^[a-zA-Z0-9., ]+$/',
+		'bp3'=>'sometimes|nullable|regex:/^[a-zA-Z0-9., ]+$/',
 		'sdate'=>'sometimes|nullable|date_format:Y-m-d',
 		'edate'=>'sometimes|nullable|date_format:Y-m-d',
 		'min'=>'sometimes|nullable|regex:/^[0-9]+$/',
 		'max'=>'sometimes|nullable|regex:/^[0-9]+$/',
-		'sdesc'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
-		'jdesc'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
-		'pcode'=>'sometimes|nullable|regex:/^[a-zA-Z0-9 ]+$/',
-		'vurl'=>'sometimes|nullable|regex:/^[a-zA-Z0-9.]+$/',
+		'sdesc'=>'sometimes|nullable|regex:/^[a-zA-Z0-9., ]+$/',
+		'jdesc'=>'sometimes|nullable|regex:/^[a-zA-Z0-9., ]+$/',
+		'pcode'=>'sometimes|nullable|regex:/^[a-zA-Z0-9., ]+$/',
+		'vurl'=>array("nullable", "regex:".$videoregex)
         ];
 		foreach(session('job') as $job){
 			$rules[$job.'industry']= 'required';

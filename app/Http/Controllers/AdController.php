@@ -22,6 +22,9 @@ class AdController extends Controller
 		$this->rservice=$rservice;
     }
 	public function recruit(){
+		session()->forget('job');
+		session()->forget('details');
+		session()->forget('temp');
 		return view('recruitment.index');
 	}
     public function adIndex(Request $request){
@@ -48,20 +51,22 @@ class AdController extends Controller
 	     else  return redirect('/recruitment/adpost');
 	}
 	public function adDetailPost(adRequest $request){
-		if($request->has('back') && $request->back=='back'){
+		#print_r($request->all());exit;
+		if($request->has('back') && $request->back=='back' ){
 			return redirect('/recruitment/adpost');
 		}
 		else{
 		session(['details'=>$request->except('_token')]);
-		if(count($request->session()->get('details',[]))>0) return redirect('/recruitment/adpost/2');
+		if(count($request->session()->get('details',[]))>9) return redirect('/recruitment/adpost/2');
 		else  return redirect('/recruitment/adpost/1');
 		}
 	}
 	
 	public function previewPub(Request $request){
 		//dd(session()->all());
+		$loc='';
 		if($request->session()->get('details')){
-		$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+		$JobTemplate=$this->rservice->roleBased(Auth::user()->role,Auth::user()->office_location,Auth::user()->secondary_office_location);
 	    //print_r($JobTemplate);
 		return view('recruitment.previewpub',compact('JobTemplate'));
 		}
@@ -88,7 +93,7 @@ class AdController extends Controller
 	public function jobPub(Request $request){
 		if($request->session()->get('details')&& $request->session()->get('temp')){
 		
-		$tempDetail=JobTemplate::where([['active','1'],['template_name',session('temp.jtemp')]])->get()->toArray();
+		$tempDetail=JobTemplate::where([['active','1'],['id',session('temp.jtemp')]])->get()->toArray();
 		$tempDetail=$tempDetail[0];
 		return view('recruitment.jobpub',compact('tempDetail'));
 		}
@@ -108,6 +113,7 @@ class AdController extends Controller
 	public function manageAd(Request $request){
 		session()->forget('job');
 		session()->forget('details');
+		session()->forget('temp');
 	   $ads= Adjob::with('applicants')->where('active','1')->latest('id')->get();
 	  
 	   
@@ -166,7 +172,11 @@ class AdController extends Controller
 	public function displayAd(Request $request,$rid){
 		session(['rno'=>$rid]);
 		//$disAd= Adjob::where([['id',$rid],['active','1']])->get()->toArray();
-		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		$disAd= Adjob::where('id',$rid)->take(1)->get();
+		//role based restriction
+		if(isset($disAd[0])) $this->authorize('views', $disAd[0]);
+		//Auth::user()->can('views',$disAd[0]);
+		$disAd=$disAd->toArray();
 		if(isset($disAd[0])){
 		$disAd=$disAd[0];
 		
@@ -181,13 +191,17 @@ class AdController extends Controller
 		session(['details'=>'']);
 		session(['temp'=>'']);
 		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		if(isset($disAd[0])){
 		$disAd=$disAd[0];
+		
 		$boards=Board::where('adjob_id',$rid)->get()->toArray();
 		foreach($boards as $board){
 			$bname[]=$board['board_name'];
 		}
 		$bname=isset($bname) ? $bname : [];
 		return view('recruitment.editpost',compact('disAd','bname'));
+		}
+		else return redirect('/recruitment/managead');
 	}	
 	
 	public function editChangePost(Request $request,$rid){
@@ -204,6 +218,7 @@ class AdController extends Controller
 		session(['rno'=>$rid]);
 		if($request->session()->get('job')){
 		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		if(isset($disAd[0])){
 		$disAd=$disAd[0];
 		$boards=Board::where('adjob_id',$rid)->get()->toArray();
 		foreach($boards as $board){
@@ -214,6 +229,7 @@ class AdController extends Controller
 		$bindus=isset($bindus) ? $bindus : [];
 		$bclassi=isset($bclassi) ? $bclassi : [];
 		return view('recruitment.editaddetail',compact('disAd','bindus','bclassi'));
+		} else return redirect("/recruitment/managead/$rid/edit");
 		}
 	     else  return redirect("/recruitment/managead/$rid/edit");
 		
@@ -233,10 +249,14 @@ class AdController extends Controller
 	public function editPub(Request $request,$rid){
 		if($request->session()->get('details')){
 		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		if(isset($disAd[0])){
 		$disAd=$disAd[0];
-		$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+		
+		#$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+		$JobTemplate=$this->rservice->roleBased(Auth::user()->role,Auth::user()->office_location,Auth::user()->secondary_office_location);
 	    //print_r($JobTemplate);
 		return view('recruitment.editpub',compact('JobTemplate','disAd'));
+		} else return redirect("/recruitment/managead/$rid/edit");
 		}
 	    else return redirect("/recruitment/managead/$rid/edit");
 	}
@@ -265,7 +285,7 @@ class AdController extends Controller
 		
 		if($request->session()->get('details')&& $request->session()->get('temp')){
 		
-		$tempDetail=JobTemplate::where([['active','1'],['template_name',session('temp.jtemp')]])->get()->toArray();
+		$tempDetail=JobTemplate::where([['active','1'],['id',session('temp.jtemp')]])->get()->toArray();
 		$tempDetail=$tempDetail[0];
 		return view('recruitment.editjobpub',compact('tempDetail'));
 		}
@@ -291,6 +311,7 @@ class AdController extends Controller
 		session(['details'=>'']);
 		session(['temp'=>'']);
 		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		if(isset($disAd[0])){
 		$disAd=$disAd[0];
 		$boards=Board::where('adjob_id',$rid)->get()->toArray();
 		foreach($boards as $board){
@@ -300,6 +321,7 @@ class AdController extends Controller
 		//echo $vv=implode(',',$dd);
 		//print_r(array_values($dd)); exit;
 		return view('recruitment.resendpost',compact('disAd','bname'));
+		} return redirect("/recruitment/managead");
 	}	
 	
 	public function resendChangePost(Request $request,$rid){
@@ -318,6 +340,7 @@ class AdController extends Controller
 		session(['rno'=>'']);
 		if($request->session()->get('job')){
 		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		if(isset($disAd[0])){
 		$disAd=$disAd[0];
 		$boards=Board::where('adjob_id',$rid)->get()->toArray();
 		foreach($boards as $board){
@@ -328,6 +351,7 @@ class AdController extends Controller
 		$bindus=isset($bindus) ? $bindus : [];
 		$bclassi=isset($bclassi) ? $bclassi : [];
 		return view('recruitment.resendaddetail',compact('disAd','bindus','bclassi'));
+		} else  return redirect("/recruitment/managead/$rid/resend");
 		}
 	     else  return redirect("/recruitment/managead/$rid/resend");
 		
@@ -347,10 +371,13 @@ class AdController extends Controller
 	public function resendPub(Request $request,$rid){
 		if($request->session()->get('details')){
 		$disAd= Adjob::where('id',$rid)->get()->toArray();
+		if(isset($disAd[0])){
 		$disAd=$disAd[0];
-		$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+		#$JobTemplate = JobTemplate::where('active','1')->get()->toArray();
+		$JobTemplate=$this->rservice->roleBased(Auth::user()->role,Auth::user()->office_location,Auth::user()->secondary_office_location);
 	    //print_r($JobTemplate);
 		return view('recruitment.resendpub',compact('JobTemplate','disAd'));
+		} else return redirect("/recruitment/managead/$rid/resend");
 		}
 	    else return redirect("/recruitment/managead/$rid/resend");
 	}
@@ -379,7 +406,7 @@ class AdController extends Controller
 		
 		if($request->session()->get('details')&& $request->session()->get('temp')){
 		
-		$tempDetail=JobTemplate::where([['active','1'],['template_name',session('temp.jtemp')]])->get()->toArray();
+		$tempDetail=JobTemplate::where([['active','1'],['id',session('temp.jtemp')]])->get()->toArray();
 		$tempDetail=$tempDetail[0];
 		return view('recruitment.resendjobpub',compact('tempDetail'));
 		}

@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Policies\AdjobPolicy;
+use App\User;
+use App\Adjob;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use App\User;
+
 use Illuminate\Support\Facades\Auth;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+		Adjob::class => AdjobPolicy::class,
     ];
 
     /**
@@ -33,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
 		Gate::define('view-user',function($user){
 			return $user->hasRole('admin');
 		});
+		
         //
     }
 }

@@ -9,20 +9,29 @@
 				<div class="pic">
 					<img src="{{ asset('css/img/reg.jpg') }}" />
 				</div>
-			<p>Not yet an account? <a href="{{ route('register') }}">Register</a></p>
+			<!--<p>Not yet an account? <a href="{{ route('register') }}">Register</a></p>-->
 		</div>
 		<div class="col-md-7 pwd">
 			 <form method="POST" action="{{ route('login') }}">
                         @csrf
+						
+						@if(count( $errors ) > 0)
+    @foreach ($errors->all() as $error)
+       <h1>{{ $error }}</h1>
+    @endforeach
+@endif
 
+@if ($errors->has('throttle'))
+    <strong>{{ $errors->first('throttle') }}</strong>
+@endif
                         <div class="form-group row">
                           <div class="col-md-12 add"> 
 							
-							<label for="email" class="col-md-4 col-form-label text-md-left" ><img src="{{ asset('css/img/emailid.png') }}" />{{ __('E-Mail Address') }}</label>
+							<label for="email" class="col-md-4 col-form-label text-md-left" ><img src="{{ asset('css/img/emailid.png') }}" />{{ __('Username') }}</label>
 						</div>
 
                             <div class="col-md-12 space">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
+                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -68,9 +77,9 @@
                                 </button> <br>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                   <!-- <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
-                                    </a>
+                                    </a>-->
                                 @endif
                             </div>
                         </div>

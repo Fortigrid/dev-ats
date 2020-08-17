@@ -16,16 +16,16 @@ $(document).ready(function(){
 				name: 'id',
 			},
 			{
-				data: 'name',
-				name: 'name',
+				data: 'username',
+				name: 'username',
 			},
 			{
 				data: 'email',
 				name: 'email',
 			},
 			{
-				data: 'user_role',
-				name: 'user_role',
+				data: 'role',
+				name: 'role',
 			},
 			{
 				data: 'action',

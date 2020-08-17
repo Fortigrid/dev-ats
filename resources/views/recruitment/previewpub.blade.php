@@ -59,11 +59,13 @@
             <select name="jtemp">
 			<option value="">Select Template</option>
 			@foreach($JobTemplate as $jtemp)
-			<option value="{{$jtemp['template_name']}}">{{$jtemp['template_name']}}</option>
+			<option value="{{$jtemp['id']}}">{{$jtemp['template_name']}}</option>
 			@endforeach
 			</select>
         </div>
     </div>
+	
+	
 	
 	<div class="form-group row">
 	 <hr class="col-md-12">
@@ -200,6 +202,13 @@
 			{{session('details.lresi')}}
         </div>
     </div>
+	<div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Work Permission</label>
+        <div class="col-sm-4">
+            
+			{{session('details.work_permissions')}}
+        </div>
+    </div>
 	
 	<div class="form-group row">
 	 <hr class="col-md-12">
@@ -226,20 +235,27 @@
 			{{session('details.vurl')}}
         </div>
     </div>
+	<div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Video Position</label>
+        <div class="col-sm-4">
+            
+			{{session('details.vid_pos')}}
+        </div>
+    </div>
 	
 	<div class="form-group row">
 	 <hr class="col-md-12">
 	 <h5 class="col-md-12">Main Description Details</h5>
         <label for="inputPassword" class="col-sm-2 col-form-label">Job Summary/Introduction *</label>
         <div class="col-sm-7">
-             <textarea name="jsum"> {{session('details.jsum')}}</textarea>
+             <textarea name="jsum"> {{strip_tags(session('details.jsum'))}}</textarea>
         </div>
     </div>
 	<div class="form-group row">
 	
         <label for="inputPassword" class="col-sm-2 col-form-label">Detailed Job Description *</label>
         <div class="col-sm-7">
-            <textarea name="djob">{{session('details.djob')}}</textarea>
+            <textarea name="djob">{{strip_tags(session('details.djob'))}}</textarea>
         </div>
     </div>
 	
@@ -250,12 +266,49 @@
         <div class="col-sm-7">
             <select name="posttime">
 				
-				<option value="<?php echo now();?>">Now</option>
+				<option value="Now" >Now</option>
+	<option value="12am">12am</option>
+	<option value="1am">1am</option>
+	<option value="2am">2am</option>
+	<option value="3am">3am</option>
+	<option value="4am">4am</option>
+	<option value="5am">5am</option>
+	<option value="6am">6am</option>
+	<option value="7am">7am</option>
+	<option value="8am">8am</option>
+	<option value="9am">9am</option>
+	<option value="10am">10am</option>
+	<option value="11am">11am</option>
+	<option value="12pm">12pm</option>
+	<option value="1pm">1pm</option>
+	<option value="2pm">2pm</option>
+	<option value="3pm">3pm</option>
+	<option value="4pm">4pm</option>
+	<option value="5pm">5pm</option>
+	<option value="6pm">6pm</option>
+	<option value="7pm">7pm</option>
+	<option value="8pm">8pm</option>
+	<option value="9pm">9pm</option>
+	<option value="10pm">10pm</option>
+	<option value="11pm">11pm</option>
 				
 			</select>
 			 <select name="posttime1">
 				
-				<option value="<?php echo date('Y-m-d');?>">Today</option>
+				<option value="<?php echo date('d/m/Y');?>">Today</option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+1 day"));?>"><?php echo date('l', strtotime("+1 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+2 day"));?>"><?php echo date('l', strtotime("+2 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+3 day"));?>"><?php echo date('l', strtotime("+3 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+4 day"));?>"><?php echo date('l', strtotime("+4 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+5 day"));?>"><?php echo date('l', strtotime("+5 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+6 day"));?>"><?php echo date('l', strtotime("+6 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+7 day"));?>">Week <?php echo date('l', strtotime("+7 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+8 day"));?>">Week <?php echo date('l', strtotime("+8 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+9 day"));?>">Week <?php echo date('l', strtotime("+9 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+10 day"));?>">Week <?php echo date('l', strtotime("+10 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+11 day"));?>">Week <?php echo date('l', strtotime("+11 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+12 day"));?>">Week <?php echo date('l', strtotime("+12 day"));?></option>
+				<option value="<?php echo $date = date('d/m/Y', strtotime("+13 day"));?>">Week <?php echo date('l', strtotime("+13 day"));?></option>
 				
 			</select>
         </div>

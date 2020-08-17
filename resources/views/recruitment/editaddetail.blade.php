@@ -113,7 +113,116 @@
         <div class="col-sm-5">
             <select name="{{$board}}industry">
 				<option value="">Select</option>
-				<option value="IT" @if(in_array('IT',$bindus)) selected="selected" @endif>IT</option>
+				
+				<option value="Accountancy" @if(session('details.'.$board.'industry')=='Accountancy') selected="selected" @elseif(in_array('Accountancy',$bindus)) selected="selected" @endif>Accountancy</option>
+ 
+  <option value="Admin and Secretarial" @if(session('details.'.$board.'industry')=='Admin and Secretarial') selected="selected" @elseif(in_array('Admin and Secretarial',$bindus)) selected="selected" @endif>Admin and Secretarial</option>
+ 
+  <option value="Advertising and PR" @if(session('details.'.$board.'industry')=='Advertising and PR') selected="selected" @elseif(in_array('Advertising and PR',$bindus)) selected="selected" @endif>Advertising and PR</option>
+ 
+  <option value="Aerospace" @if(session('details.'.$board.'industry')=='Aerospace') selected="selected" @elseif(in_array('Aerospace',$bindus)) selected="selected" @endif>Aerospace</option>
+ 
+  <option value="Agriculture Fishing and Forestry" @if(session('details.'.$board.'industry')=='Agriculture Fishing and Forestry') selected="selected" @elseif(in_array('Agriculture Fishing and Forestry',$bindus)) selected="selected" @endif>Agriculture Fishing and Forestry</option>
+ 
+  <option value="Arts" @if(session('details.'.$board.'industry')=='Arts') selected="selected" @elseif(in_array('Arts',$bindus)) selected="selected" @endif>Arts</option>
+ 
+  <option value="Automotive" @if(session('details.'.$board.'industry')=='Automotive') selected="selected" @elseif(in_array('Automotive',$bindus)) selected="selected" @endif>Automotive</option>
+ 
+  <option value="Banking" @if(session('details.'.$board.'industry')=='Banking') selected="selected" @elseif(in_array('Banking',$bindus)) selected="selected" @endif>Banking</option>
+ 
+  <option value="Building and Construction" @if(session('details.'.$board.'industry')=='Building and Construction') selected="selected" @elseif(in_array('Building and Construction',$bindus)) selected="selected" @endif>Building and Construction</option>
+ 
+  <option value="Call Centre and Customer Service" @if(session('details.'.$board.'industry')=='Call Centre and Customer Service') selected="selected" @elseif(in_array('Call Centre and Customer Service',$bindus)) selected="selected" @endif>Call Centre and Customer Service</option>
+ 
+  <option value="Community Services" @if(session('details.'.$board.'industry')=='Community Services') selected="selected" @elseif(in_array('Community Services',$bindus)) selected="selected" @endif>Community Services </option>
+ 
+  <option value="Consultancy" @if(session('details.'.$board.'industry')=='Consultancy') selected="selected" @elseif(in_array('Consultancy',$bindus)) selected="selected" @endif>Consultancy</option>
+ 
+  <option value="Defence and Military" @if(session('details.'.$board.'industry')=='Defence and Military') selected="selected" @elseif(in_array('Defence and Military',$bindus)) selected="selected" @endif>Defence and Military</option>
+ 
+  <option value="Design and Creative" @if(session('details.'.$board.'industry')=='Design and Creative') selected="selected" @elseif(in_array('Design and Creative',$bindus)) selected="selected" @endif>Design and Creative</option>
+ 
+  <option value="Education and Training" @if(session('details.'.$board.'industry')=='Education and Training') selected="selected" @elseif(in_array('Education and Training',$bindus)) selected="selected" @endif>Education and Training</option>
+ 
+  <option value="Electronics" @if(session('details.'.$board.'industry')=='Electronics') selected="selected" @elseif(in_array('Electronics',$bindus)) selected="selected" @endif>Electronics</option>
+ 
+  <option value="Engineering" @if(session('details.'.$board.'industry')=='Engineering') selected="selected" @elseif(in_array('Engineering',$bindus)) selected="selected" @endif>Engineering</option>
+ 
+  <option value="Fashion" @if(session('details.'.$board.'industry')=='Fashion') selected="selected" @elseif(in_array('Fashion',$bindus)) selected="selected" @endif>Fashion</option>
+ 
+  <option value="Financial Services" @if(session('details.'.$board.'industry')=='Financial Services') selected="selected" @elseif(in_array('Financial Services',$bindus)) selected="selected" @endif>Financial Services</option>
+ 
+  <option value="FMCG" @if(session('details.'.$board.'industry')=='FMCG') selected="selected" @elseif(in_array('FMCG',$bindus)) selected="selected" @endif>FMCG</option>
+ 
+  <option value="Graduates and Trainees" @if(session('details.'.$board.'industry')=='Graduates and Trainees') selected="selected" @elseif(in_array('Graduates and Trainees',$bindus)) selected="selected" @endif>Graduates and Trainees</option>
+ 
+  <option value="Health and Safety" @if(session('details.'.$board.'industry')=='Health and Safety') selected="selected" @elseif(in_array('Health and Safety',$bindus)) selected="selected" @endif>Health and Safety</option>
+ 
+  <option value="Healthcare ->" @if(session('details.'.$board.'industry')=='Healthcare ->') selected="selected" @elseif(in_array('Healthcare ->',$bindus)) selected="selected" @endif>Healthcare -&gt;</option>
+ 
+  <option value="Hospitality and Catering" @if(session('details.'.$board.'industry')=='Hospitality and Catering') selected="selected" @elseif(in_array('Hospitality and Catering',$bindus)) selected="selected" @endif>Hospitality and Catering</option>
+ 
+  <option value="Human Resources and Personnel" @if(session('details.'.$board.'industry')=='Human Resources and Personnel') selected="selected" @elseif(in_array('Human Resources and Personnel',$bindus)) selected="selected" @endif>Human Resources and Personnel</option>
+ 
+  <option value="Insurance" @if(session('details.'.$board.'industry')=='Insurance') selected="selected" @elseif(in_array('Insurance',$bindus)) selected="selected" @endif>Insurance</option>
+ 
+  <option value="IT" @if(session('details.'.$board.'industry')=='IT') selected="selected" @elseif(in_array('IT',$bindus)) selected="selected" @endif>IT</option>
+ 
+  <option value="Legal" @if(session('details.'.$board.'industry')=='Legal') selected="selected" @elseif(in_array('Legal',$bindus)) selected="selected" @endif>Legal</option>
+ 
+  <option value="Leisure and Sport" @if(session('details.'.$board.'industry')=='Leisure and Sport') selected="selected" @elseif(in_array('Leisure and Sport',$bindus)) selected="selected" @endif>Leisure and Sport</option>
+ 
+  <option value="Logistics Distribution and Supply Chain" @if(session('details.'.$board.'industry')=='ogistics Distribution and Supply Chain') selected="selected" @elseif(in_array('ogistics Distribution and Supply Chain',$bindus)) selected="selected" @endif>Logistics Distribution and Supply Chain</option>
+ 
+  <option value="Manufacturing and Production" @if(session('details.'.$board.'industry')=='Manufacturing and Production') selected="selected" @elseif(in_array('Manufacturing and Production',$bindus)) selected="selected" @endif>Manufacturing and Production</option>
+ 
+  <option value="Marketing" @if(session('details.'.$board.'industry')=='Marketing') selected="selected" @elseif(in_array('Marketing',$bindus)) selected="selected" @endif>Marketing</option>
+ 
+  <option value="Media" @if(session('details.'.$board.'industry')=='Media') selected="selected" @elseif(in_array('Media',$bindus)) selected="selected" @endif>Media</option>
+ 
+  <option value="Medical and Nursing" @if(session('details.'.$board.'industry')=='Medical and Nursing') selected="selected" @elseif(in_array('Medical and Nursing',$bindus)) selected="selected" @endif>Medical and Nursing</option>
+ 
+  <option value="Mining" @if(session('details.'.$board.'industry')=='Mining') selected="selected" @elseif(in_array('Mining',$bindus)) selected="selected" @endif>Mining </option>
+ 
+  <option value="New Media and Internet" @if(session('details.'.$board.'industry')=='New Media and Internet') selected="selected" @elseif(in_array('New Media and Internet',$bindus)) selected="selected" @endif>New Media and Internet</option>
+ 
+  <option value="Not for Profit and Charities" @if(session('details.'.$board.'industry')=='Not for Profit and Charities') selected="selected" @elseif(in_array('Not for Profit and Charities',$bindus)) selected="selected" @endif>Not for Profit and Charities</option>
+ 
+  <option value="Oil and Gas" @if(session('details.'.$board.'industry')=='Oil and Gas') selected="selected" @elseif(in_array('Oil and Gas',$bindus)) selected="selected" @endif>Oil and Gas </option>
+ 
+  <option value="Pharmaceuticals" @if(session('details.'.$board.'industry')=='Pharmaceuticals') selected="selected" @elseif(in_array('Pharmaceuticals',$bindus)) selected="selected" @endif>Pharmaceuticals</option>
+ 
+  <option value="Property and Housing" @if(session('details.'.$board.'industry')=='Property and Housing') selected="selected" @elseif(in_array('Property and Housing',$bindus)) selected="selected" @endif>Property and Housing</option>
+ 
+  <option value="Public Sector and Government" @if(session('details.'.$board.'industry')=='Public Sector and Government') selected="selected" @elseif(in_array('Public Sector and Government',$bindus)) selected="selected" @endif>Public Sector and Government</option>
+ 
+  <option value="Purchasing and Procurement" @if(session('details.'.$board.'industry')=='Purchasing and Procurement') selected="selected" @elseif(in_array('Purchasing and Procurement',$bindus)) selected="selected" @endif>Purchasing and Procurement</option>
+ 
+  <option value="Real Estate and Property" @if(session('details.'.$board.'industry')=='Real Estate and Property') selected="selected" @elseif(in_array('Real Estate and Property',$bindus)) selected="selected" @endif>Real Estate and Property </option>
+ 
+  <option value="Recruitment Consultancy" @if(session('details.'.$board.'industry')=='Recruitment Consultancy') selected="selected" @elseif(in_array('Recruitment Consultancy',$bindus)) selected="selected" @endif>Recruitment Consultancy</option>
+ 
+  <option value="Retail" @if(session('details.'.$board.'industry')=='Retail') selected="selected" @elseif(in_array('Retail',$bindus)) selected="selected" @endif>Retail</option>
+ 
+  <option value="Sales" @if(session('details.'.$board.'industry')=='Sales') selected="selected" @elseif(in_array('Sales',$bindus)) selected="selected" @endif>Sales</option>
+ 
+  <option value="Science and Research" @if(session('details.'.$board.'industry')=='Science and Research') selected="selected" @elseif(in_array('Science and Research',$bindus)) selected="selected" @endif>Science and Research</option>
+ 
+  <option value="Senior Appointments" @if(session('details.'.$board.'industry')=='Senior Appointments') selected="selected" @elseif(in_array('Senior Appointments',$bindus)) selected="selected" @endif>Senior Appointments</option>
+ 
+  <option value="Social Care" @if(session('details.'.$board.'industry')=='Social Care') selected="selected" @elseif(in_array('Social Care',$bindus)) selected="selected" @endif>Social Care</option>
+ 
+  <option value="Telecommunications" @if(session('details.'.$board.'industry')=='Telecommunications') selected="selected" @elseif(in_array('Telecommunications',$bindus)) selected="selected" @endif>Telecommunications</option>
+ 
+  <option value="Trade and Services" @if(session('details.'.$board.'industry')=='Trade and Services') selected="selected" @elseif(in_array('Trade and Services',$bindus)) selected="selected" @endif>Trade and Services </option>
+ 
+  <option value="Transport and Rail" @if(session('details.'.$board.'industry')=='Transport and Rail') selected="selected" @elseif(in_array('Transport and Rail',$bindus)) selected="selected" @endif>Transport and Rail</option>
+ 
+  <option value="Travel and Tourism" @if(session('details.'.$board.'industry')=='Travel and Tourism') selected="selected" @elseif(in_array('Travel and Tourism',$bindus)) selected="selected" @endif>Travel and Tourism</option>
+ 
+  <option value="Utilities" @if(session('details.'.$board.'industry')=='Utilities') selected="selected" @elseif(in_array('Utilities',$bindus)) selected="selected" @endif>Utilities</option>
+ 
+  <option value="Other/General" @if(session('details.'.$board.'industry')=='Other/General') selected="selected" @elseif(in_array('Other/General',$bindus)) selected="selected" @endif>Other/General</option>
 			</select>
         </div>
     </div>
@@ -122,7 +231,117 @@
         <div class="col-sm-5">
             <select name="{{$board}}classi">
 				<option value="">Select</option>
-				<option value="Admin" @if(in_array('Admin',$bclassi)) selected="selected" @endif>Admin</option>
+				
+				<option value="Accountancy" @if(session('details.'.$board.'industry')=='Accountancy') selected="selected" @elseif(in_array('Accountancy',$bclassi)) selected="selected" @endif>Accountancy</option>
+ 
+  <option value="Admin and Secretarial" @if(session('details.'.$board.'industry')=='Admin and Secretarial') selected="selected" @elseif(in_array('Admin and Secretarial',$bclassi)) selected="selected" @endif>Admin and Secretarial</option>
+ 
+  <option value="Advertising and PR" @if(session('details.'.$board.'industry')=='Advertising and PR') selected="selected" @elseif(in_array('Advertising and PR',$bclassi)) selected="selected" @endif>Advertising and PR</option>
+ 
+  <option value="Aerospace" @if(session('details.'.$board.'industry')=='Aerospace') selected="selected" @elseif(in_array('Aerospace',$bclassi)) selected="selected" @endif>Aerospace</option>
+ 
+  <option value="Agriculture Fishing and Forestry" @if(session('details.'.$board.'industry')=='Agriculture Fishing and Forestry') selected="selected" @elseif(in_array('Agriculture Fishing and Forestry',$bclassi)) selected="selected" @endif>Agriculture Fishing and Forestry</option>
+ 
+  <option value="Arts" @if(session('details.'.$board.'industry')=='Arts') selected="selected" @elseif(in_array('Arts',$bclassi)) selected="selected" @endif>Arts</option>
+ 
+  <option value="Automotive" @if(session('details.'.$board.'industry')=='Automotive') selected="selected" @elseif(in_array('Automotive',$bclassi)) selected="selected" @endif>Automotive</option>
+ 
+  <option value="Banking" @if(session('details.'.$board.'industry')=='Banking') selected="selected" @elseif(in_array('Banking',$bclassi)) selected="selected" @endif>Banking</option>
+ 
+  <option value="Building and Construction" @if(session('details.'.$board.'industry')=='Building and Construction') selected="selected" @elseif(in_array('Building and Construction',$bclassi)) selected="selected" @endif>Building and Construction</option>
+ 
+  <option value="Call Centre and Customer Service" @if(session('details.'.$board.'industry')=='Call Centre and Customer Service') selected="selected" @elseif(in_array('Call Centre and Customer Service',$bclassi)) selected="selected" @endif>Call Centre and Customer Service</option>
+ 
+  <option value="Community Services" @if(session('details.'.$board.'industry')=='Community Services') selected="selected" @elseif(in_array('Community Services',$bclassi)) selected="selected" @endif>Community Services </option>
+ 
+  <option value="Consultancy" @if(session('details.'.$board.'industry')=='Consultancy') selected="selected" @elseif(in_array('Consultancy',$bclassi)) selected="selected" @endif>Consultancy</option>
+ 
+  <option value="Defence and Military" @if(session('details.'.$board.'industry')=='Defence and Military') selected="selected" @elseif(in_array('Defence and Military',$bclassi)) selected="selected" @endif>Defence and Military</option>
+ 
+  <option value="Design and Creative" @if(session('details.'.$board.'industry')=='Design and Creative') selected="selected" @elseif(in_array('Design and Creative',$bclassi)) selected="selected" @endif>Design and Creative</option>
+ 
+  <option value="Education and Training" @if(session('details.'.$board.'industry')=='Education and Training') selected="selected" @elseif(in_array('Education and Training',$bclassi)) selected="selected" @endif>Education and Training</option>
+ 
+  <option value="Electronics" @if(session('details.'.$board.'industry')=='Electronics') selected="selected" @elseif(in_array('Electronics',$bclassi)) selected="selected" @endif>Electronics</option>
+ 
+  <option value="Engineering" @if(session('details.'.$board.'industry')=='Engineering') selected="selected" @elseif(in_array('Engineering',$bclassi)) selected="selected" @endif>Engineering</option>
+ 
+  <option value="Fashion" @if(session('details.'.$board.'industry')=='Fashion') selected="selected" @elseif(in_array('Fashion',$bclassi)) selected="selected" @endif>Fashion</option>
+ 
+  <option value="Financial Services" @if(session('details.'.$board.'industry')=='Financial Services') selected="selected" @elseif(in_array('Financial Services',$bclassi)) selected="selected" @endif>Financial Services</option>
+ 
+  <option value="FMCG" @if(session('details.'.$board.'industry')=='FMCG') selected="selected" @elseif(in_array('FMCG',$bclassi)) selected="selected" @endif>FMCG</option>
+ 
+  <option value="Graduates and Trainees" @if(session('details.'.$board.'industry')=='Graduates and Trainees') selected="selected" @elseif(in_array('Graduates and Trainees',$bclassi)) selected="selected" @endif>Graduates and Trainees</option>
+ 
+  <option value="Health and Safety" @if(session('details.'.$board.'industry')=='Health and Safety') selected="selected" @elseif(in_array('Health and Safety',$bclassi)) selected="selected" @endif>Health and Safety</option>
+ 
+  <option value="Healthcare ->" @if(session('details.'.$board.'industry')=='Healthcare ->') selected="selected" @elseif(in_array('Healthcare ->',$bclassi)) selected="selected" @endif>Healthcare -&gt;</option>
+ 
+  <option value="Hospitality and Catering" @if(session('details.'.$board.'industry')=='Hospitality and Catering') selected="selected" @elseif(in_array('Hospitality and Catering',$bclassi)) selected="selected" @endif>Hospitality and Catering</option>
+ 
+  <option value="Human Resources and Personnel" @if(session('details.'.$board.'industry')=='Human Resources and Personnel') selected="selected" @elseif(in_array('Human Resources and Personnel',$bclassi)) selected="selected" @endif>Human Resources and Personnel</option>
+ 
+  <option value="Insurance" @if(session('details.'.$board.'industry')=='Insurance') selected="selected" @elseif(in_array('Insurance',$bclassi)) selected="selected" @endif>Insurance</option>
+ 
+  <option value="IT" @if(session('details.'.$board.'industry')=='IT') selected="selected" @elseif(in_array('IT',$bclassi)) selected="selected" @endif>IT</option>
+ 
+  <option value="Legal" @if(session('details.'.$board.'industry')=='Legal') selected="selected" @elseif(in_array('Legal',$bclassi)) selected="selected" @endif>Legal</option>
+ 
+  <option value="Leisure and Sport" @if(session('details.'.$board.'industry')=='Leisure and Sport') selected="selected" @elseif(in_array('Leisure and Sport',$bclassi)) selected="selected" @endif>Leisure and Sport</option>
+ 
+  <option value="Logistics Distribution and Supply Chain" @if(session('details.'.$board.'industry')=='ogistics Distribution and Supply Chain') selected="selected" @elseif(in_array('ogistics Distribution and Supply Chain',$bclassi)) selected="selected" @endif>Logistics Distribution and Supply Chain</option>
+ 
+  <option value="Manufacturing and Production" @if(session('details.'.$board.'industry')=='Manufacturing and Production') selected="selected" @elseif(in_array('Manufacturing and Production',$bclassi)) selected="selected" @endif>Manufacturing and Production</option>
+ 
+  <option value="Marketing" @if(session('details.'.$board.'industry')=='Marketing') selected="selected" @elseif(in_array('Marketing',$bclassi)) selected="selected" @endif>Marketing</option>
+ 
+  <option value="Media" @if(session('details.'.$board.'industry')=='Media') selected="selected" @elseif(in_array('Media',$bclassi)) selected="selected" @endif>Media</option>
+ 
+  <option value="Medical and Nursing" @if(session('details.'.$board.'industry')=='Medical and Nursing') selected="selected" @elseif(in_array('Medical and Nursing',$bclassi)) selected="selected" @endif>Medical and Nursing</option>
+ 
+  <option value="Mining" @if(session('details.'.$board.'industry')=='Mining') selected="selected" @elseif(in_array('Mining',$bclassi)) selected="selected" @endif>Mining </option>
+ 
+  <option value="New Media and Internet" @if(session('details.'.$board.'industry')=='New Media and Internet') selected="selected" @elseif(in_array('New Media and Internet',$bclassi)) selected="selected" @endif>New Media and Internet</option>
+ 
+  <option value="Not for Profit and Charities" @if(session('details.'.$board.'industry')=='Not for Profit and Charities') selected="selected" @elseif(in_array('Not for Profit and Charities',$bclassi)) selected="selected" @endif>Not for Profit and Charities</option>
+ 
+  <option value="Oil and Gas" @if(session('details.'.$board.'industry')=='Oil and Gas') selected="selected" @elseif(in_array('Oil and Gas',$bclassi)) selected="selected" @endif>Oil and Gas </option>
+ 
+  <option value="Pharmaceuticals" @if(session('details.'.$board.'industry')=='Pharmaceuticals') selected="selected" @elseif(in_array('Pharmaceuticals',$bclassi)) selected="selected" @endif>Pharmaceuticals</option>
+ 
+  <option value="Property and Housing" @if(session('details.'.$board.'industry')=='Property and Housing') selected="selected" @elseif(in_array('Property and Housing',$bclassi)) selected="selected" @endif>Property and Housing</option>
+ 
+  <option value="Public Sector and Government" @if(session('details.'.$board.'industry')=='Public Sector and Government') selected="selected" @elseif(in_array('Public Sector and Government',$bindus)) selected="selected" @endif>Public Sector and Government</option>
+ 
+  <option value="Purchasing and Procurement" @if(session('details.'.$board.'industry')=='Purchasing and Procurement') selected="selected" @elseif(in_array('Purchasing and Procurement',$bindus)) selected="selected" @endif>Purchasing and Procurement</option>
+ 
+  <option value="Real Estate and Property" @if(session('details.'.$board.'industry')=='Real Estate and Property') selected="selected" @elseif(in_array('Real Estate and Property',$bindus)) selected="selected" @endif>Real Estate and Property </option>
+ 
+  <option value="Recruitment Consultancy" @if(session('details.'.$board.'industry')=='Recruitment Consultancy') selected="selected" @elseif(in_array('Recruitment Consultancy',$bindus)) selected="selected" @endif>Recruitment Consultancy</option>
+ 
+  <option value="Retail" @if(session('details.'.$board.'industry')=='Retail') selected="selected" @elseif(in_array('Retail',$bindus)) selected="selected" @endif>Retail</option>
+ 
+  <option value="Sales" @if(session('details.'.$board.'industry')=='Sales') selected="selected" @elseif(in_array('Sales',$bindus)) selected="selected" @endif>Sales</option>
+ 
+  <option value="Science and Research" @if(session('details.'.$board.'industry')=='Science and Research') selected="selected" @elseif(in_array('Science and Research',$bindus)) selected="selected" @endif>Science and Research</option>
+ 
+  <option value="Senior Appointments" @if(session('details.'.$board.'industry')=='Senior Appointments') selected="selected" @elseif(in_array('Senior Appointments',$bindus)) selected="selected" @endif>Senior Appointments</option>
+ 
+  <option value="Social Care" @if(session('details.'.$board.'industry')=='Social Care') selected="selected" @elseif(in_array('Social Care',$bindus)) selected="selected" @endif>Social Care</option>
+ 
+  <option value="Telecommunications" @if(session('details.'.$board.'industry')=='Telecommunications') selected="selected" @elseif(in_array('Telecommunications',$bindus)) selected="selected" @endif>Telecommunications</option>
+ 
+  <option value="Trade and Services" @if(session('details.'.$board.'industry')=='Trade and Services') selected="selected" @elseif(in_array('Trade and Services',$bindus)) selected="selected" @endif>Trade and Services </option>
+ 
+  <option value="Transport and Rail" @if(session('details.'.$board.'industry')=='Transport and Rail') selected="selected" @elseif(in_array('Transport and Rail',$bindus)) selected="selected" @endif>Transport and Rail</option>
+ 
+  <option value="Travel and Tourism" @if(session('details.'.$board.'industry')=='Travel and Tourism') selected="selected" @elseif(in_array('Travel and Tourism',$bindus)) selected="selected" @endif>Travel and Tourism</option>
+ 
+  <option value="Utilities" @if(session('details.'.$board.'industry')=='Utilities') selected="selected" @elseif(in_array('Utilities',$bindus)) selected="selected" @endif>Utilities</option>
+ 
+  <option value="Other/General" @if(session('details.'.$board.'industry')=='Other/General') selected="selected" @elseif(in_array('Other/General',$bindus)) selected="selected" @endif>Other/General</option>
+	
 			</select>
         </div>
     </div>
@@ -207,6 +426,18 @@
     </div>
 	
 	<div class="form-group row">
+	
+        <label for="inputPassword" class="col-sm-2 col-form-label">Work Permissions</label>
+        <div class="col-sm-4">
+           <select name="work_permissions">  
+  <option value="No permission required to work in the country" @if(session('work_permissions')=='No permission required to work in the country') selected="selected" @elseif($disAd['work_permission']=='No permission required to work in the country') selected="selected" @endif>No permission required to work in the country</option> 
+  <option value="Candidates require a work visa" @if(session('work_permissions')=='Candidates require a work visa') selected="selected" @elseif($disAd['work_permission']=='Candidates require a work visa') selected="selected" @endif>Candidates require a work visa</option>  
+  <option value="Candidates must be a resident of the country" @if(session('work_permissions')=='Candidates must be a resident of the country') selected="selected" @elseif($disAd['work_permission']=='Candidates must be a resident of the country') selected="selected" @endif>Candidates must be a resident of the country</option>  
+</select>
+        </div>
+    </div>
+	
+	<div class="form-group row">
 	 <hr class="col-md-12">
 	 <h5 class="col-md-12">Location Information</h5>
         <label for="inputPassword" class="col-sm-2 col-form-label">Location *</label>
@@ -227,6 +458,17 @@
         <label for="inputPassword" class="col-sm-2 col-form-label">Video URL</label>
         <div class="col-sm-7">
             <input type="text" name="vurl" class="form-control" id="reference" value="@if(session('details.vurl')) {{session('details.vurl')}} @else {{$disAd['video_url']}} @endif">
+        </div>
+    </div>
+	
+	<div class="form-group row">
+	
+        <label for="inputPassword" class="col-sm-2 col-form-label">Youtube Video Position</label>
+        <div class="col-sm-4">
+           <select name="vid_pos" > 
+			<option value="Above"  @if(session('details.vid_pos')=='Above') selected="selected" @elseif($disAd['video_pos']=='Above') selected="selected" @endif>Above</option> 
+			<option value="Below"  @if(session('details.vid_pos')=='Below') selected="selected" @elseif($disAd['video_pos']=='Below') selected="selected" @endif>Below</option>
+			</select>
         </div>
     </div>
 	
@@ -261,6 +503,14 @@
 </div><br>
 <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+			$('#adpost').on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    return false;
+  }
+});
     $(document).ready(function () {
         $('.ckeditor').ckeditor();
 		

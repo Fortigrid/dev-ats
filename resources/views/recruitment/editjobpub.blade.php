@@ -17,7 +17,7 @@
 						<div style="border:1px solid black">
 						<img style="width:100px;height:100px" src="/storage/uploads/{{$tempDetail['header_image']}}">
 						<span style="width:100%">{{session('details.jobtitle')}}</span>
-						<span style="width:100%">{{session('details.jsum')}}</span>
+						<span style="width:100%">{{strip_tags(session('details.jsum'))}}</span>
 						<img style="width:100px;height:100px" src="/storage/uploads/{{$tempDetail['footer_image']}}">
 						</div>
 						<p>&nbsp;</p>

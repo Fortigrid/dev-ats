@@ -101,7 +101,15 @@ $(document).ready(function(){
 				data: 'id',
 				render: function (dataField) { return ''; },
 				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-				$(nTd).html("<input type='checkbox' class='checkBoxClass' name='jobs[]' value='"+oData.id+"'>");
+					var id = "{{ Auth::user()->id }}";
+					var role = "{{ Auth::user()->role }}";
+					if( role==='admin')
+					$(nTd).html("<input type='checkbox' class='checkBoxClass' name='jobs[]' value='"+oData.id+"'>");
+					else if(id===oData.created_by && role==='consult')
+					$(nTd).html("<input type='checkbox' class='checkBoxClass' name='jobs[]' value='"+oData.id+"'>");
+				    else
+					$(nTd).html("");
+					
 				},
 				orderable: false
 			},
@@ -117,8 +125,17 @@ $(document).ready(function(){
 				data: 'job_title',
 				name: 'job_title',
 				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-            $(nTd).html("<a href='/recruitment/managead/"+oData.id+"'>"+oData.job_title+"</a>");
-        }
+				/*var id = "{{ Auth::user()->id }}";
+				var role = "{{ Auth::user()->role }}";
+				    if( role==="admin")
+					$(nTd).html("<a href='/recruitment/managead/"+oData.id+"'>"+oData.job_title+"</a>");
+					else if(id===oData.created_by && role==="consult")
+					$(nTd).html("<a href='/recruitment/managead/"+oData.id+"'>"+oData.job_title+"</a>");
+					else
+					$(nTd).html("<a style='text-decoration:none'>"+oData.job_title+"</a>");*/
+				   $(nTd).html("<a href='/recruitment/managead/"+oData.id+"'>"+oData.job_title+"</a>");
+					
+				}
 			},
 			{
 				data: 'created_by',
@@ -135,6 +152,9 @@ $(document).ready(function(){
 		$('#liveads tbody .checkBoxClass').show();
 		
 		$('.mdelete').click(function(){
+			
+			if($('.checkBoxClass').is(':checked')){
+			
 			var checkbox_value=[];
 			
 			var myTable = $('#liveads').dataTable();
@@ -162,6 +182,10 @@ $(document).ready(function(){
 				}
 			});
 		}
+			}
+			else{
+				alert('Please select a checkbox to delete');
+			}
 			});
 		
 		

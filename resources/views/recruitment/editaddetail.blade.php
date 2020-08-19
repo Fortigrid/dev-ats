@@ -30,7 +30,7 @@
 				 @endif
 				 <div>
 				   <b>Job Boards --> Ad Details</b><br>
-				   <form method="Post">
+				   <form method="Post" id="adpost">
 				   @csrf
 				   <p>Please Enter the details for this advert</p>
 				   <p><b>Please provide values for the mandatory fields marked with astericks</b></p>
@@ -69,6 +69,7 @@
 				<option value="">Select</option>
 				<option value="Permanent" @if(session('details.jobtype')=='Permanent') selected="selected" @elseif($disAd['job_type']=='Permanent') selected="selected" @endif>Permanent</option>
 				<option value="Contract" @if(session('details.jobtype')=='Contract') selected="selected" @elseif($disAd['job_type']=='Contract') selected="selected" @endif>Contract</option>
+				<option value="Temporary" @if(session('details.jobtype')=='Temporary') selected="selected" @elseif($disAd['job_type']=='Temporary') selected="selected" @endif>Temporary</option>
 			</select>
         </div>
     </div>
@@ -366,29 +367,36 @@
         <div class="col-sm-3">
 			<p>Numeric Salary  </p>
             <select name="salary">
-				<option value="">Select</option>
+				<option value="">Select currency</option>
 				<option value="AUD" @if(session('details.salary')=='AUD') selected="selected" @elseif($disAd['currency']=='AUD') selected="selected" @endif>AUD</option>
+				<option value="GBP" @if(session('details.salary')=='GBP') selected="selected" @elseif($disAd['currency']=='GBP') selected="selected" @endif>GBP</option>
+				<option value="EUR" @if(session('details.salary')=='EUR') selected="selected" @elseif($disAd['currency']=='EUR') selected="selected" @endif>EUR</option>
+				<option value="USD" @if(session('details.salary')=='USD') selected="selected" @elseif($disAd['currency']=='USD') selected="selected" @endif>USD</option>
+				<option value="NZD" @if(session('details.salary')=='NZD') selected="selected" @elseif($disAd['currency']=='NZD') selected="selected" @endif>NZD</option>
 			</select>
 			</div>
 			<div class="col-sm-2">
 			<p>Minimum</p>
-			<input type="text" name="min" placeholder="Min" class="form-control" id="job" value="@if(session('details.min')) {{session('details.min')}} @else {{$disAd['min']}} @endif ">
+			<input type="text" name="min" class="form-control" id="job" placeholder="Minimum Salary"  @if(session('details.min') !='' || $disAd['min'] !='')value="@if(session('details.min')) {{session('details.min')}} @else {{$disAd['min']}} @endif" @else value=""@endif>
 			</div>
 			<div class="col-sm-2">
 			<p>Maximum</p>
-			<input type="text" name="max" placeholder="Max" class="form-control" id="job" value="@if(session('details.max')) {{session('details.max')}} @else {{$disAd['max']}} @endif ">
+			<input type="text" name="max" class="form-control" id="job" placeholder="Maximum Salary" @if(session('details.min') !='' || $disAd['min'] !='')value="@if(session('details.max')) {{session('details.max')}} @else {{$disAd['max']}} @endif" @else value=""@endif>
 			</div>
 			<div class="col-sm-3">
 			<p>Salary Type</p>
 			<select name="stype">
-				<option value="">Select</option>
+				<option value="">Select salary/per</option>
 				<option value="Annum" @if(session('details.stype')=='Annum') selected="selected" @elseif($disAd['salary_per']=='Annum') selected="selected" @endif>Annum</option>
-				<option value="Monthly" @if(session('details.stype')=='Monthly') selected="selected" @elseif($disAd['salary_per']=='Monthly') selected="selected" @endif>Monthly</option>
+				<option value="Month" @if(session('details.stype')=='Month') selected="selected" @elseif($disAd['salary_per']=='Month') selected="selected" @endif>Month</option>
+				<option value="week" @if(session('details.stype')=='week') selected="selected" @elseif($disAd['salary_per']=='week') selected="selected" @endif>Week</option>
+				<option value="day" @if(session('details.stype')=='day') selected="selected" @elseif($disAd['salary_per']=='day') selected="selected" @endif>Day</option>
+				<option value="hour" @if(session('details.stype')=='hour') selected="selected" @elseif($disAd['salary_per']=='hour') selected="selected" @endif>Hour</option>
 			</select>
 			</div>
 			<div class="col-sm-2">
 			<p>Salary Description</p>
-			<input type="text" name="sdesc" class="form-control" id="job" value="@if(session('details.sdesc')) {{session('details.sdesc')}} @else {{old('sdesc')}} @endif ">
+			<input type="text" name="sdesc" class="form-control" id="job"  placeholder="Salary Description"  @if(session('details.sdesc') !='' || $disAd['salary_desc'] !='')value="@if(session('details.sdesc')) {{session('details.sdesc')}} @else {{$disAd['salary_desc']}} @endif" @else value=""@endif>
         </div>
     </div>
     <div class="form-group row">
@@ -416,7 +424,23 @@
         <div class="col-sm-4">
             <select name="mexp">
 				<option value="">Select</option>
-				<option value="No Minimum" @if(session('details.mexp')=='No') selected="selected" @elseif($disAd['min_exp']=='No') selected="selected" @endif>No Minimum</option>
+				<option value="0" @if(session('details.mexp')=='0') selected="selected" @elseif($disAd['min_exp']=='0') selected="selected" @endif>No Minimum</option>
+				 <option value="1" @if(session('details.mexp')=='1') selected="selected" @elseif($disAd['min_exp']=='1') selected="selected" @endif>1 year</option>  
+				  <option value="2" @if(session('details.mexp')=='2') selected="selected" @elseif($disAd['min_exp']=='2') selected="selected" @endif>2 years</option>  
+				  <option value="3" @if(session('details.mexp')=='3') selected="selected" @elseif($disAd['min_exp']=='3') selected="selected" @endif>3 years</option>  
+				  <option value="4" @if(session('details.mexp')=='4') selected="selected" @elseif($disAd['min_exp']=='4') selected="selected" @endif>4 years</option>
+				  <option value="5" @if(session('details.mexp')=='5') selected="selected" @elseif($disAd['min_exp']=='5') selected="selected" @endif>5 years</option>
+				  <option value="6" @if(session('details.mexp')=='6') selected="selected" @elseif($disAd['min_exp']=='6') selected="selected" @endif>6 years</option>
+				  <option value="7" @if(session('details.mexp')=='7') selected="selected" @elseif($disAd['min_exp']=='7') selected="selected" @endif>7 years</option>
+				  <option value="8" @if(session('details.mexp')=='8') selected="selected" @elseif($disAd['min_exp']=='8') selected="selected" @endif>8 years</option>
+				  <option value="9" @if(session('details.mexp')=='9') selected="selected" @elseif($disAd['min_exp']=='9') selected="selected" @endif>9 years</option>
+				  <option value="10" @if(session('details.mexp')=='10') selected="selected" @elseif($disAd['min_exp']=='10') selected="selected" @endif>10 years</option>
+				  <option value="11" @if(session('details.mexp')=='11') selected="selected" @elseif($disAd['min_exp']=='11') selected="selected" @endif>11 years</option>
+				  <option value="12" @if(session('details.mexp')=='12') selected="selected" @elseif($disAd['min_exp']=='12') selected="selected" @endif>12 years</option>
+				  <option value="13" @if(session('details.mexp')=='13') selected="selected" @elseif($disAd['min_exp']=='13') selected="selected" @endif>13 years</option>
+				  <option value="14" @if(session('details.mexp')=='14') selected="selected" @elseif($disAd['min_exp']=='14') selected="selected" @endif>14 years</option>
+				  <option value="15" @if(session('details.mexp')=='15') selected="selected" @elseif($disAd['min_exp']=='15') selected="selected" @endif>15 years</option>
+				  <option value="16" @if(session('details.mexp')=='16') selected="selected" @elseif($disAd['min_exp']=='16') selected="selected" @endif>16 years</option>
 			</select>
         </div>
     </div>
@@ -425,7 +449,16 @@
         <div class="col-sm-4">
             <select name="elevel">
 				<option value="">Select</option>
-				<option value="Not Specified" @if(session('details.elevel')=='Not Specified') selected="selected" @elseif($disAd['edu_level']=='Not Specified') selected="selected" @endif>Not Specified</option>
+				<option value="BBTECH_RESERVED_NULL" @if(session('details.elevel')=='BBTECH_RESERVED_NULL') selected="selected" @elseif($disAd['edu_level']=='BBTECH_RESERVED_NULL') selected="selected" @endif>Not Specified</option>
+			    <option value="Primary School/Junior High" @if(session('details.elevel')=='Primary School/Junior High') selected="selected" @elseif($disAd['edu_level']=='Primary School/Junior High') selected="selected" @endif>Primary School/Junior High</option>  
+			    <option value="Secondary School/High School" @if(session('details.elevel')=='Secondary School/High School') selected="selected" @elseif($disAd['edu_level']=='Secondary School/High School') selected="selected" @endif>Secondary School/High School</option> 
+			    <option value="College/Pre-University" @if(session('details.elevel')=='College/Pre-University') selected="selected" @elseif($disAd['edu_level']=='College/Pre-University') selected="selected" @endif>College/Pre-University</option>  
+			    <option value="Vocational/Professional Qualification" @if(session('details.elevel')=='Vocational/Professional Qualification') selected="selected" @elseif($disAd['edu_level']=='Vocational/Professional Qualification') selected="selected" @endif>Vocational/Professional Qualification</option>  
+			    <option value="Associate Degree/Diploma" @if(session('details.elevel')=='Associate Degree/Diploma') selected="selected" @elseif($disAd['edu_level']=='Associate Degree/Diploma') selected="selected" @endif>Associate Degree/Diploma</option>  
+			    <option value="Bachelor Degree" @if(session('details.elevel')=='Bachelor Degree') selected="selected" @elseif($disAd['edu_level']=='Bachelor Degree') selected="selected" @endif>Bachelor Degree</option>  
+			    <option value="Post Graduate Diploma" @if(session('details.elevel')=='Post Graduate Diploma') selected="selected" @elseif($disAd['edu_level']=='Post Graduate Diploma') selected="selected" @endif>Post Graduate Diploma</option>  
+			    <option value="Master's Degree" @if(session('details.elevel')=="Master's Degree") selected="selected" @elseif($disAd['edu_level']=="Master's Degree") selected="selected" @endif>Master's Degree</option>  
+			    <option value="Doctorate (PHD)" @if(session('details.elevel')=='Doctorate (PHD)') selected="selected" @elseif($disAd['edu_level']=='Doctorate (PHD)') selected="selected" @endif>Doctorate (PHD)</option>  
 			</select>
         </div>
     </div>
@@ -528,6 +561,7 @@ $(document).ready(function(){
     e.preventDefault();
     return false;
   }
+});
 });
     $(document).ready(function () {
         $('.ckeditor').ckeditor();

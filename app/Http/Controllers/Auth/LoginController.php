@@ -134,7 +134,7 @@ class LoginController extends Controller
   $user =[];
   
   if ($this->hasTooManyLoginAttempts($request)) {
-	  echo 'test'; exit;
+	 
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);

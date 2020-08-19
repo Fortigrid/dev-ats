@@ -58,7 +58,7 @@
 	 </div>
 	 </div>
 	 <div class="form-group row pl-2">
-
+        <div class="col-md-12">@if($disAd['cost']!='') <a target="blank" href="/recruitment/managead/{{$disAd['cost']}}">Parent job details</a> @endif</div>
 		<div class="col-md-2">
 			<label for="inputPassword"  class="col-form-label">Consultant:</label>
 		</div>
@@ -104,7 +104,7 @@
         <label for="inputPassword"  class="col-form-label">Job Classification:</label>
 		</div>
 		<div class="col-md-4">
-		{{ $disAd['job_class']}}
+		{{ $disAd['boards'][0]['job_class']}}
         </div>
     </div>
 	<div class="form-group row pl-2">
@@ -123,7 +123,8 @@
     </div>
 	 <div class="send_details">
 		<ul>
-			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/resend">Resend</a></li>
+			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/repost">Re-Post</a></li>
+			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/resend">Clone</a></li>
 			<li class="float-md-right"><a class="btn btn-primary"href="/recruitment/managead/{{$disAd['id']}}/edit">Edit</a> 
 		<a id="del" href="#" class="btn btn-danger">Delete</a></li>
 		</ul>
@@ -223,46 +224,46 @@ $(document).ready(function(){
 				render: function (dataField) { return ''; },
 				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 				if(oData.status==''){
-            $(nTd).append("<a class='stat' id='qual' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;' >Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+            $(nTd).append("<a class='stat' id='qual' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >I</a>");
 				}
 				if(oData.status=='qualify'){
-            $(nTd).append("<a  style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+            $(nTd).append("<a  style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if( oData.status=='potential'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='starr'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='inteviewschedule'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
 			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='invited'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;cursor:pointer;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;cursor:pointer;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;cursor:pointer;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>I</a>&nbsp;&nbsp;");
 				}
 			}
 				
@@ -287,7 +288,7 @@ $(document).ready(function(){
 			},
 			{
 				data: 'cv',
-				name: 'cv',
+				render: function (dataField) { return '<a href="/downloads/cv.docx" class="edit btn btn-primary btn-sm">CV Download</a>'; },
 			}
 		];
 		

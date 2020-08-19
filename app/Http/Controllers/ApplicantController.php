@@ -18,15 +18,35 @@ class ApplicantController extends Controller
         $this->middleware('auth');
     }
      public function appliIndex(Request $request){
+		 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		 $mergLoc1=array_filter(explode(',',$mergLoc));
+		if(Auth::user()->role=='admin')
 		$aps= Applicant::with('adjob')->latest('id')->get();
+	    else{
+			$aps= Applicant::join('adjobs', 'adjobs.id','applicants.adjob_id')
+				->join('acusers', 'acusers.id', 'adjobs.created_by')
+				->where(function($query) use ($mergLoc1){
+					foreach($mergLoc1 as $exp1){
+				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
+					}
+				   })
+				->orWhere(function($query) use ($mergLoc1){
+					foreach($mergLoc1 as $exp){
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp . '%');
+					}
+				})
+				->where([['adjobs.active',1]])
+				->get();
+		}
+		
 		if($request->ajax())
 		{
 			return DataTables::of($aps)
 					->addColumn('action', function($aps){
-						$button ='<button type="button"
+						$button ='<a href="../downloads/cv.docx"
 						name="view" id="'.$aps->id.'"
 						class="edit btn btn-primary btn-sm edit
-						">View</button> ';
+						">CV Download</a> ';
 					
 						return $button;
 					})
@@ -36,15 +56,34 @@ class ApplicantController extends Controller
 		return view('recruitment.manageappli');
 	}
 	public function cvSearch(Request $request){
+		 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		 $mergLoc1=array_filter(explode(',',$mergLoc));
+		if(Auth::user()->role=='admin')
 		$aps= Applicant::with('adjob')->latest('id')->get();
+	    else{
+			$aps= Applicant::join('adjobs', 'adjobs.id','applicants.adjob_id')
+				->join('acusers', 'acusers.id', 'adjobs.created_by')
+				->where(function($query) use ($mergLoc1){
+					foreach($mergLoc1 as $exp1){
+				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
+					}
+				   })
+				->orWhere(function($query) use ($mergLoc1){
+					foreach($mergLoc1 as $exp){
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp . '%');
+					}
+				})
+				->where([['adjobs.active',1]])
+				->get();
+		}
 		if($request->ajax())
 		{
 			return DataTables::of($aps)
 					->addColumn('action', function($aps){
-						$button ='<button type="button"
+						$button ='<a href="../downloads/cv.docx"
 						name="view" id="'.$aps->id.'"
 						class="edit btn btn-primary btn-sm edit
-						">View</button> ';
+						">CV Download</a> ';
 					
 						return $button;
 					})

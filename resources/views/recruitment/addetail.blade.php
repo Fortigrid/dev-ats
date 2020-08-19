@@ -359,7 +359,7 @@
 			</div>
         <div class="col-md-2">
             <select name="salary">
-				<option value="">Select</option>
+				<option value="">Select currency</option>
 				<option value="AUD">AUD</option>
 				<option value="GBP">GBP</option>
 				<option value="EUR">EUR</option>
@@ -369,15 +369,15 @@
 			</div>
 
 			<div class="col-md-2">
-			<input type="text" name="min" class="form-control" id="job" placeholder="Minimum" value="@if(session('details.min')) {{session('details.min')}} @else {{old('min')}}@endif">
+			<input type="text" name="min" class="form-control" id="job" placeholder="Minimum Salary"  @if(session('details.min') !='' || old('min') !='')value="@if(session('details.min')) {{session('details.min')}} @else {{old('min')}}@endif" @else value=""@endif>
 			</div>
 			<div class="col-md-2">
-			<input type="text" name="max" class="form-control" placeholder="Maximum" id="job" value="@if(session('details.max')) {{session('details.max')}} @else {{old('max')}}@endif">
+			<input type="text" name="max" class="form-control" placeholder="Maximum Salary" id="job" @if(session('details.max') !='' || old('max') !='')value="@if(session('details.max')) {{session('details.max')}} @else {{old('max')}}@endif" @else value=""@endif>
 
 			</div>
 			<div class="col-md-2">
 			<select name="stype">
-				<option value="">Select</option>
+				<option value="">Select salary/per</option>
 				<option value="Annum">Annum</option>
 				<option value="Month">Month</option>
 				<option value="week">Week</option>
@@ -387,7 +387,7 @@
 			</div>
 
 			<div class="col-md-2">
-			<input type="text" name="sdesc" placeholder="Description" class="form-control" id="job" value="@if(session('details.sdesc')) {{session('details.sdesc')}}@else {{old('sdesc')}}@endif">
+			<input type="text" name="sdesc" placeholder="Salary Description" class="form-control" id="job" @if(session('details.sdesc') !='' || old('sdesc') !='')value="@if(session('details.sdesc')) {{session('details.sdesc')}}@else {{old('sdesc')}}@endif" @else value=""@endif>
 
         </div>
     </div>
@@ -528,7 +528,7 @@
         <div class="col-sm-7">
             <textarea name="djob" class="ckeditor">@if(session('details.djob')) {{session('details.djob')}} @else {{old('djob')}} @endif</textarea>
         </div>
-    </div>-->
+    </div>
 	
 	
     <div class="form-group row">

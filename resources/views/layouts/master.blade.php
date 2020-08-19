@@ -168,7 +168,7 @@
          <!-- <img src="" class="img-circle elevation-2" alt="">	-->
         </div>
         <div class="info">
-          <a href="#" class="d-block"><i class="fa fa-user-circle"></i>	@auth {{ Auth::user()->name }} @endauth</a>
+          <a href="#" class="d-block"><i class="fa fa-user-circle"></i>	@auth {{ Auth::user()->first_name }} ({{ Auth::user()->role }}) @endauth</a>
         </div>
       </div>
 
@@ -231,7 +231,7 @@
 			
             <ul class="nav nav-treeview">
 			
-              <li class="nav-item" style="padding-left:20px;">
+              <!--<li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/business') }}" class="nav-link ">
                   <i class="fa fa-address-card nav-icon"></i>
                   <p>Business Unit</p>
@@ -268,7 +268,7 @@
                   <i class="fa fa-clipboard nav-icon"></i>
                   <p>Roles</p>
                 </a>
-              </li>
+              </li>-->
 			  <li class="nav-item" style="padding-left:20px;">
                 <a href="{{ url('/job-template') }}" class="nav-link">
                   <i class="fa fa-graduation-cap	 nav-icon"></i>
@@ -348,10 +348,10 @@
   <footer class="main-footer">
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
-      Anything you want
+     
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong></strong> 
   </footer>
 </div>
 <!-- ./wrapper -->

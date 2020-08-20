@@ -15,7 +15,7 @@
 						<h1>{{$job}}</h1>
 						<div class="col-md-12 new_card">
 						<div class="col-md-12">
-							<img src="/storage/uploads/{{$tempDetail['header_image']}}">
+							<img style="width:100%;height:200px;" src="/storage/uploads/{{$tempDetail['header_image']}}">
 						</div>
 						<div class="col-md-12">
 							<h2>{{session('details.jobtitle')}}</h2>
@@ -24,7 +24,7 @@
 							<h4>{{strip_tags(session('details.jsum'))}}</h4>
 						</div>
 						<div class="col-md-12">
-							<img  src="/storage/uploads/{{$tempDetail['footer_image']}}">
+							<img style="width:100%;height:200px;" src="/storage/uploads/{{$tempDetail['footer_image']}}">
 						</div>
 
 						</div>

@@ -289,7 +289,7 @@
     </div>
 	
 	<div class="form-group row">
-<<<<<<< HEAD
+
 	 <div class="col-md-12">
 		<h5>Main Description Details</h5>
 	</div>

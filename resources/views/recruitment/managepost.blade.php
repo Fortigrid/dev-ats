@@ -118,7 +118,7 @@ $(document).ready(function(){
 					var role = "{{ Auth::user()->role }}";
 					if( role==='admin')
 					$(nTd).html("<input type='checkbox' class='checkBoxClass' name='jobs[]' value='"+oData.id+"'>");
-					else if(id===oData.created_by && role==='consult')
+					else if((role==='consult' || role==='state'))
 					$(nTd).html("<input type='checkbox' class='checkBoxClass' name='jobs[]' value='"+oData.id+"'>");
 				    else
 					$(nTd).html("");
@@ -131,8 +131,8 @@ $(document).ready(function(){
 				name: 'response',
 			},
 			{
-				data: 'post_time',
-				name: 'post_time',
+				data: 'post_date',
+				name: 'post_date',
 			},
 			{
 				data: 'job_title',

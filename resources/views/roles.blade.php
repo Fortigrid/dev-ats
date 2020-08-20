@@ -4,8 +4,8 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card" style="margin-top:20px;">
+        <div class="col-md-12">
+            <div class="card recruitment">
                 <div class="card-header">{{ __('Manage Roles') }}</div>
 
                 <div class="card-body">
@@ -23,10 +23,10 @@
 					
 					@csrf
 					<div class="error2" style="color:red;font-weight:bold"></div>
-					<button type="submit" class="btn btn-primary" id="addNew" value="create" style="float:right">Add New</button>
+					<button type="submit" class="button-3" id="addNew" value="create" style="float:right">Add New</button>
 					
 					</div>
-					<div class="table-responsive" > 
+					<div class="table-responsive business" > 
 						<table id="role" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -43,11 +43,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="ajaxModel1" aria-hidden="true">
+<div class="modal fade loc" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="RoleForm" name="RoleForm" class="form-horizontal">
@@ -56,8 +57,9 @@
 				   <div class="error" style="color:red;font-weight:bold"></div>
 				   <div class="form-group">
                         <label class="col-sm-6 control-label">Role Name</label>
-                        <div class="col-sm-12">
-                           <input class="form-control" type="text" id="roles"  name="role_name" placeholder="Role Name" value="" maxlength="50" required=""> 
+                        <div class="col-sm-12 unit">
+                           <input class="form-control effect-1" type="text" id="roles"  name="role_name" placeholder="Role Name" value="" maxlength="50" required=""> 
+						  <span class="focus-border"></span>
                         </div>
                     </div>
 				   <div class="form-group">
@@ -130,7 +132,7 @@
                     </div>-->
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn2" value="create">Save
                      </button>
                     </div>
                 </form>

@@ -12,6 +12,7 @@ use App\Site;
 use App\Agency;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class RoleController extends Controller
 {
@@ -27,25 +28,48 @@ class RoleController extends Controller
     public function index(Request $request)
     {
 		
-		$business_ids= BusinessUnit::where("active",1)->get()->toArray();
-		$locations=Location::where("active",1)->get();
-		$clients= Client::with('locations')->where("active",1)->get();
-		$sites= Site::with('clients')->where("active",1)->get();
-		$agencies= Agency::with('sites')->where("active",1)->get();
+		#$business_ids= BusinessUnit::where("active",1)->get()->toArray();
+		$business_ids = Cache::remember('bus', 60, function () {
+			return BusinessUnit::where("active",1)->get()->toArray();
+		});
+		#$locations=Location::where("loc",1)->get();
+		$locations = Cache::remember('loc', 60, function () {
+			return Location::where("active",1)->get();
+		});
+		#$clients= Client::with('locations')->where("active",1)->get();
+		$clients = Cache::remember('cli', 60, function () {
+			return Client::with('locations')->where("active",1)->get();
+		});
+		
+		#$sites= Site::with('clients')->where("active",1)->get();
+		$sites = Cache::remember('sit', 60, function () {
+			return Site::with('clients')->where("active",1)->get();
+		});
+		
+		#$agencies= Agency::with('sites')->where("active",1)->get();
+		$agencies = Cache::remember('ag', 60, function () {
+			return Agency::with('sites')->where("active",1)->get();
+		});
+		
+		$rdata = Cache::remember('rol', 60, function () {
+			return Role::where("active",1)->get();
+		});
+		
         if($request->ajax())
 		{
-			$rdata=Role::all();
+			#$rdata=Role::all();
+			
 	      
 			return DataTables::of($rdata)
 					->addColumn('action', function($rdata){
 						$button ='<button type="button"
 						name="edit" id="'.$rdata->id.'"
 						class="edit btn btn-primary btn-sm edit
-						">Edit</button> ';
+						"><img src="../css/img/edit-icon.png" /></button> ';
 						$button .=' <button type="button"
 						name="delete" id="'.$rdata->id.'"
 						class="delete btn btn-danger btn-sm delete
-						">Delete</button>';
+						"><img src="../css/img/remove-icon.png" /></button>';
 						return $button;
 					})
 					->rawColumns(['action'])

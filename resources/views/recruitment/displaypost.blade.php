@@ -2,13 +2,26 @@
 
 
 @section('content')
-<div class="container">
+<div class="container details">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card" style="margin-top:20px;">
+        <div class="col-md-12">
+            <div class="card">
                 <div class="card-header">{{ $disAd['job_title']}}</div>
-				
-				<div class="table-responsive"> 
+						<div class="btn-group btn-group-justified nav nav-pills" id="managepost">
+					<button type="button" id="detail"  data-toggle="pill"  class="btn btn-info nav-link active">Ad Details</a>
+					<button type="button"  id="all" data-toggle="pill"class="nav-link btn btn-info">All Applicants</a>
+					<button type="button"  id="qauls"data-toggle="pill"class="nav-link btn btn-info">Qualified Applicants</a>
+					<button type="button" id="star" data-toggle="pill" class="btn btn-info nav-link">Starred Applicants </a> 
+					<button type="button"  id="invite"data-toggle="pill" class="btn btn-info nav-link">Invited Applicants</a> 
+
+				</div>
+				<!--<a id="detail"  data-toggle="pill"  class="btn btn-light">Ad Details</a> 
+					<a  id="all" data-toggle="pill" href="#menu2" class="btn btn-light">All Applicants</a> 
+					<a  id="qauls"data-toggle="pill" href="#menu3" class="btn btn-light">Qualified Applicants</a> 
+					<a id="star" data-toggle="pill" href="#menu4"class="btn btn-light">Starred Applicants </a> 
+					<a  id="invite"data-toggle="pill" href="#menu5"class="btn btn-light">Invited Applicants</a> 
+				</div>
+				<!--<div class="table-responsive"> 
 						<table id="managepost" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -20,65 +33,103 @@
 							</tr>
 							</thead>
 						</table>
-					</div>
+					</div>-->
 
                 <div class="card-body" id="manageposts">
                    
 					
 					
 					<div >
-						<div class="form-group row">
+	<div class="form-group row">
 	 <hr class="col-md-12">
-	 <h5 class="col-md-12">Details</h5>
-	  <div style="width:100%;text-align:right;"><a href="/recruitment/managead/{{$disAd['id']}}/edit" style="text-decoration:underline">Edit</a> <a id="del" href="#" style="text-decoration:underline">Delete</a> <a href="/recruitment/managead/{{$disAd['id']}}/resend" style="text-decoration:underline">Resend</a></div>
-	  <hr class="col-md-12">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Consultant:</label>
-        <div class="col-sm-5">
+	 <div class="col-md-12 setting">
+		
+		<div class="btn-group user_edit btn-group-sm">
+			<button type="button" class="btn btn-light"><img src="{{ asset('css/img/edit_user.png') }}" /></button>
+			<!--<button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+			<span class="caret"></span>
+			</button>-->
+		<!--<div class="dropdown-menu">
+			<a class="dropdown-item pen" href="/recruitment/managead/{{$disAd['id']}}/edit"><img src="{{ asset('css/img/write.png') }}" /> Edit </a>
+			<a class="dropdown-item pen" id="del" href="#"><img src="{{ asset('css/img/erase-icon.png') }}" /> Delete</a>
+		</div>-->
+	  <!--<div style="width:100%;text-align:right;"><a href="/recruitment/managead/{{$disAd['id']}}/edit" style="text-decoration:underline">Edit</a> <a id="del" href="#" style="text-decoration:underline">Delete</a> <a href="/recruitment/managead/{{$disAd['id']}}/resend" style="text-decoration:underline">Resend</a></div>-->
+	  </div><h5>Details</h5>
+	 </div>
+	 </div>
+	 <div class="form-group row pl-2">
+        <div class="col-md-12">@if($disAd['cost']!='') <a target="blank" href="/recruitment/managead/{{$disAd['cost']}}">Parent job details</a> @endif</div>
+		<div class="col-md-2">
+			<label for="inputPassword"  class="col-form-label">Consultant:</label>
+		</div>
+		<div class="col-md-4">
 		{{ $disAd['created_by']}}
         </div>
+		
     </div>
-    <div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Job Ref:</label>
-        <div class="col-sm-5">
+    <div class="form-group row pl-2">
+		<div class="col-md-2">
+        <label for="inputPassword"  class="col-form-label">Job Ref:</label>
+		</div>
+		<div class="col-md-4">
 		{{ $disAd['reference_no']}}
         </div>
     </div>
-	<div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Job Title:</label>
-        <div class="col-sm-5">
+	<div class="form-group row pl-2">
+		<div class="col-md-2">
+        <label for="inputPassword"  class="col-form-label">Job Title:</label>
+		</div>
+		<div class="col-md-4">
 		{{ $disAd['job_title']}}
         </div>
     </div>
-	<div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Job Type:</label>
-        <div class="col-sm-5">
+	<div class="form-group row pl-2">
+		<div class="col-md-2">
+        <label for="inputPassword"  class="col-form-label">Job Type:</label>
+		</div>
+		<div class="col-md-4">
 		{{ $disAd['job_type']}}
         </div>
     </div>
-	<div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Employment Start date:</label>
-        <div class="col-sm-5">
+	<div class="form-group row pl-2">
+		<div class="col-md-2">
+			<label for="inputPassword"  class="col-form-label">Employment Start date:</label>
+		</div>
+		<div class="col-md-4">
 		{{ $disAd['sdate']}}
         </div>
     </div>
-	<div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Job Classification:</label>
-        <div class="col-sm-5">
-		{{ $disAd['job_class']}}
+	<div class="form-group row pl-2">
+		<div class="col-md-2">
+        <label for="inputPassword"  class="col-form-label">Job Classification:</label>
+		</div>
+		<div class="col-md-4">
+		{{ $disAd['boards'][0]['job_class']}}
         </div>
     </div>
-	<div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Location:</label>
-        <div class="col-sm-5">
+	<div class="form-group row pl-2">
+		<div class="col-md-2">
+        <label for="inputPassword"  class="col-form-label">Location:</label>
+		</div>
+		<div class="col-md-4">
 		{{ $disAd['location']}}
         </div>
     </div>
-	<div class="form-group row">
-        <label for="inputPassword"  class="col-sm-2 col-form-label">Salary:</label>
-        <div class="col-sm-5">
+	<div class="form-group row pl-2">
+		<div class="col-md-12">
+        <label for="inputPassword"  class="col-form-label">Salary:</label>
 		{{ $disAd['currency']}} {{ $disAd['min']}} {{ $disAd['max']}} {{ $disAd['salary_per']}} {{ $disAd['salary_desc']}}
         </div>
     </div>
+	 <div class="send_details">
+		<ul>
+			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/repost">Re-Post</a></li>
+			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/resend">Clone</a></li>
+			<li class="float-md-right"><a class="btn btn-primary"href="/recruitment/managead/{{$disAd['id']}}/edit">Edit</a> 
+		<a id="del" href="#" class="btn btn-danger">Delete</a></li>
+		</ul>
+
+	</div>
 	
 					</div>
                 </div>
@@ -121,9 +172,6 @@
 					</div>
                 </div>
 				
-				
-				
-				
             </div>
         </div>
     </div>
@@ -133,7 +181,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modelHeading"></h4>
+                <h4 class="modal-title" id="modelHeading">Interview Schedule</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
 			
@@ -146,15 +195,15 @@
 					
 					
 					<div class="form-group ">
-					<label class="col-sm-8 control-label">Mode</label>
+					<label class="col-md-12 control-label mode">Mode</label>
 					<p class="field switch" style="padding-left:8px;">
-					<input type="radio" class="mode" id="radio1" name="status" value="email" />Email
-					<input type="radio" class="mode" id="radio2" name="status" value="text"/>Text
-					<input type="radio" class="mode" id="radio2" name="status" value="msg"/>Msg
+					<div><input type="radio" class="mode" id="radio1" name="status" value="email" /> Email</div>
+					<div><input type="radio" class="mode" id="radio2" name="status" value="text"/> Text</div>
+					<div><input type="radio" class="mode" id="radio2" name="status" value="msg"/> Msg</div>
 					</p></div>  
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary edit" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3 edit" id="saveBtn2" value="create">Save changes
                      </button>
                     </div>
                 
@@ -175,46 +224,46 @@ $(document).ready(function(){
 				render: function (dataField) { return ''; },
 				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 				if(oData.status==''){
-            $(nTd).append("<a class='stat' id='qual' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline' >Q</a>&nbsp;&nbsp;");
-		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline' >P</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline' >S</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline' >IS</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline' >I</a>");
+            $(nTd).append("<a class='stat' id='qual' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >I</a>");
 				}
 				if(oData.status=='qualify'){
-            $(nTd).append("<a  style='border:1px solid red;background-color:blue'>Q</a>&nbsp;&nbsp;");
-		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>P</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>S</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>IS</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a  style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if( oData.status=='potential'){
-            $(nTd).append("<a style='border:1px solid red;background-color:blue'>Q</a>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='border:1px solid red;background-color:blue'>P</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>S</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>IS</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='starr'){
-            $(nTd).append("<a style='border:1px solid red;background-color:blue'>Q</a>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='border:1px solid red;background-color:blue'>P</a>&nbsp;&nbsp;");
-			$(nTd).append("<a style='border:1px solid red;background-color:blue'>S</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>IS</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='inteviewschedule'){
-            $(nTd).append("<a style='border:1px solid red;background-color:blue'>Q</a>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='border:1px solid red;background-color:blue'>P</a>&nbsp;&nbsp;");
-			$(nTd).append("<a style='border:1px solid red;background-color:blue'>S</a>&nbsp;&nbsp;");
-			$(nTd).append("<a style='border:1px solid red;background-color:blue'>IS</a>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='border:1px solid black;text-decoration:underline'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='invited'){
-            $(nTd).append("<a style='border:1px solid red;background-color:blue'>Q</a>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='border:1px solid red;background-color:blue'>P</a>&nbsp;&nbsp;");
-			$(nTd).append("<a style='border:1px solid red;background-color:blue'>S</a>&nbsp;&nbsp;");
-			$(nTd).append("<a style='border:1px solid red;background-color:blue'>IS</a>&nbsp;&nbsp;");
-			$(nTd).append("<a style='border:1px solid red;background-color:blue'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>I</a>&nbsp;&nbsp;");
 				}
 			}
 				
@@ -239,7 +288,7 @@ $(document).ready(function(){
 			},
 			{
 				data: 'cv',
-				name: 'cv',
+				render: function (dataField) { return '<a href="/downloads/cv.docx" class="edit btn btn-primary btn-sm">CV Download</a>'; },
 			}
 		];
 		

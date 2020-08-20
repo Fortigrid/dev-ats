@@ -16,16 +16,16 @@ $(document).ready(function(){
 				name: 'id',
 			},
 			{
-				data: 'name',
-				name: 'name',
+				data: 'username',
+				name: 'username',
 			},
 			{
 				data: 'email',
 				name: 'email',
 			},
 			{
-				data: 'user_role',
-				name: 'user_role',
+				data: 'role',
+				name: 'role',
 			},
 			{
 				data: 'action',
@@ -39,7 +39,7 @@ $(document).ready(function(){
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('User Dashboard') }}</div>
 

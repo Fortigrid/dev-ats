@@ -5,8 +5,8 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card" style="margin-top:20px;">
+        <div class="col-md-12">
+            <div class="card mtop">
                 <div class="card-header">{{ __('Manage Job Template') }}</div>
                 <div class="card-body">
                    @if($errors->any())
@@ -21,9 +21,9 @@
 				  @endif
 				  <div >
 					<div class="error2" style="color:white;font-weight:bold;display:none"></div>
-					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
+					<button style="float:right"  type="submit" class="button-3" id="addNew" value="create">Add New</button>
 					</div>
-					<div class="table-responsive"> 
+					<div class="table-responsive new"> 
 						<table id="job_template" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -41,11 +41,12 @@
     </div>
 </div><br>
 
-<div class="modal fade" id="ajaxModel1" aria-hidden="true">
+<div class="modal fade loc" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
 			
@@ -57,12 +58,12 @@
                    <input type="hidden" name="id" id="job_id">
 				   <div class="error alert alert-danger" style="color:white;font-weight:bold;display:none"></div>
 				   <div class="form-group">
-                        <label class="col-sm-2 control-label">Business_Unit</label>
+                        <label class="col-sm-2 control-label">Location</label>
                         <div class="col-sm-12">
 						   <select id="business_unit_id" name="business_unit_id">
-						   <option value="">Select Business ID</option>
+						   <option value="">Select Location</option>
 							@foreach($business_ids as $business_id)
-							<option    value="{{$business_id['id']}}"> {{$business_id['business_unit']}} </option>
+							<option    value="{{$business_id['id']}}"> {{$business_id['location']}} </option>
 							@endforeach
 							</select>
                         </div>
@@ -71,8 +72,9 @@
 
                     <div class="form-group">
                         <label class="col-sm-8 control-label">Template Name</label>
-                        <div class="col-sm-12">
-                           <input class="form-control" type="text" id="template_name"  name="template_name" placeholder="Template Name" value="" maxlength="50" > 
+                        <div class="col-sm-12 unit">
+                           <input class="form-control effect-1" type="text" id="template_name"  name="template_name" placeholder="Template Name" value="" maxlength="50" > 
+						   <span class="focus-border"></span>
                         </div>
                     </div>
 					
@@ -148,7 +150,7 @@
 					</p></div>  
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn2" value="create">Save 
                      </button>
                     </div>
                 </form>
@@ -220,8 +222,8 @@ $(document).ready(function(){
 				name: 'id',
 			},
 			{
-				data: 'business_unit',
-				name: 'business_unit',
+				data: 'location',
+				name: 'location',
 			},
 			{
 				data: 'template_name',

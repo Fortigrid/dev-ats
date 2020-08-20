@@ -40,11 +40,11 @@ class LocationController extends Controller
 						$button ='<button type="button"
 						name="edit" id="'.$vv->id.'"
 						class="edit btn btn-primary btn-sm edit
-						">Edit</button> ';
+						"><img src="../css/img/edit-icon.png" /></button> ';
 						$button .=' <button type="button"
 						name="delete" id="'.$vv->id.'"
 						class="delete btn btn-danger btn-sm delete
-						">Delete</button>';
+						"><img src="../css/img/remove-icon.png" /></button>';
 						return $button;
 					})
 					->rawColumns(['action'])

@@ -1,10 +1,8 @@
 @extends('layouts.master')
-
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card" style="margin-top:20px;">
                 <div class="card-header">{{ __('Manage Location') }}</div>
                 <div class="card-body">
@@ -20,9 +18,9 @@
 				  @endif
 				  <div >
 					<div class="error2" style="color:red;font-weight:bold"></div>
-					<button style="float:right"  type="submit" class="btn btn-primary" id="addNew" value="create">Add New</button>
+					<button style="float:right"  type="submit" class="button-3" id="addNew" value="create">Add New</button>
 					</div>
-					<div class="table-responsive"> 
+					<div class="table-responsive new"> 
 						<table id="location" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -41,11 +39,12 @@
     </div>
 </div><br>
 
-<div class="modal fade" id="ajaxModel1" aria-hidden="true">
+<div class="modal fade loc" id="ajaxModel1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="LocationForm" name="LocationForm" class="form-horizontal">
@@ -53,12 +52,15 @@
                    <input type="hidden" name="id" id="location_id">
 				   <div class="error" style="color:red;font-weight:bold"></div>
 				   <div class="form-group">
-                        <label class="col-sm-2 control-label">Business_Unit</label>
+                       <!-- <label class="col-sm-2 control-label">Business_Unit</label>-->
+						<button type="button" class=" control-label btn btn-info" data-toggle="collapse" data-target="#demo">Select Business Unit</button>
+						<div id="demo" class="collapse business">
                         <div class="col-sm-12">
 							@foreach($business_ids as $business_id)
-							<input type="checkbox" id="business_unit_id" name="business_unit_id" value="{{$business_id['id']}}"> {{$business_id['business_unit']}}
+							<div><input type="checkbox" id="business_unit_id" name="business_unit_id" value="{{$business_id['id']}}"> {{$business_id['business_unit']}}</div>
 							@endforeach
                         </div>
+						</div>
                     </div>
 					
                     <div class="form-group">
@@ -80,13 +82,14 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Location</label>
-                        <div class="col-sm-12">
-                           <input class="form-control" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 
+                        <div class="col-sm-12 unit">
+                           <input class="form-control effect-1" type="text" id="locations"  name="location" placeholder="Location" value="" maxlength="50" required=""> 
+						   <span class="focus-border"></span>
                         </div>
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn2" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn2" value="create">Save changes
                      </button>
                     </div>
                 </form>

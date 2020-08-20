@@ -4,23 +4,30 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card" style="margin-top:20px;">
                 <div class="card-header">{{ __('Manage Business Unit') }}</div>
 
                 <div class="card-body">
-                   
-					<div >
+					<div>
 					<form action="" method="post" id="BusinessForms">
+					<div class="business">
+						<button type="button" class="ad_btn" data-toggle="collapse" data-target="#demo">Add Business Unit</button>
+					</div>
+					<div id="demo" class="collapse business">
 					@csrf
 					<div class="error" style="color:red;font-weight:bold"></div>
-					<input type="text" id="business_units" name="business_unit" placeholder="Business Unit" required> <!--<input type="submit" name="submit" value="Add Business Unit">-->
-					<button type="submit" class="btn btn-primary" id="saveBtn1" value="create">Add Business Unit
-                     </button>
+					<div class="unit"><input type="text" class="effect-2" id="business_units" name="business_unit" placeholder="Business Unit" required> 
+					<span class="focus-border"></span>
+					<!--<input type="submit" name="submit" value="Add Business Unit">-->
+					<span class="dld" type="submit"  id="saveBtn1" value="create"><img src="{{ asset('css/img/save-icon.png') }}" />
+                     </span>
 					@error('business_unit')<div class="error" style="color:red;font-weight:bold;">{{ $message }}</div>@enderror 
+					</div>
+					</div><hr>
 					</form>
 					</div>
-					<div class="table-responsive"> 
+					<div class="table-responsive table-striped"> 
 						<table id="business" class="cell-border stripe hover row-border">
 							<thead>
 							<tr>
@@ -42,6 +49,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
 			<div class="error1" style="color:red;font-weight:bold"></div>
@@ -52,15 +60,15 @@
 
                     <div class="form-group">
                         <label class="col-sm-6 control-label">Business Unit</label>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 unit">
                            
-							  <input class="form-control" type="text" id="business_unit"  name="business_unit" placeholder="Business Unit" value="" maxlength="50"> 
-                            
+							  <input class="form-control effect-1" type="text" id="business_unit"  name="business_unit" placeholder="Business Unit" value="" maxlength="50"> 
+								<span class="focus-border"></span>
                         </div>
                     </div>
 
                     <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes
+                     <button type="submit" class="button-3" id="saveBtn" value="create">Save
                      </button>
                     </div>
                 </form>

@@ -24,13 +24,37 @@ class JobTemplateController extends Controller
      */
     public function index(Request $request)
     {
-        $business_ids= BusinessUnit::where('active','1')->get()->toArray();
+		
+        #$business_ids= BusinessUnit::where('active','1')->get()->toArray();
+		$mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		$mergLoc1=array_filter(explode(',',$mergLoc));
+		
+		if(Auth::user()->role=='admin'){
+		$business_ids=DB::connection('tracker')->select('select id,location from office_locations');
 		$jobtemplates=JobTemplate::select([
 		'job_templates.id',
-		'business_units.business_unit',
+		'admin_tracker.office_locations.location',
 		'job_templates.template_name'
-		])->join('business_units', 'business_units.id', '=', 'job_templates.business_unit_id')
+		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
 		->where('job_templates.active',1);
+		}
+	    else{
+		$business_ids=DB::connection('tracker')->select('select id,location from office_locations where id IN ('.$mergLoc.')');
+		$jobtemplates=JobTemplate::select([
+		'job_templates.id',
+		'admin_tracker.office_locations.location',
+		'job_templates.template_name'
+		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
+		->where(function($query) use ($mergLoc1){
+					foreach($mergLoc1 as $exp1){
+				   $query->orWhere('job_templates.business_unit_id','like', '%' . $exp1 . '%');
+					}
+				   })
+		->where('job_templates.active',1);
+		}
+		$business_ids=json_decode(json_encode($business_ids), true);
+		
+		
 	    if($request->ajax())
 		{
 			return DataTables::of($jobtemplates)
@@ -38,11 +62,11 @@ class JobTemplateController extends Controller
 						$button ='<button type="button"
 						name="edit" id="'.$jobtemplates->id.'"
 						class="edit btn btn-primary btn-sm edit
-						">Edit</button> ';
+						"><img src="../css/img/edit-icon.png" /></button> ';
 						$button .=' <button type="button"
 						name="delete" id="'.$jobtemplates->id.'"
 						class="delete btn btn-danger btn-sm delete
-						">Delete</button>';
+						"><img src="../css/img/remove-icon.png" /></button>';
 						return $button;
 					})
 					->rawColumns(['action'])
@@ -69,6 +93,11 @@ class JobTemplateController extends Controller
      */
     public function store(Request $request)
     {
+		$jobloca=JobTemplate::select(['business_unit_id'])->where("active", 1)->get()->toArray();
+		foreach($jobloca as $joblocs){
+			$jobbloc[]=$joblocs['business_unit_id'];
+		}
+		
 		if($request->id ==''){
 		$validator = Validator::make($request->all(), [
 		'business_unit_id'=> 'required',
@@ -118,8 +147,23 @@ class JobTemplateController extends Controller
 					request()->footer_image->move(storage_path('app/public/uploads'), $imageNames1);
 				}
             
-			    
+			  // Checking based on Roles
+			    if(Auth::user()->role=='admin'){
+				 JobTemplate::where("id", $request->id)->update($values);
+				}elseif(Auth::user()->role=='state'){
+				  $loc='';
+				  
+				 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+				 $mergLoc1=array_filter(explode(',',$mergLoc));
+				 $locs=JobTemplate::select(['business_unit_id'])->where("id", $request->id)->get()->toArray();
+				 $loc=$locs[0]['business_unit_id'];
+				
+				  if(in_array($loc,$mergLoc1)){
 			     JobTemplate::where("id", $request->id)->update($values);
+				 //return Response()->json(["success"=>$loc]);
+				  }
+				
+				}
 				 #JobTemplate::where([["business_unit_id", $request->business_unit_id],["template_name", $request->template_name],["content_bg_color",$request->content_bg_color],["status", $request->status]])->update(["id" => $request->id]);
 			    
 			}
@@ -177,8 +221,20 @@ class JobTemplateController extends Controller
      */
     public function destroy($id)
     {
-      
+      if(Auth::user()->role=='admin'){
        JobTemplate::where("id", $id)->update(["active" => 0]);
+	  }
+	  elseif(Auth::user()->role=='state'){
+		$loc='';
+				  
+		$mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		$mergLoc1=array_filter(explode(',',$mergLoc));
+		$locs=JobTemplate::select(['business_unit_id'])->where("id", $id)->get()->toArray();
+		$loc=$locs[0]['business_unit_id'];
+		if(in_array($loc,$mergLoc1)){
+		JobTemplate::where("id", $id)->update(["active" => 0]); 
+		 }
+	  }
 	   return response()->json(['success'=>'Agency deleted!']);
 	
     }

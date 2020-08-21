@@ -328,20 +328,20 @@
 		<div class="col-md-4">
 			 <select name="posttime1">
 				
-				<option value="<?php echo date('d/m/Y');?>">Today</option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+1 day"));?>"><?php echo date('l', strtotime("+1 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+2 day"));?>"><?php echo date('l', strtotime("+2 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+3 day"));?>"><?php echo date('l', strtotime("+3 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+4 day"));?>"><?php echo date('l', strtotime("+4 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+5 day"));?>"><?php echo date('l', strtotime("+5 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+6 day"));?>"><?php echo date('l', strtotime("+6 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+7 day"));?>">Week <?php echo date('l', strtotime("+7 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+8 day"));?>">Week <?php echo date('l', strtotime("+8 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+9 day"));?>">Week <?php echo date('l', strtotime("+9 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+10 day"));?>">Week <?php echo date('l', strtotime("+10 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+11 day"));?>">Week <?php echo date('l', strtotime("+11 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+12 day"));?>">Week <?php echo date('l', strtotime("+12 day"));?></option>
-				<option value="<?php echo $date = date('d/m/Y', strtotime("+13 day"));?>">Week <?php echo date('l', strtotime("+13 day"));?></option>
+				<option value="<?php echo date('d-m-Y');?>">Today</option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+1 day"));?>"><?php echo date('l', strtotime("+1 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+2 day"));?>"><?php echo date('l', strtotime("+2 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+3 day"));?>"><?php echo date('l', strtotime("+3 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+4 day"));?>"><?php echo date('l', strtotime("+4 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+5 day"));?>"><?php echo date('l', strtotime("+5 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+6 day"));?>"><?php echo date('l', strtotime("+6 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+7 day"));?>">Week <?php echo date('l', strtotime("+7 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+8 day"));?>">Week <?php echo date('l', strtotime("+8 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+9 day"));?>">Week <?php echo date('l', strtotime("+9 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+10 day"));?>">Week <?php echo date('l', strtotime("+10 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+11 day"));?>">Week <?php echo date('l', strtotime("+11 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+12 day"));?>">Week <?php echo date('l', strtotime("+12 day"));?></option>
+				<option value="<?php echo $date = date('d-m-Y', strtotime("+13 day"));?>">Week <?php echo date('l', strtotime("+13 day"));?></option>
 				
 			</select>
         </div>

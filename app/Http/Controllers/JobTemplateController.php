@@ -26,7 +26,10 @@ class JobTemplateController extends Controller
     {
 		
         #$business_ids= BusinessUnit::where('active','1')->get()->toArray();
+		if(Auth::user()->secondary_office_location !='')
 		$mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		else
+		$mergLoc=Auth::user()->office_location;
 		$mergLoc1=array_filter(explode(',',$mergLoc));
 		
 		if(Auth::user()->role=='admin'){

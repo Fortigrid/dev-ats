@@ -58,7 +58,11 @@
 	 </div>
 	 </div>
 	 <div class="form-group row pl-2">
-        <div class="col-md-12">@if($disAd['cost']!='') <a target="blank" href="/recruitment/managead/{{$disAd['cost']}}">Parent job details</a> @endif</div>
+        <div class="col-md-12">@if($disAd['cost']!='') <a target="blank" href="/recruitment/managead/{{$disAd['cost']}}">Old Post Link</a> @endif <br>
+		@foreach($childPost as $child)
+		<a target="blank" href="/recruitment/managead/{{$child['id']}}">New Post Link</a>
+		@endforeach
+		</div>
 		<div class="col-md-2">
 			<label for="inputPassword"  class="col-form-label">Consultant:</label>
 		</div>
@@ -126,7 +130,7 @@
 			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/repost">Re-Post</a></li>
 			<li> <a class="ad_btn" href="/recruitment/managead/{{$disAd['id']}}/resend">Clone</a></li>
 			<li class="float-md-right"><a class="btn btn-primary"href="/recruitment/managead/{{$disAd['id']}}/edit">Edit</a> 
-		<a id="del" href="#" class="btn btn-danger">Delete</a></li>
+				@if($act=='1')<a id="del" href="#" class="btn btn-danger">Delete</a>@endif</li>
 		</ul>
 
 	</div>
@@ -146,6 +150,7 @@
 							<tr>
 								<th>Status</th>
 								<th>Applicant</th>
+								<th>Applicant email</th>
 								<th>Source</th>
 								<th>Date</th>
 								<th>Tags</th>
@@ -214,8 +219,33 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="ajaxModel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading">Preview CV</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+			
+                
+				<iframe class="previewhead" src="" width="750" height="298" seamless=""></iframe>
+				
+			
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
+
+
+
 $(document).ready(function(){
+	
+	//$('#imghead').attr("src", "storage/uploads/"+data.header_image);
+	
 	var rno={{session('rno')}}
 	var cols=[];
 	cols= [
@@ -224,46 +254,46 @@ $(document).ready(function(){
 				render: function (dataField) { return ''; },
 				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
 				if(oData.status==''){
-            $(nTd).append("<a class='stat' id='qual' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >I</a>");
+            $(nTd).append("<a class='stat' title='qualify applicant' id='qual' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a class='stat' title='potential applicant' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' title='star applicant' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' title='schedule interview for applicant' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a class='stat' title='invite applicant' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;' >I</a>");
 				}
 				if(oData.status=='qualify'){
-            $(nTd).append("<a  style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a title='qualified applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a title='potential applicant' class='stat' id='poten' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>P</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='star applicant' class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='schedule interview for applicant' class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='invite applicant' class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if( oData.status=='potential'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a title='qualified applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a title='potential applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='star applicant' class='stat' id='stars' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>S</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='schedule interview for applicant' class='stat' id='insc' rel='"+oData.id+"'style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='invite applicant' class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='starr'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a title='qualified applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a title='potential applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='starred applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='schedule interview for applicant' class='stat' id='insc' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>IS</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='invite applicant' class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='inteviewschedule'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a title='qualified applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a title='potential applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='starred applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='interview scheduled for applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='invite applicant' class='stat' id='invites' rel='"+oData.id+"' style='background:#aaa;color:#fff;padding:4px;font-size:12px;border-radius:12px;cursor:pointer;'>I</a>&nbsp;&nbsp;");
 				}
 				if(oData.status=='invited'){
-            $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-		    $(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
-			$(nTd).append("<a style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>I</a>&nbsp;&nbsp;");
+            $(nTd).append("<a title='qualified applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>Q</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+		    $(nTd).append("<a title='potential applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>P</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='starred applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>S</a><span class='dbl_arw'>></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='interview scheduled for applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>IS</a><span class='dbl_arw'> ></span>&nbsp;&nbsp;");
+			$(nTd).append("<a title='invited applicant' style='background:#54bce7;color:#fff;padding:4px;font-size:12px;border-radius:12px;'>I</a>&nbsp;&nbsp;");
 				}
 			}
 				
@@ -271,6 +301,10 @@ $(document).ready(function(){
 			{
 				data: 'applicant_name',
 				name: 'applicant_name',
+			},
+			{
+				data: 'applicant_email',
+				name: 'applicant_email',
 			},
 			{
 				data: 'applicant_source',
@@ -287,8 +321,12 @@ $(document).ready(function(){
 				orderable: false
 			},
 			{
-				data: 'cv',
-				render: function (dataField) { return '<a href="/downloads/cv.docx" class="edit btn btn-primary btn-sm">CV Download</a>'; },
+				data: 'download',
+				render: function (dataField) { return ''; },
+				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+				
+					$(nTd).append('<a href="#" id="'+oData.download+'" data-rel="popup" data-position-to="window" class="preview">Preview</a> &nbsp; <a href="/downloads/'+oData.download+'" class="edit btn btn-primary btn-sm">CV Download</a>');
+				}
 			}
 		];
 		
@@ -305,6 +343,13 @@ $(document).ready(function(){
 		
 		var table = $('#displayall').DataTable();
 		var table1 = $('#displayqual').DataTable();
+		
+		$('#displayall tbody').on('click', 'a[class="preview"]' , function () {
+			var ids=$(this).prop('id');
+			$('#ajaxModel2').modal('show');
+			$('.previewhead').attr("src", "https://view.officeapps.live.com/op/embed.aspx?src=https://ats.dev.apptra.com.au/downloads/"+ids);
+		});
+		
 		
 		//------------------------------change status------------------------------------------
 		var id='';
@@ -399,7 +444,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 3, "desc" ]],
+		order: [[ 4, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/all'
@@ -419,7 +464,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 3, "desc" ]],
+		order: [[ 4, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/qual'
@@ -440,7 +485,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 3, "desc" ]],
+		order: [[ 4, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/star'
@@ -461,7 +506,7 @@ $(document).ready(function(){
 		destroy: true,
 		processing: true,
 		serverSide: true,
-		order: [[ 3, "desc" ]],
+		order: [[ 4, "desc" ]],
 		ajax: {
 			
 			url: "/recruitment/managead" +'/' + rno +'/invite'

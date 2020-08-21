@@ -28,11 +28,8 @@ class ApplicantController extends Controller
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
-					}
-				   })
-				->orWhere(function($query) use ($mergLoc1){
-					foreach($mergLoc1 as $exp){
-						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp . '%');
+					
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
 					}
 				})
 				->where([['adjobs.active',1]])
@@ -43,7 +40,7 @@ class ApplicantController extends Controller
 		{
 			return DataTables::of($aps)
 					->addColumn('action', function($aps){
-						$button ='<a href="../downloads/cv.docx"
+						$button ='<a href="#" id="'.$aps->download.'" data-rel="popup" data-position-to="window" class="preview">Preview</a> <a href="../downloads/'.$aps->download.'"
 						name="view" id="'.$aps->id.'"
 						class="edit btn btn-primary btn-sm edit
 						">CV Download</a> ';
@@ -66,11 +63,8 @@ class ApplicantController extends Controller
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
-					}
-				   })
-				->orWhere(function($query) use ($mergLoc1){
-					foreach($mergLoc1 as $exp){
-						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp . '%');
+					
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
 					}
 				})
 				->where([['adjobs.active',1]])
@@ -80,7 +74,7 @@ class ApplicantController extends Controller
 		{
 			return DataTables::of($aps)
 					->addColumn('action', function($aps){
-						$button ='<a href="../downloads/cv.docx"
+						$button ='<a href="#" id="'.$aps->download.'" data-rel="popup" data-position-to="window" class="preview">Preview</a> <a href="../downloads/'.$aps->download.'"
 						name="view" id="'.$aps->id.'"
 						class="edit btn btn-primary btn-sm edit
 						">CV Download</a> ';

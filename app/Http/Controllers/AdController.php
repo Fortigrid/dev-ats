@@ -145,45 +145,69 @@ class AdController extends Controller
 		 $mergLoc1=array_filter(explode(',',$mergLoc));
 		if($request->ids=='liveads'){
 			if(Auth::user()->role=='admin')
-			$ads= Adjob::with('applicants')->where('active','1')->latest('id')->get();
-		    else{
-				$ads= Adjob::select([
+			#$ads= Adjob::with('applicants')->where('active','1')->latest('id')->get();
+		    $ads= Adjob::select([
 				'adjobs.id',
-				'adjobs.response',
+				\DB::raw('count(applicants.adjob_id) as response'),
 				'adjobs.post_date',
 				'adjobs.job_title',
 				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
+				->where([['adjobs.active',1]])
+				->groupBy('applicants.adjob_id','adjobs.id')
+				->get();
+		    else{
+				$ads= Adjob::select([
+				'adjobs.id',
+				\DB::raw('count(applicants.adjob_id) as response'),
+				'adjobs.post_date',
+				'adjobs.job_title',
+				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
 				->join('acusers', 'acusers.id', 'adjobs.created_by')
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
-				   $query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+					
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
 					}
 				})
 				->where([['adjobs.active',1]])
+				->groupBy('applicants.adjob_id','adjobs.id')
 				->get();
 			}
 		}
 		else {
 			if(Auth::user()->role=='admin')
-			$ads= Adjob::with('applicants')->where('active','0')->latest('id')->get();
-		    else{
-				$ads= Adjob::select([
+			#$ads= Adjob::with('applicants')->where('active','0')->latest('id')->get();
+		    $ads= Adjob::select([
 				'adjobs.id',
-				'adjobs.response',
+				\DB::raw('count(applicants.adjob_id) as response'),
 				'adjobs.post_date',
 				'adjobs.job_title',
 				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
+				->where([['adjobs.active',0]])
+				->groupBy('applicants.adjob_id','adjobs.id')
+				->get();
+		    else{
+				$ads= Adjob::select([
+				'adjobs.id',
+				\DB::raw('count(applicants.adjob_id) as response'),
+				'adjobs.post_date',
+				'adjobs.job_title',
+				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
 				->join('acusers', 'acusers.id', 'adjobs.created_by')
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
-				   $query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
-					}
 					
-				   })
-				
-				->where('adjobs.active',0)
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+					}
+				})
+				->where([['adjobs.active',0]])
+				->groupBy('applicants.adjob_id','adjobs.id')
 				->get();
 				
 			}
@@ -227,16 +251,19 @@ class AdController extends Controller
     }	
 	public function displayAd(Request $request,$rid){
 		session(['rno'=>$rid]);
+		$act='0';
 		//$disAd= Adjob::where([['id',$rid],['active','1']])->get()->toArray();
 		$disAd= Adjob::with('boards')->where('id',$rid)->take(1)->get();
-		
+		$childPost=Adjob::with('boards')->where('cost',$rid)->take(1)->get('id');
+		$childPost=isset($childPost) ? $childPost=$childPost : $childPost=[];
 		//role based restriction
 		if(isset($disAd[0])) $this->authorize('views', $disAd[0]);
 		//Auth::user()->can('views',$disAd[0]);
 		$disAd=$disAd->toArray();
 		if(isset($disAd[0])){
 		$disAd=$disAd[0];
-		return view('recruitment.displaypost',compact('disAd'));
+		if($disAd['active']=='1') $act=1; else $act='0';
+		return view('recruitment.displaypost',compact('disAd','childPost','act'));
 		}
 		else return redirect('/recruitment/managead');
 	

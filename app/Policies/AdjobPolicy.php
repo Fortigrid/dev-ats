@@ -28,7 +28,7 @@ class AdjobPolicy
 		//return $user->id == $adjob->created_by;
 		 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
 		 $mergLoc1=array_filter(explode(',',$mergLoc));
-				 
+				  $adid=[];
 				 $ads= Adjob::select([
 				'adjobs.id',
 				'adjobs.response',

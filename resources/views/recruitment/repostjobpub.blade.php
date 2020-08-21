@@ -52,7 +52,7 @@
 					
                  <div class="form-group row">
 					<div class="col-sm-12 text-center">
-						<button type="submit" class="btn btn-primary">Post Ad</button> 
+						<button type="submit" class="btn btn-primary">Re-post Ad</button> 
 					</div>
 					</div>
 				</form>

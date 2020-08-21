@@ -191,13 +191,15 @@ class RecruitService
 		->useLog('Applicant Board updated')
 		->log('updated');
 		}
-		Board::where([['adjob_id',$rid],['industry','']])->delete();
+		$vv=Board::where([['adjob_id',$rid],['industry','']])->delete();
+		if($vv==1){
 		activity()
 		->performedOn($adjob)
 		->causedBy(Auth::user())
 		->withProperties(['industry'=>''])
 		->useLog('Applicant Board deleted')
 		->log('deleted board whose industry updated to null see the above log');
+		}
 		$vals=[];
 		$data=[];
 	}
@@ -315,13 +317,14 @@ class RecruitService
 		->useLog('Applicant Board updated')
 		->log('updated');
 		}
-		Board::where([['adjob_id',$adjob->id],['industry','']])->delete();
-		activity()
+		$vv=Board::where([['adjob_id',$adjob->id],['industry','']])->delete();
+		if($vv==1){ activity()
 		->performedOn($adjob)
 		->causedBy(Auth::user())
 		->withProperties(['industry'=>''])
 		->useLog('Applicant Board deleted')
 		->log('deleted board whose industry updated to null see the above log');
+		}
 		$vals=[];
 		$data=[];
 	}
@@ -439,13 +442,15 @@ class RecruitService
 		->useLog('Applicant Board updated')	  
 		->log('updated');
 		}
-		Board::where([['adjob_id',$adjob->id],['industry','']])->delete();
+		$vv=Board::where([['adjob_id',$adjob->id],['industry','']])->delete();
+		if($vv==1){
 		activity()
 		->performedOn($adjob)
 		->causedBy(Auth::user())
 		->withProperties(['industry'=>''])
 		->useLog('Applicant Board deleted')
 		->log('deleted board whose industry updated to null see the above log');
+		}
 		$vals=[];
 		$data=[];
 	}
@@ -513,15 +518,26 @@ class RecruitService
 		$mergLoc1=array_filter(explode(',',$mergLoc1));
 		
 		if($role=="admin"){
-				$ads= Adjob::with('applicants')->where('active','1')->latest('id')->get();
+				#$ads= Adjob::with('applicants')->where('active','1')->latest('id')->get();
+				$ads= Adjob::select([
+				'adjobs.id',
+				\DB::raw('count(applicants.adjob_id) as response'),
+				'adjobs.post_date',
+				'adjobs.job_title',
+				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
+				->where([['adjobs.active',1]])
+				->groupBy('applicants.adjob_id','adjobs.id')
+				->get();
 			}
 			elseif($role=="state"){
 				$ads= Adjob::select([
 				'adjobs.id',
-				'adjobs.response',
+				\DB::raw('count(applicants.adjob_id) as response'),
 				'adjobs.post_date',
 				'adjobs.job_title',
 				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
 				->join('acusers', 'acusers.id', 'adjobs.created_by')
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
@@ -531,15 +547,17 @@ class RecruitService
 					}
 				})
 				->where([['adjobs.active',1]])
+				->groupBy('applicants.adjob_id','adjobs.id')
 				->get();
 			}
 			elseif($role=="consult"){
 				$ads= Adjob::select([
 				'adjobs.id',
-				'adjobs.response',
+				\DB::raw('count(applicants.adjob_id) as response'),
 				'adjobs.post_date',
 				'adjobs.job_title',
 				'adjobs.created_by'])
+				->leftJoin('applicants', 'adjobs.id', 'applicants.adjob_id')
 				->join('acusers', 'acusers.id', 'adjobs.created_by')
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
@@ -549,6 +567,7 @@ class RecruitService
 					}
 				})
 				->where([['adjobs.active',1]])
+				->groupBy('applicants.adjob_id','adjobs.id')
 				->get();
 			}
 			

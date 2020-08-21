@@ -172,7 +172,7 @@
     </div>
 </div>
 <style>
-.cb-enable, .cb-disable, .cb-enable span, .cb-disable span { background: url(http://demos.devgrow.com/switch/switch.gif) repeat-x; display: block; float: left; }
+.cb-enable, .cb-disable, .cb-enable span, .cb-disable span { background: url(../images/switch.gif) repeat-x; display: block; float: left; }
 	.cb-enable span, .cb-disable span { line-height: 30px; display: block; background-repeat: no-repeat; font-weight: bold; }
 	.cb-enable span { background-position: left -90px; padding: 0 10px; }
 	.cb-disable span { background-position: right -180px;padding: 0 10px; }

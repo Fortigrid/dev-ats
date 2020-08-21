@@ -24,6 +24,7 @@
 							<tr>
 								<th>Date</th>
 								<th>Name</th>
+								<th>Email</th>
 								<th>Applied For</th>
 								<th>Source</th>
 								<th></th>
@@ -34,6 +35,24 @@
 					</div>
                     
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ajaxModel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading">Preview CV</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+			
+                
+				<iframe class="previewhead" src="" width="750" height="298" seamless=""></iframe>
+				
+			
             </div>
         </div>
     </div>
@@ -61,6 +80,10 @@ $(document).ready(function(){
 				name: 'applicant_name',
 			},
 			{
+				data: 'applicant_email',
+				name: 'applicant_email',
+			},
+			{
 				data: 'applicant_for',
 				name: 'applicant_for',
 			},
@@ -79,6 +102,13 @@ $(document).ready(function(){
 			}
 		]
 	});
+	
+	
+	$('#manageappli tbody').on('click', 'a[class="preview"]' , function () {
+			var ids=$(this).prop('id');
+			$('#ajaxModel2').modal('show');
+			$('.previewhead').attr("src", "https://view.officeapps.live.com/op/embed.aspx?src=https://ats.dev.apptra.com.au/downloads/"+ids);
+		});
 	
 	
 // For hiding column

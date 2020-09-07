@@ -68,6 +68,10 @@ $(document).ready(function(){
 		ajax: {
 			url: "{{ route('appall') }}"
 		},
+		language: {
+            'loadingRecords': '&nbsp;',
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },     
 		columns: [
 			{
 				data: 'applied_date',
@@ -84,6 +88,11 @@ $(document).ready(function(){
 			{
 				data: 'applicant_for',
 				name: 'applicant_for',
+				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+				
+				   $(nTd).html("<a href='/recruitment/managead/"+oData.adjob_id+"'>"+oData.applicant_for+"</a>");
+					
+				}
 			},
 			{
 				data: 'applicant_source',

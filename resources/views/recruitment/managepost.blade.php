@@ -27,6 +27,7 @@
 					<button class="mdelete btn btn-danger dlt"><i class="fa fa-trash"></i></button>
 					</div>
 					<div class="table-responsive"> 
+					  <div class="error"></div>
 						<table id="" class="cell-border stripe hover row-border appli">
 							<thead>
 							<tr>
@@ -58,10 +59,10 @@
 				<div class="alert alert-danger print-error-msg" style="display:none">
         <ul></ul>
     </div>
-                   <input type="hidden" name="id" id="id">
+                   
 				   <input type="hidden" name="val" id="val">
 					
-					
+					<div class="error1"></div>
 					<div class="form-group ">
 					<!--<label class="col-sm-8 control-label">Status</label>-->
 					<p class="field switch" style="padding-left:8px;">
@@ -75,8 +76,15 @@
 						</div>
 					</div>-->
 					
-					<ul><li style='float:left;list-style:none;width:50px;'><b>Name</b></li><li style='float:left;list-style:none;margin-left:30px;'><b>Response</b></li></ul>
-					<div class="drow" style="float:left;width:100%;"></div>
+					<ul><li style='float:left;list-style:none;width:20px;'>&nbsp;</li>
+					<li style='float:left;list-style:none;width:50px;'><b>Name</b></li>
+					<li style='float:left;list-style:none;margin-left:30px;'><b>Response</b></li>
+					<li style='float:left;list-style:none;margin-left:30px;'><b>Expiry Date</b></li>
+					</ul>
+					<div class="drow" style="float:left;width:100%;">
+					
+					</div>
+					<input type="submit" name="delete" id="deletes" value="Delete">
 					</p></div>  
 
                     
@@ -87,7 +95,9 @@
         </div>
     </div>
 </div>
+<style>
 
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -213,6 +223,93 @@ $(document).ready(function(){
 	});*/
 	
 	
+	$('#deletes').click(function(){
+			var selected=[];
+			var seleboard=[];
+			if($('.boardss').is(':checked')){
+			
+			 $("input:checkbox[name=boardss]:checked").each(function() {
+			selected.push($(this).val());
+			seleboard.push($(this).prop('id'));
+			});
+			var jobid=$('#val').val();
+			
+			
+			var ok =confirm("Are you sure want to delete !");
+        if(ok == true){
+			$.ajax({
+			type: "POST",
+			data:{deleboards:selected, jobid:jobid, deleboname:seleboard},
+			url: "/recruitment/managead",
+			dataType: 'json',
+				success: function (data) {
+					$(".drow").html("");
+					$.ajax({
+							type: "POST",
+							data:{adid:jobid},
+							url: "/recruitment/managead",
+							dataType: 'json',
+							success: function (data) {
+							var now = new Date();
+							$.each(data, function(key, value) {
+				
+							//expiry date validation
+							var expiry = new Date(value['expiry_date']);
+							var startValidAppDate = new Date(value['expiry_date']);
+						startValidAppDate.setTime(expiry.getTime() - (7 * 1 * 24 * 60 * 60 * 1000)); // 1 week
+						
+			
+						if(now <= expiry && now > startValidAppDate){
+						$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:yellow'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+						}
+						else if(now > expiry){
+						$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:red'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+
+						}
+						else {
+						$(".drow").append("<ul class='boar' style='float:left;width:100%;'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+
+						}
+						});
+							}
+						});
+					if(data == 'board deleted'){
+						$('.error').show();
+						$('.error').text(data);
+						$('.error1').show();
+						$('.error1').text(data);
+						setTimeout(function(){
+                           $('.error').hide();
+						   $('.error1').hide();
+                        }, 5000);
+						
+					}
+					if(data == 'job deleted'){
+						$('.error').show();
+						$('.error').text(data);
+						$('.error1').show();
+						$('.error1').text(data);
+						setTimeout(function(){
+                           $('.error').hide();
+						   $('.error1').hide();
+                        }, 5000);
+						$('#ajaxModel1').modal('hide');
+					}
+					$('#liveads').DataTable().draw();
+				},
+				error: function (data) {
+					alert(JSON.stringify(data));
+               console.log(JSON.stringify(data));
+				}
+			});
+		}
+			}
+			else{
+				alert('Please select a checkbox to delete');
+			}
+			});
+	
+	
 	
 	
 	$('.appli').attr('id','liveads')
@@ -227,6 +324,7 @@ $(document).ready(function(){
 			$(".drow").html("");
 		//alert('test');
 		var id=$(this).attr('id');
+		$('#val').val(id);
 		//alert(id);
 		$('#ajaxModel1').modal('show');
 		$.ajax({
@@ -235,12 +333,28 @@ $(document).ready(function(){
             url: "/recruitment/managead",
 			dataType: 'json',
             success: function (data) {
-				
+			var now = new Date();
 			$.each(data, function(key, value) {
-    
-			console.log(value['board_name']);
-			$(".drow").append("<ul style='float:left;width:100%'><li style='float:left;list-style:none;width:50px;'>"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:10px'>_"+value["response"]+"</li></ul>");
-		
+				
+			 //expiry date validation
+             var expiry = new Date(value['expiry_date']);
+			 var startValidAppDate = new Date(value['expiry_date']);
+			 startValidAppDate.setTime(expiry.getTime() - (7 * 1 * 24 * 60 * 60 * 1000)); //1 week
+			 console.log(now);
+			 console.log(expiry);
+			console.log(startValidAppDate);
+			
+			if(now <= expiry && now > startValidAppDate){
+			$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:yellow'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+		    }
+			else if(now > expiry){
+				$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:red'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+
+			}
+			else {
+				$(".drow").append("<ul class='boar' style='float:left;width:100%;'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+
+			}
 			});
 				
                
@@ -263,7 +377,17 @@ $(document).ready(function(){
 			data:{ids:'liveads'},
 			url: "/recruitment/managead"
 		},
-		columns: cols
+		language: {
+            'loadingRecords': '&nbsp;',
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },     
+		columns: cols,
+		createdRow: function( row, data, dataIndex){
+			
+                if( data['expiry'] ==  '1'){
+                    $(row).find('td:eq(0),td:eq(1),td:eq(2),td:eq(3),td:eq(4),td:eq(5)').css('cssText','background-color:yellow !important');
+                }
+            }
 	});
 	
 	
@@ -284,7 +408,17 @@ $(document).ready(function(){
 			data:{ids:'liveads'},
 			url: "/recruitment/managead"
 		},
-		columns: cols
+		language: {
+            'loadingRecords': '&nbsp;',
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },     
+		columns: cols,
+		createdRow: function( row, data, dataIndex){
+			
+                if( data['expiry'] ==  '1'){
+                    $(row).find('td:eq(0),td:eq(1),td:eq(2),td:eq(3),td:eq(4),td:eq(5)').css('cssText','background-color:yellow !important');
+                }
+            }
 	});
 	});
 	
@@ -306,6 +440,10 @@ $(document).ready(function(){
 			data:{ids:'expads'},
 			url: "/recruitment/managead"
 		},
+		language: {
+            'loadingRecords': '&nbsp;',
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },     
 		columns: cols
 	});
 	});

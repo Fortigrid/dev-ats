@@ -72,7 +72,7 @@
             <select name="jtemp">
 			<option value="">Select Template</option>
 			@foreach($JobTemplate as $jtemp)
-			<option value="{{$jtemp['id']}}" @if($jtemp['id']==$disAd['job_template']) selected @endif>{{$jtemp['template_name']}}</option>
+			<option value="{{$jtemp['id']}}" @if(session('temp.jtemp')==$jtemp['id']) selected="selected" @elseif($jtemp['id']==$disAd['job_template']) selected="selected" @endif>{{$jtemp['template_name']}}</option>
 			@endforeach
 			</select>
         </div>

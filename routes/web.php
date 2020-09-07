@@ -17,8 +17,21 @@ use App\Adjob;
 
 
 Route::group(['middleware' => 'web'], function() {
-Route::get('/', function(){
-	return view ('auth.login');
+
+Route::get('', function () {
+    if(Auth::check()) {
+        return redirect()->route('home');
+    }
+
+    return view('auth.login');
+});
+
+Route::get('/', function () {
+    if(Auth::check()) {
+        return redirect()->route('home');
+    }
+
+    return view('auth.login');
 });
 
 
@@ -45,15 +58,23 @@ Route::get('/recruitment/adpost/2','AdController@previewPub');
 Route::post('/recruitment/adpost/2','AdController@previewPubPost');
 Route::get('/recruitment/adpost/3','AdController@jobPub');
 Route::post('/recruitment/adpost/3','AdController@jobPubPost');
+Route::post('/recruitment/locasession','AdController@locaSession');
+Route::get('/recruitment/drafts','AdController@draftIndex')->name('draft');
+Route::post('/recruitment/draftAdd','AdController@draftAdd');
+Route::get('/recruitment/scheduler','AdController@scheduler');
 Route::get('/recruitment/managead','AdController@manageAd')->name('mpost');
 Route::post('/recruitment/managead','AdController@allAd');
 Route::get('/recruitment/managead/{rid}','AdController@displayAd');
 Route::get('/recruitment/managead/{rid}/all','AdController@displayAll')->name('dall');
 Route::get('/recruitment/managead/{rid}/qual','AdController@displayAll');
+Route::get('/recruitment/managead/{rid}/poten','AdController@displayAll');
 Route::get('/recruitment/managead/{rid}/star','AdController@displayAll');
+Route::get('/recruitment/managead/{rid}/isc','AdController@displayAll');
 Route::get('/recruitment/managead/{rid}/invite','AdController@displayAll');
 Route::post('/recruitment/managead/{rid}/del','AdController@deleteAd');
 Route::post('/recruitment/managead/{rid}/statChange','AdController@statChange');
+Route::post('/recruitment/managead/{rid}/tooltip','AdController@fetchJobApp');
+Route::post('/recruitment/managead/{rid}/loccon','AdController@locaBasedConsult');
 Route::get('/recruitment/managead/{rid}/edit','AdController@editChange');
 Route::post('/recruitment/managead/{rid}/edit','AdController@editChangePost');
 Route::get('/recruitment/managead/{rid}/edit/step1','AdController@editDetail');
@@ -82,5 +103,18 @@ Route::get('/recruitment/manageappli','ApplicantController@appliIndex')->name('a
 Route::get('/recruitment/cvsearch','ApplicantController@cvSearch');
 Route::get('/response','ApplicantController@responses');
 Route::get('/account','ApplicantController@campaign');
+Route::get('/edit-profile','ProfileController@changePassword');
+Route::post('/edit-profile','ProfileController@updatePassword')->name('editProfile');
+
+Route::get('/recruitment/managead/{rid}/draft','AdController@draftChange');
+Route::post('/recruitment/managead/{rid}/draft','AdController@draftChangePost');
+Route::get('/recruitment/managead/{rid}/draft/step1','AdController@draftDetail');
+Route::post('/recruitment/managead/{rid}/draft/step1','AdController@draftDetailPost');
+Route::get('/recruitment/managead/{rid}/draft/step2','AdController@draftPub');
+Route::post('/recruitment/managead/{rid}/draft/step2','AdController@draftPubPost');
+Route::get('/recruitment/managead/{rid}/draft/step3','AdController@draftJobPub');
+Route::post('/recruitment/managead/{rid}/draft/step3','AdController@draftJobPubPost');
+
+Route::get('/brules','AdController@bRules');
 });
 //URL::forceScheme('https');

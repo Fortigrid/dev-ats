@@ -514,6 +514,31 @@ class RecruitService
 		$data=[];
 	}
 	
+	
+	public function getAllEvent(){
+		$stat=[];
+		$eve=Applicant::select([
+				'applicant_email as title',
+				'start_date as start',
+				'end_date as end' 
+		        ])
+			->where([['active','1']])->get();
+		$eve=json_decode(json_encode($eve), true);
+		return $eve;
+	}
+	
+	public function getEvent($rid){
+		$stat=[];
+		$eve=Applicant::select([
+				'applicant_email as title',
+				'start_date as start',
+				'end_date as end' 
+		        ])
+			->where([['adjob_id',$rid],['active','1']])->get();
+		$eve=json_decode(json_encode($eve), true);
+		return $eve;
+	}
+	
 	public function getValue($val,$rid){
 		
 		#if($val=='all') return Applicant::with('adjob')->where('adjob_id',$rid)->latest('id')->get();
@@ -526,6 +551,7 @@ class RecruitService
 				'applicants.applicant_source',
 				'applicants.applied_date',
 				'applicants.download',
+				'applicants.start_date',
 				\DB::raw('count(applicants.applicant_email) as jobsappli'),
 				'admin_tracker.candidates.email_address',
 				'admin_tracker.candidates.appointment_date',
@@ -535,7 +561,7 @@ class RecruitService
 				)
 				->leftJoin('admin_tracker.candidates', 'admin_tracker.candidates.email_address', 'applicants.applicant_email')
 				->leftJoin('admin_tracker.candidates_additional', 'admin_tracker.candidates_additional.candidate_id', 'admin_tracker.candidates.id')
-				->where('adjob_id',$rid)
+				->where([['adjob_id',$rid],['applicants.active','1']])
 				->groupBy('applicants.id')
 				->get();
 		}
@@ -551,6 +577,7 @@ class RecruitService
 				'applicants.applicant_source',
 				'applicants.applied_date',
 				'applicants.download',
+				'applicants.start_date',
 				\DB::raw('count(applicants.applicant_email) as jobsappli'),
 				'admin_tracker.candidates.email_address',
 				'admin_tracker.candidates.appointment_date',
@@ -560,7 +587,7 @@ class RecruitService
 				)
 				->leftJoin('admin_tracker.candidates', 'admin_tracker.candidates.email_address', 'applicants.applicant_email')
 				->leftJoin('admin_tracker.candidates_additional', 'admin_tracker.candidates_additional.candidate_id', 'admin_tracker.candidates.id')
-				->where('adjob_id',$rid)
+				->where([['adjob_id',$rid],['applicants.active','1']])
 				->whereIn('applicants.status', ['5','4','3', '2','1'])
 				->groupBy('applicants.id')
 				->orderBy('applicants.status', 'desc')
@@ -578,6 +605,7 @@ class RecruitService
 				'applicants.applicant_source',
 				'applicants.applied_date',
 				'applicants.download',
+				'applicants.start_date',
 				\DB::raw('count(applicants.applicant_email) as jobsappli'),
 				'admin_tracker.candidates.email_address',
 				'admin_tracker.candidates.appointment_date',
@@ -587,7 +615,7 @@ class RecruitService
 				)
 				->leftJoin('admin_tracker.candidates', 'admin_tracker.candidates.email_address', 'applicants.applicant_email')
 				->leftJoin('admin_tracker.candidates_additional', 'admin_tracker.candidates_additional.candidate_id', 'admin_tracker.candidates.id')
-				->where('adjob_id',$rid)
+				->where([['adjob_id',$rid],['applicants.active','1']])
 				->whereIn('applicants.status', ['5','4','3'])
 				->groupBy('applicants.id')
 				->orderBy('applicants.status', 'desc')
@@ -605,6 +633,7 @@ class RecruitService
 				'applicants.applicant_source',
 				'applicants.applied_date',
 				'applicants.download',
+				'applicants.start_date',
 				\DB::raw('count(applicants.applicant_email) as jobsappli'),
 				'admin_tracker.candidates.email_address',
 				'admin_tracker.candidates.appointment_date',
@@ -614,7 +643,7 @@ class RecruitService
 				)
 				->leftJoin('admin_tracker.candidates', 'admin_tracker.candidates.email_address', 'applicants.applicant_email')
 				->leftJoin('admin_tracker.candidates_additional', 'admin_tracker.candidates_additional.candidate_id', 'admin_tracker.candidates.id')
-				->where('adjob_id',$rid)
+				->where([['adjob_id',$rid],['applicants.active','1']])
 				->whereIn('applicants.status', ['5'])
 				->groupBy('applicants.id')
 				->orderBy('applicants.status', 'desc')
@@ -787,6 +816,7 @@ class RecruitService
 			if($i == $adds['boards_count'])
 			Adjob::where("id", $adds['id'])->update(["active" => 0]);
 		    
+			//updating response if changed
 			if($adds['response'] != $adds['applicants_count'])
 		    Adjob::where("id", $adds['id'])->update(["response" => $adds['applicants_count']]);
 			
@@ -997,7 +1027,25 @@ class RecruitService
 			return $ads;
 	}
 	
-	
+	function get_random_password($chars_min=6, $chars_max=8, $use_upper_case=false, $include_numbers=false, $include_special_chars=false)
+	{
+    $length = rand($chars_min, $chars_max);
+    $selection = 'aeuoyibcdfghjklmnpqrstvwxz';
+    if($include_numbers) {
+        $selection .= "1234567890";
+    }
+    if($include_special_chars) {
+        $selection .= "!@\"#$%&[]{}?|";
+    }
+                            
+    $password = "";
+    for($i=0; $i<$length; $i++) {
+        $current_letter = $use_upper_case ? (rand(0,1) ? strtoupper($selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))]) : $selection[(rand() % strlen($selection))];            
+        $password .=  $current_letter;
+    }                
+    
+	return $password;
+	}
 	
 }
 	

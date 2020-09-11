@@ -257,17 +257,17 @@ $(document).ready(function(){
 							var expiry = new Date(value['expiry_date']);
 							var startValidAppDate = new Date(value['expiry_date']);
 						startValidAppDate.setTime(expiry.getTime() - (7 * 1 * 24 * 60 * 60 * 1000)); // 1 week
-						
+						if(value["response"]=="") value["response"]='0';
 			
 						if(now <= expiry && now > startValidAppDate){
-						$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:yellow'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+						$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:yellow'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["expiry_date"]+"</li></ul>");
 						}
 						else if(now > expiry){
-						$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:red'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+						$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:red'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["expiry_date"]+"</li></ul>");
 
 						}
 						else {
-						$(".drow").append("<ul class='boar' style='float:left;width:100%;'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+						$(".drow").append("<ul class='boar' style='float:left;width:100%;'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["expiry_date"]+"</li></ul>");
 
 						}
 						});
@@ -343,16 +343,16 @@ $(document).ready(function(){
 			 console.log(now);
 			 console.log(expiry);
 			console.log(startValidAppDate);
-			
+			if(value["response"]=="") value["response"]='0';
 			if(now <= expiry && now > startValidAppDate){
-			$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:yellow'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+			$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:yellow'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["expiry_date"]+"</li></ul>");
 		    }
 			else if(now > expiry){
-				$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:red'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+				$(".drow").append("<ul class='boar' style='float:left;width:100%;background-color:red'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["expiry_date"]+"</li></ul>");
 
 			}
 			else {
-				$(".drow").append("<ul class='boar' style='float:left;width:100%;'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>_"+value["expiry_date"]+"</li></ul>");
+				$(".drow").append("<ul class='boar' style='float:left;width:100%;'><li style='float:left;list-style:none;width:20px;'><input type='checkbox' value="+value["id"]+" class='boardss' name='boardss' id="+value["board_name"]+"></li> <li class='boname' style='float:left;list-style:none;width:10px;'></li> <li style='float:left;list-style:none;width:50px;' value="+value["board_name"]+">"+value["board_name"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["response"]+"</li><li style='float:left;list-style:none;margin-left:30px'>"+value["expiry_date"]+"</li></ul>");
 
 			}
 			});

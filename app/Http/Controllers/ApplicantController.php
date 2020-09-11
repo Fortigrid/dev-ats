@@ -18,11 +18,34 @@ class ApplicantController extends Controller
         $this->middleware('auth');
     }
      public function appliIndex(Request $request){
-		 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		 $sesloc='';
+		 if(Auth::user()->secondary_office_location !='')
+		  $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+	     else
+		  $mergLoc=Auth::user()->office_location; 
 		 $mergLoc1=array_filter(explode(',',$mergLoc));
+		 
+		 $sesloc=session()->get('locations');
+		 
 		if(Auth::user()->role=='admin')
 		$aps= Applicant::with('adjob')->latest('id')->get();
 	    else{
+			//location based filter
+			if(!empty($sesloc)) {
+			$sesloc=array_filter(explode(',',$sesloc));
+			$aps= Applicant::join('adjobs', 'adjobs.id','applicants.adjob_id')
+				->join('acusers', 'acusers.id', 'adjobs.created_by')
+				->where(function($query) use ($sesloc){
+					foreach($sesloc as $exp1){
+				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
+					
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+					}
+				})
+				->where([['adjobs.active',1]])
+				->get();
+			}
+			else{	
 			$aps= Applicant::join('adjobs', 'adjobs.id','applicants.adjob_id')
 				->join('acusers', 'acusers.id', 'adjobs.created_by')
 				->where(function($query) use ($mergLoc1){
@@ -34,6 +57,7 @@ class ApplicantController extends Controller
 				})
 				->where([['adjobs.active',1]])
 				->get();
+			}
 		}
 		
 		if($request->ajax())
@@ -53,11 +77,34 @@ class ApplicantController extends Controller
 		return view('recruitment.manageappli');
 	}
 	public function cvSearch(Request $request){
-		 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		$sesloc='';
+		 if(Auth::user()->secondary_office_location !='')
+		  $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+	     else
+		  $mergLoc=Auth::user()->office_location; 
+	    
 		 $mergLoc1=array_filter(explode(',',$mergLoc));
+		 $sesloc=session()->get('locations');
+		 
 		if(Auth::user()->role=='admin')
 		$aps= Applicant::with('adjob')->latest('id')->get();
 	    else{
+			//location based filter
+			if(!empty($sesloc)) {
+			$sesloc=array_filter(explode(',',$sesloc));
+			$aps= Applicant::join('adjobs', 'adjobs.id','applicants.adjob_id')
+				->join('acusers', 'acusers.id', 'adjobs.created_by')
+				->where(function($query) use ($sesloc){
+					foreach($sesloc as $exp1){
+				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
+					
+						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+					}
+				})
+				->where([['adjobs.active',1]])
+				->get();
+			}
+			else{
 			$aps= Applicant::join('adjobs', 'adjobs.id','applicants.adjob_id')
 				->join('acusers', 'acusers.id', 'adjobs.created_by')
 				->where(function($query) use ($mergLoc1){
@@ -69,6 +116,7 @@ class ApplicantController extends Controller
 				})
 				->where([['adjobs.active',1]])
 				->get();
+			}
 		}
 		if($request->ajax())
 		{

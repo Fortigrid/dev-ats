@@ -7,6 +7,7 @@ use App\User;
 use App\Adjob;
 use Illuminate\Support\Facades\Auth;
 use Request;
+use DB;
 
 class AdjobPolicy
 {
@@ -42,8 +43,8 @@ class AdjobPolicy
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
-					
-						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+				   //$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+				   $query->orWhere(DB::raw("find_in_set($exp1,acusers.secondary_office_location)"),">",DB::raw("'0'"));
 					}
 				})
 				->where([['adjobs.active',1]])

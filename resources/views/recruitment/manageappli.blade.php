@@ -40,7 +40,7 @@
 </div>
 
 <div class="modal fade" id="ajaxModel2" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width:1140px !important;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading">Preview CV</h4>
@@ -49,7 +49,7 @@
             <div class="modal-body">
 			
                 
-				<iframe class="previewhead" src="" width="750" height="298" seamless=""></iframe>
+				<iframe class="previewhead" src="" width="1100" height="600" seamless=""></iframe>
 				
 			
             </div>

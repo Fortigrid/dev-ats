@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Activity;
 use DB;
+use Mail;
 
 class AdController extends Controller
 {
@@ -438,7 +439,7 @@ class AdController extends Controller
 		$childPost=isset($childPost) ? $childPost=$childPost : $childPost=[];
 		//location for invite candidate based on role
 		$locations=$this->rservice->roleBasedLocation(Auth::user()->role,Auth::user()->office_location,Auth::user()->secondary_office_location);
-		
+		//$event= $this->rservice->getEvent($rid);
 		//role based restriction
 		if(isset($disAd[0])) $this->authorize('views', $disAd[0]);
 		//Auth::user()->can('views',$disAd[0]);
@@ -446,7 +447,7 @@ class AdController extends Controller
 		if(isset($disAd[0])){
 		$disAd=$disAd[0];
 		if($disAd['active']=='1') $act=1; else $act='0';
-		return view('recruitment.displaypost',compact('disAd','childPost','act','locations'));
+		return view('recruitment.displaypost',compact('disAd','childPost','act','locations','event'));
 		}
 		else return redirect('/recruitment/managead');
 	
@@ -846,10 +847,11 @@ class AdController extends Controller
 	public function displayAll(Request $request,$rid){
 		
 		$valUrl= request()->segment(4); 
-		
+		$event=[];
 		session(['rno'=>$rid]);
 		
 		$disAd1= $this->rservice->getValue($valUrl,$rid);
+		
 		
 		if($request->ajax())
 		{
@@ -857,8 +859,9 @@ class AdController extends Controller
 					->make(true);
 		}
 		
-	
+	     
 	}
+	
 	
 	public function fetchJobApp(Request $request){
 		
@@ -866,6 +869,26 @@ class AdController extends Controller
 		$disAd1= $this->rservice->toolTips($request->emails);
 		
 		return $disAd1;
+	}
+	
+	public function getMode(Request $request, $rid){
+		$apps = Applicant::findOrFail($request->id);
+		$apps1=$apps->where([["adjob_id", $rid],["id",$request->id]])->get('mode')->toArray();
+		return $apps1[0]['mode'];
+	}
+	
+	public function setMode(Request $request, $rid){
+		
+		$vv=Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["mode" =>$request->mode]);
+		return $request->id;
+	}
+	
+	public function appEventFeed(Request $request, $rid){
+			$event= $this->rservice->getEvent($rid);
+			header('Content-type: application/json');
+			echo $event=json_encode($event);
+			
+			
 	}
 	
 	
@@ -915,7 +938,7 @@ class AdController extends Controller
 	    if($request->valUrl=='insc'){
 		$apps = Applicant::findOrFail($request->id);
 		$apps1=$apps->where([["adjob_id", $rid],["id",$request->id]])->get('status')->toArray();
-		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => '4',"mode"=>$request->mode]);
+		Applicant::where([["adjob_id", $rid],["id",$request->id]])->update(["status" => '4',"mode"=>$request->mode,"start_date"=>$request->start_date,"end_date"=>$request->end_date]);
 		activity()
 		->performedOn($apps)
 		->causedBy(Auth::user())
@@ -928,21 +951,94 @@ class AdController extends Controller
 		//$getStat=Applicant::where([["adjob_id", $rid],["id",$request->id]])->get()->toArray();
 		//if($getStat[0]['status']=='interviewschedule'){
 		//{"success":{"invite_id":"re-invite","ids":"invites","vals":"3","fname":null,"mname":null,"lname":"Tutu","pname":null,"location":null,"consultant":null,"company":null,"email":"tutu@test.com","mobile":null,"adate":null,"atime":null}}
+		
 		if($request->invite_id=='re-invite'){
+			$pass='';
+			$data=[];
+			$payroll='';
+			$id='';
+			$ids='';
+			$pass = $this->rservice->get_random_password(6,8,false,true,false);
 			DB::connection('tracker')->table('candidates')->where([["email_address",$request->email]])->update(
-			['first_name' => $request->fname, 'last_name' => $request->lname, 'registration_office'=> $request->location, 'consultant_id'=>$request->consultant, 'company'=>$request->company, 'email_address'=>$request->email,
-			'mobile_number'=>$request->mobile, 'appointment_date'=>$request->adate, 'appointment_time'=>$request->atime, 'reinvite_flag'=>'1']
+			['first_name' => $request->fname, 'last_name' => $request->lname, 'middle_name'=>$request->mname, 'other_names'=>$request->pname, 'password'=>$pass, 'registration_office'=> $request->location, 'consultant_id'=>$request->consultant, 'company'=>$request->company, 'email_address'=>$request->email,
+			'mobile_number'=>$request->mobile, 'appointment_date'=>$request->adate,'type_application'=>$request->type_application, 'appointment_time'=>$request->atime, 
+			'completed_application'=>0,'checklist_completed'=>0,'poi_completed'=>0,'reference_check_completed'=>0,'placement_suitability'=>0,'candidate_successful'=>0,
+			'candidate_source'=>0,'reason_success'=>0,'reason_success_by'=>0,'assessment_status'=>0,'pending_payroll'=>0,'crime_check_email'=>0,
+			'reinvite_flag'=>'1']
 			);
+			$ids=DB::connection('tracker')->table('candidates')->where([["email_address",$request->email]])->get(['id','payroll_terminated_date']);
+			$ids=json_decode(json_encode($ids), true);
+			$id=$ids[0]['id'];
+			$payroll=$ids[0]['payroll_terminated_date'];
+			$idpay=$id."A";
+			
+			if($payroll !='' && $payroll !='0000-00-00') {
+				DB::connection('tracker')->table('candidates')->where([["id",$id]])->update(['payroll_id'=>$idpay, 'payroll_terminated_date'=>'','last_paid'=>'']);
+			}
+			else DB::connection('tracker')->table('candidates')->where([["id",$id]])->update(['payroll_terminated_date'=>'']);
+			
+			DB::connection('tracker')->table('candidates_additional')->where([["candidate_id",$id]])->update(
+			['active_candidate' => 'Pdg' , 'active_sub_status' => '', 'inactive_reason' => '' ]
+			);
+			
+			$cid=DB::connection('tracker')->table('release_payroll')->where([["candidate_id",$id]])->get(['candidate_id']);
+			
+			if($cid) DB::connection('tracker')->table('release_payroll')->where([["candidate_id",$id]])->delete();
+			
+			$cids=DB::connection('tracker')->table('candidates_checklist')->where([["candidate_id",$id]])->get(['candidate_id']);
+			if($cids) DB::connection('tracker')->table('candidates_checklist')->where([["candidate_id",$id]])->update(['created_on'=>'', 'created_by'=>'','created_role'=>'']);
+			
+			$to = $request->email;
+                $subject = 'Invitation from Action Apply';
+                $data['candidate_name'] = $request->fname;
+				$data['candidate_id'] = $id;
+				$data['appointment_date'] = $request->adate;
+				
+                $data['appointment_time'] = $request->atime;
+				$data['company'] = $request->company;
+                $data['password'] = $pass;
+                $data['email'] = $request->email;
+				
+				$mail=Mail::send('mail.invite', $data,
+				function($message) use ($to,$subject){
+				$message->to($to);
+				$message->subject($subject);
+				}
+				);
+				if (!Mail::failures())  DB::connection('tracker')->table('candidates_additional')->where('candidate_id',$id)->update(['invite_email_sent'=>'1']);
 		}
 		else{
+			//invite process and mail
+			$pass='';
+			$data=[];
+			$pass = $this->rservice->get_random_password(6,8,false,true,false);
 			$lastId=DB::connection('tracker')->table('candidates')->insertGetId(
-			['first_name' => $request->fname, 'last_name' => $request->lname, 'registration_office'=> $request->location, 'consultant_id'=>$request->consultant, 'company'=>$request->company, 'email_address'=>$request->email,
-			'mobile_number'=>$request->mobile, 'appointment_date'=>$request->adate, 'appointment_time'=>$request->atime]
+			['first_name' => $request->fname, 'last_name' => $request->lname, 'password' => $pass, 'middle_name'=>$request->mname, 'other_names'=>$request->pname, 'registration_office'=> $request->location, 'consultant_id'=>$request->consultant, 'company'=>$request->company, 'email_address'=>$request->email,
+			'mobile_number'=>$request->mobile,'type_application'=>$request->type_application, 'appointment_date'=>$request->adate, 'appointment_time'=>$request->atime]
 			);
 			
 			DB::connection('tracker')->table('candidates_additional')->insert(
-			['candidate_id' => $lastId, 'active_candidate' => 'Pdg' ]
+			['candidate_id' => $lastId, 'active_candidate' => 'Pdg' , 'active_sub_status' => '', 'inactive_reason' => '' ]
 			);
+			
+			 $to = $request->email;
+                $subject = 'Invitation from Action Apply';
+                $data['candidate_name'] = $request->fname;
+				$data['candidate_id'] = $lastId;
+				$data['appointment_date'] = $request->adate;
+				
+                $data['appointment_time'] = $request->atime;
+				$data['company'] = $request->company;
+                $data['password'] = $pass;
+                $data['email'] = $request->email;
+				
+				$mail=Mail::send('mail.invite', $data,
+				function($message) use ($to,$subject){
+				$message->to($to);
+				$message->subject($subject);
+				}
+				);
+				if (!Mail::failures())  DB::connection('tracker')->table('candidates_additional')->where('candidate_id',$lastId)->update(['invite_email_sent'=>'1']);
 			
 		}
 		$apps = Applicant::findOrFail($request->vals);
@@ -954,7 +1050,7 @@ class AdController extends Controller
 		->withProperties(["oldstatus"=>$apps1[0]['status'],"status" => 'invited'])
 		->useLog('Applicant status change')
 		->log('updated');
-		$status=$request->all();
+		$status='Status changed to Invited';
 		//}
 		//else $status='Please schedule the interview to invite';
 		}
@@ -1148,6 +1244,10 @@ class AdController extends Controller
 			DB::table('drafts')
               ->where('reference_no', $request->refno)
 			  ->update(['job_template' => session('temp.jtemp')]);
+			  
+			DB::table('drafts')
+              ->where('reference_no', $request->refno)
+			  ->update(['created_by' => Auth::user()->id]);
               
 		}
 	
@@ -1159,8 +1259,8 @@ class AdController extends Controller
 		session(['details'=>'']);
 		session(['temp'=>'']);
 		$disAd= DB::table('drafts')->where('id',$rid)->get();
-		$disAd=json_decode(json_encode($disAd), true);
 		//if(isset($disAd[0])) $this->authorize('views', $disAd[0]);
+		$disAd=json_decode(json_encode($disAd), true);
 		//$disAd=$disAd->toArray();
 		if(isset($disAd[0])){
 		$disAd=$disAd[0];

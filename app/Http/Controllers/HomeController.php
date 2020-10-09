@@ -36,7 +36,7 @@ class HomeController extends Controller
     {
 		$user=Auth::user();
 		Session::put('userdetails', $user);
-		 if($request->ajax())
+		/* if($request->ajax())
 		{
 			if ($user->role=='admin')
 			
@@ -71,7 +71,8 @@ class HomeController extends Controller
 		
 		
 		
-        return view('home');
+        return view('home');*/
+		return redirect('/recruitment/managead');
     }
 	
 	public function getPivotval($ids,$mTab,$pTab,$field){

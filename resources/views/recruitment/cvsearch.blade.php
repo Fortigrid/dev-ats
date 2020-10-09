@@ -41,7 +41,7 @@
 </div>
 
 <div class="modal fade" id="ajaxModel2" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width:1140px !important;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading">Preview CV</h4>
@@ -50,7 +50,7 @@
             <div class="modal-body">
 			
                 
-				<iframe class="previewhead" src="" width="750" height="298" seamless=""></iframe>
+				<iframe class="previewhead" src="" width="1100" height="600" seamless=""></iframe>
 				
 			
             </div>
@@ -70,6 +70,10 @@ $(document).ready(function(){
 		ajax: {
 			url: "{{ route('appall') }}"
 		},
+		language: {
+            'loadingRecords': '&nbsp;',
+            'processing': '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },     
 		columns: [
 			{
 				data: 'applied_date',
@@ -86,6 +90,11 @@ $(document).ready(function(){
 			{
 				data: 'applicant_for',
 				name: 'applicant_for',
+				fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+				
+				   $(nTd).html("<a href='/recruitment/managead/"+oData.adjob_id+"'>"+oData.applicant_for+"</a>");
+					
+				}
 			},
 			{
 				data: 'applicant_source',
@@ -93,7 +102,7 @@ $(document).ready(function(){
 			},
 			{
 				data: 'cv',
-				name: 'cv',
+				render: function (dataField) { return ''; },
 			},
 			{
 				data: 'action',

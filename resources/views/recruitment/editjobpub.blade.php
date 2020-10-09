@@ -50,6 +50,7 @@
 					
                  <div class="form-group row">
 					<div class="col-sm-12 text-center">
+					    <button type="submit" class="button-1" name="back" value="back"><span>Prev</span></button>
 						<button type="submit" class="btn btn-primary">Post Ad</button> 
 					</div>
 					</div>

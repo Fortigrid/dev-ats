@@ -7,6 +7,7 @@ use App\User;
 use App\Adjob;
 use Illuminate\Support\Facades\Auth;
 use Request;
+use DB;
 
 class AdjobPolicy
 {
@@ -26,7 +27,10 @@ class AdjobPolicy
 	{
 		//dd($user->id);
 		//return $user->id == $adjob->created_by;
-		 $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+		 if(Auth::user()->secondary_office_location !='')
+		  $mergLoc=Auth::user()->office_location.','.Auth::user()->secondary_office_location;
+	     else
+			$mergLoc=Auth::user()->office_location; 
 		 $mergLoc1=array_filter(explode(',',$mergLoc));
 				  $adid=[];
 				 $ads= Adjob::select([
@@ -39,8 +43,8 @@ class AdjobPolicy
 				->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('acusers.office_location','like', '%' . $exp1 . '%');
-					
-						$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+				   //$query->orWhere('acusers.secondary_office_location','like', '%' . $exp1 . '%');
+				   $query->orWhere(DB::raw("find_in_set($exp1,acusers.secondary_office_location)"),">",DB::raw("'0'"));
 					}
 				})
 				->where([['adjobs.active',1]])
@@ -80,7 +84,7 @@ class AdjobPolicy
 	
 	public function views2(User $user)
 	{
-		// pass in controller like this if need parameter 
+		// pass in controller like this if no parameter 
 		# $this->authorize('views');
 	}
 	

@@ -27,11 +27,11 @@
                         <div class="form-group row">
                           <div class="col-md-12 add"> 
 							
-							<label for="email" class="col-md-4 col-form-label text-md-left" ><img src="{{ asset('css/img/emailid.png') }}" />{{ __('Username') }}</label>
+							<label for="email" class="col-md-4 col-form-label text-md-left" ><img src="{{ asset('css/img/emailid.png') }}" />{{ __('Email') }}</label>
 						</div>
 
                             <div class="col-md-12 space">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -73,13 +73,13 @@
                        <div class="form-group row mb-0">
                             <div class="text-center col-md-12">
                                 <button type="submit" class="btn btn-light">
-                                    {{ __('Signin') }}
+                                    {{ __('Login') }}
                                 </button> <br>
 
                                 @if (Route::has('password.request'))
-                                   <!-- <a class="btn btn-link" href="{{ route('password.request') }}">
+                                   <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
-                                    </a>-->
+                                    </a>
                                 @endif
                             </div>
                         </div>

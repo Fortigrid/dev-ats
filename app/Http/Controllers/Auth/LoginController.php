@@ -40,9 +40,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-	protected $username;
-    protected $redirectTo = RouteServiceProvider::HOME;
-
+	//protected $username;
+    #protected $redirectTo = RouteServiceProvider::HOME;
+      protected $redirectTo = '/recruitment/managead';
     /**
      * Create a new controller instance.
      *
@@ -51,9 +51,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-		$this->username = $this->findUsername();
+		//$this->username = $this->findUsername();
 		$this->middleware('throttle:3,1')->only('login');
     }
+	
+	
+	public function checkLogin()
+{
+
+    if (auth()->user()) 
+    {
+         return redirect(route('home'));
+    }
+    else
+    {
+           return redirect(route('login'));
+    }
+}
 	
 	
 	
@@ -112,43 +126,24 @@ class LoginController extends Controller
 	return $diff === 0; 
 }
 	
-	 public function findUsername()
-    {
-        $login = request()->input('email');
- 
-        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
- 
-        request()->merge([$fieldType => $login]);
- 
-        return $fieldType;
-    }
 	
 	
 	
 	
-	public function login(Request $request)
+	
+public function login(Request $request)
 {
   $pass='';
   $valid='';
   $pass= bcrypt($request->password);
   $user =[];
   
-  if ($this->hasTooManyLoginAttempts($request)) {
-	 
-            $this->fireLockoutEvent($request);
 
-            return $this->sendLockoutResponse($request);
-        }
   
- #echo $request->password; 
-  $credentials = [ $this->username => $request->email , 'password' => $request->password ];
-   /*#print_r($credentials); exit; 
+ 
+  #$credentials = [ $this->username => $request->email , 'password' => $request->password ];
+  $credentials = [ 'email' => $request->email , 'password' => $request->password ];
   
-  $user = User::where('username', $request->username)
-                  ->where('password',$this->create_hash($request->password))
-                  ->first();
-				  
-  if(Auth::login($user)) return redirect('/home');*/
   
   if(Auth::attempt($credentials)){ // login attempt
    if(Auth::user()->bcrypt=='0'){
@@ -163,10 +158,10 @@ class LoginController extends Controller
 		else{	
 			return redirect('/login')->withErrors('Error logging in!');	
 			}
-			 return redirect('/home');
+			 return redirect('/recruitment/managead');
    }
     
-    return redirect('/home');
+    return redirect('/recruitment/managead');
   }
   else{
 	  return redirect('/login')->withErrors('Error logging in!');
@@ -175,6 +170,7 @@ class LoginController extends Controller
   
   }
   
+  /*
   protected function hasTooManyLoginAttempts(Request $request)
 {
    $maxLoginAttempts = 3;
@@ -197,14 +193,21 @@ protected function sendLockoutResponse(Request $request)
     ])->status(Response::HTTP_TOO_MANY_REQUESTS);
 }
 
+ public function findUsername()
+    {
+        $login = request()->input('email');
  
-    /**
-     * Get username property.
-     *
-     * @return string
-     */
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+ 
+        request()->merge([$fieldType => $login]);
+ 
+        return $fieldType;
+    }
+
     public function username()
     {
-        return $this->username;
+        return $this->email;
     }
+	*/
+	
 }

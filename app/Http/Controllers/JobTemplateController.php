@@ -31,8 +31,24 @@ class JobTemplateController extends Controller
 		else
 		$mergLoc=Auth::user()->office_location;
 		$mergLoc1=array_filter(explode(',',$mergLoc));
+		$sesloc='';
 		
+		//location based filter
+		$sesloc=session()->get('locations');
 		if(Auth::user()->role=='admin'){
+		//location based filter	
+		if(!empty($sesloc)) {
+		$sesloc1=array_filter(explode(',',$sesloc));
+		$business_ids=DB::connection('tracker')->select('select id,location from office_locations where id IN ('.$sesloc.')');
+		$jobtemplates=JobTemplate::select([
+		'job_templates.id',
+		'admin_tracker.office_locations.location',
+		'job_templates.template_name'
+		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
+		->whereIn('job_templates.business_unit_id',$sesloc1)
+		->where('job_templates.active',1);
+		}
+		else{
 		$business_ids=DB::connection('tracker')->select('select id,location from office_locations');
 		$jobtemplates=JobTemplate::select([
 		'job_templates.id',
@@ -41,19 +57,37 @@ class JobTemplateController extends Controller
 		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
 		->where('job_templates.active',1);
 		}
+		}
 	    else{
+		//location based filter	
+		if(!empty($sesloc)) {
+		$sesloc1=array_filter(explode(',',$sesloc));
+		
+		$business_ids=DB::connection('tracker')->select('select id,location from office_locations where id IN ('.$sesloc.')');
+		$jobtemplates=JobTemplate::select([
+		'job_templates.id',
+		'admin_tracker.office_locations.location',
+		'job_templates.template_name'
+		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
+		->whereIn('job_templates.business_unit_id',$sesloc1)
+		->where('job_templates.active',1);
+		}
+		else{
 		$business_ids=DB::connection('tracker')->select('select id,location from office_locations where id IN ('.$mergLoc.')');
 		$jobtemplates=JobTemplate::select([
 		'job_templates.id',
 		'admin_tracker.office_locations.location',
 		'job_templates.template_name'
 		])->join('admin_tracker.office_locations', 'office_locations.id', '=', 'job_templates.business_unit_id')
-		->where(function($query) use ($mergLoc1){
+		/*->where(function($query) use ($mergLoc1){
 					foreach($mergLoc1 as $exp1){
 				   $query->orWhere('job_templates.business_unit_id','like', '%' . $exp1 . '%');
 					}
 				   })
+		*/
+		->whereIn('job_templates.business_unit_id',$mergLoc1)
 		->where('job_templates.active',1);
+		}
 		}
 		$business_ids=json_decode(json_encode($business_ids), true);
 		

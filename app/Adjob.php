@@ -20,7 +20,7 @@ class Adjob extends Model
 	public $timestamps = false;
 	
 	public function applicants(){
-		return $this->hasMany(Applicant::class);
+		return $this->hasMany(Applicant::class)->where('active','1');;
 		
 	}
 	public function boards(){

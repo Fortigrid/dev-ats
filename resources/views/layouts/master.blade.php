@@ -10,21 +10,36 @@
 
 
   <!-- Google Font: Source Sans Pro -->
+
   <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
   <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
   <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  
   <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.5/css/adminlte.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/multiselect.css') }}">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+  <link rel="stylesheet" href="{{ asset('css/full.css') }}">
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.5/js/adminlte.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <script src="{{ asset('js/multiselect.js') }}"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  
+   <script src="{{ asset('js/main.js') }}"></script>
+
+
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	
 </head>
 <body class="hold-transition sidebar-mini" >
 <div class="wrapper" >
@@ -44,7 +59,7 @@
       </li>-->
     </ul>
 
-    <!-- SEARCH FORM -->
+    <!-- SEARCH FORM 
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
@@ -54,8 +69,67 @@
           </button>
         </div>
       </div>
-    </form>
+    </form>-->
+	
+	
+     <div>&nbsp;&nbsp;<button onclick="window.history.back()"><< Go Back</button> &nbsp;&nbsp; <button onclick="window.history.forward()">Go Forward >> </button></div>
+	 
+	 <div><form><select id="multiselectss" name="location[]" multiple="multiple" >
+							@foreach($locas as $loca)
+								<option value="{{$loca['id']}}"> {{$loca['location']}}</option>
+							 @endforeach
+							     
+							</select> </form> 
+							
+							<script>
 
+							$(document).ready(function(){
+								
+							var searchedLocation = sessionStorage.getItem("locat");
+							
+							if(!searchedLocation){
+							$('#multiselectss option').each(function(){
+							this.selected=true;
+							});
+							$('#multiselectss').multiselect("refresh");
+							}
+								
+								
+							
+							if(searchedLocation!=null && searchedLocation.indexOf(',') > -1) var aFirst = searchedLocation.split(','); else var aFirst= sessionStorage.getItem("locat");
+							$('#multiselectss').multiselect('select', aFirst);
+								
+								
+								 $.ajaxSetup({
+								headers: {
+									'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+								}
+								});
+								$.ajax({
+
+									type: "POST",
+									url: "/recruitment/locasession",
+									data: {searchedLocation:searchedLocation},
+									dataType: 'json',
+									cache: false,
+									success: function(response) {
+									}
+								});
+							});
+
+							$('#multiselectss').change(function () {
+							
+							sessionStorage.setItem("locat", $("#multiselectss").val());
+							
+							location.reload();
+							
+							
+							});
+							</script>
+							
+							
+							
+							</div>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
@@ -177,17 +251,58 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-			    <li class="nav-item">
+			    <!--<li class="nav-item">
                  <a href="#" class="nav-link">
                   <i class="fa fa-th nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
-              </li>
-			   <li class="nav-item">
-                 <a href="{{ url('/recruitment') }}" class="nav-link ">
+              </li>-->
+			   <li class="nav-item has-treeview">
+                 <a href="#" class="nav-link ">
                   <i class="fa fa-search nav-icon"></i>
-                  <p>Recruitment</p>
+                  <p>Recruitment <i class="right fa fa-angle-right"></i></p>
                 </a>
+				 <ul class="nav nav-treeview">
+				   <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/recruitment/adpost') }}" class="nav-link ">
+                  <i class="fa fa-address-card nav-icon"></i>
+                  <p>Post Ad</p>
+                </a>
+              </li>
+			  
+              <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/recruitment/managead') }}" class="nav-link">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Manage Ad</p>
+                </a>
+              </li>
+			  
+			  <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/recruitment/drafts') }}" class="nav-link">
+                  <i class="fa fa-list nav-icon"></i>
+                  <p>Draft Ad</p>
+                </a>
+              </li>
+			  
+			  <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/recruitment/manageappli') }}" class="nav-link">
+                  <i class="fa fa-users nav-icon"></i>
+                  <p>Manage Applicants</p>
+                </a>
+              </li>
+			  <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/recruitment/cvsearch') }}" class="nav-link">
+                  <i class="fa fa-search nav-icon"></i>
+                  <p>CV Search</p>
+                </a>
+              </li>
+			  <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/recruitment/scheduler') }}" class="nav-link">
+                  <i class="fa fa-search nav-icon"></i>
+                  <p>Interview Scheduler</p>
+                </a>
+              </li>
+				 </ul>
               </li>
 			  <!--<li class="nav-item">
                 <a href="#" class="nav-link">
@@ -275,9 +390,20 @@
                   <p>Job Template</p>
                 </a>
               </li>
+			  <li class="nav-item" style="padding-left:20px;">
+                <a href="{{ url('/brules') }}" class="nav-link">
+                  <i class="fa fa-graduation-cap	 nav-icon"></i>
+                  <p>Business Rules</p>
+                </a>
+              </li>
             </ul>
           </li>
 		  @endcan
+		   <li class="nav-item">
+		    <a href="{{ url('/edit-profile') }}" class="nav-link">
+			 <i class="fa fa-address-card nav-icon"></i>
+			<p>Update Profile</p></a>
+		   </li>
 
           <li class="nav-item pl-2">
 
@@ -358,7 +484,16 @@
 <!--<script src="{{ asset('js/app.js') }}" defer></script>-->
 
 <!-- REQUIRED SCRIPTS -->
-
+<script>
+	$('#multiselectss').multiselect({
+            includeSelectAllOption: true,
+            enableFiltering: true,
+            enableCaseInsensitiveFiltering: true,
+			enableHTML: false,
+            filterPlaceholder: 'Select location..',
+			maxHeight: 300
+        }); 
+	</script>
 
 </body>
 </html>

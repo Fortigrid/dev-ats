@@ -652,7 +652,7 @@ class RecruitService
 		}
 	}
 	
-	public function toolTips($emails){
+	/*public function toolTips($emails){
 		$values=[];
 		$value=[];
 		$values= Applicant::select([
@@ -665,6 +665,25 @@ class RecruitService
 				->where('applytrack.applicants.applicant_email',$emails)
 				->whereIn('applicants.status', ['1', '2', '3', '4','5'])
 				->groupBy('applytrack.applicants.applicant_email')
+				->get();
+		if(isset($values[0])){
+			$value=$values[0];
+		return $value;}
+	    else return $value='';
+	}*/
+	
+	public function toolTips($emails){
+		$values=[];
+		$value=[];
+		$values= Applicant::select([
+				\DB::raw('count(applicants.applicant_email) as jobsappli'),
+				'admin_tracker.candidates.appointment_date',
+				'admin_tracker.candidates.appointment_time'
+				]
+				)
+				->leftJoin('admin_tracker.candidates', 'admin_tracker.candidates.email_address', 'applicants.applicant_email')
+				->where('applicants.applicant_email',$emails)
+				->groupBy('applicants.applicant_email')
 				->get();
 		if(isset($values[0])){
 			$value=$values[0];

@@ -440,6 +440,7 @@ class AdController extends Controller
 		//location for invite candidate based on role
 		$locations=$this->rservice->roleBasedLocation(Auth::user()->role,Auth::user()->office_location,Auth::user()->secondary_office_location);
 		//$event= $this->rservice->getEvent($rid);
+		$event=[];
 		//role based restriction
 		if(isset($disAd[0])) $this->authorize('views', $disAd[0]);
 		//Auth::user()->can('views',$disAd[0]);
@@ -890,6 +891,13 @@ class AdController extends Controller
 			
 			
 	}
+	public function appAllEventFeed(Request $request){
+			$events= $this->rservice->getAllEvent();
+			header('Content-type: application/json');
+			echo $event=json_encode($events);
+			
+			
+	}
 	
 	
 	public function statChange(Request $request,$rid){
@@ -1138,7 +1146,7 @@ class AdController extends Controller
 	}
 	
 	public function draftIndex(Request $request){
-	$draft=DB::table('drafts')->get();
+	$draft=DB::table('drafts')->where('active', 1)->get();
 	if($request->ajax())
 		{
 			return DataTables::of($draft)
@@ -1158,6 +1166,15 @@ class AdController extends Controller
 		}
 		return view('recruitment/draftindex');
 	}
+	
+	public function deleteDraft(Request $request,$rid){
+		
+		DB::table('drafts')
+              ->where('reference_no', $rid)
+			  ->update(['active' => 0]);
+		return response()->json(['success'=>'deleted']);
+	}
+	
 	public function draftAdd(Request $request){
 		$totref=[];
 		

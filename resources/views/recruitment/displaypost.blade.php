@@ -1250,7 +1250,7 @@ $(document).ready(function(){
       //events: "http://localhost:8000/recruitment/managead" +'/' + rno +'/eventfeed'
 	  //events:[{"title":"mani@test.com","start":"2020-09-08T06:00","end":"2020-09-08T06:15"}]
 	  events:{
-			url:  "http://localhost:8000/recruitment/managead" +'/' + rno +'/eventfeed',
+			url:  "/recruitment/managead" +'/' + rno +'/eventfeed',
 			type: 'POST',
 			success: function(data, xhr) {
 				

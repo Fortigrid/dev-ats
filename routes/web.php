@@ -79,6 +79,8 @@ Route::post('/recruitment/managead/{rid}/getmode','AdController@getMode');
 Route::post('/recruitment/managead/{rid}/setmode','AdController@setMode');
 Route::get('/recruitment/managead/{rid}/eventfeed','AdController@appEventFeed');
 Route::post('/recruitment/managead/{rid}/eventfeed','AdController@appEventFeed');
+Route::get('/recruitment/eventallfeed','AdController@appAllEventFeed');
+Route::post('/recruitment/eventallfeed','AdController@appAllsEventFeed');
 Route::get('/recruitment/managead/{rid}/edit','AdController@editChange');
 Route::post('/recruitment/managead/{rid}/edit','AdController@editChangePost');
 Route::get('/recruitment/managead/{rid}/edit/step1','AdController@editDetail');
@@ -118,6 +120,7 @@ Route::get('/recruitment/managead/{rid}/draft/step2','AdController@draftPub');
 Route::post('/recruitment/managead/{rid}/draft/step2','AdController@draftPubPost');
 Route::get('/recruitment/managead/{rid}/draft/step3','AdController@draftJobPub');
 Route::post('/recruitment/managead/{rid}/draft/step3','AdController@draftJobPubPost');
+Route::post('/recruitment/managead/{rid}/draft/del','AdController@deleteDraft');
 
 Route::get('/brules','AdController@bRules');
 });

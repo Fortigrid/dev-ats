@@ -67,7 +67,29 @@ $(document).ready(function(){
 		]
 	});
 	
+	$('body').on('click', '.delete', function (e) {
+		e.preventDefault();
+        var Draft_id = $(this).attr('id');
+        var ok =confirm("Are You sure want to delete !");
+        if(ok == true){
+        $.ajax({
+            type: "POST",
+            url: "/recruitment/managead" +'/' + Draft_id +'/draft/del',
+            success: function (data) {
+                 $('#draft').DataTable().draw();
+				$('.error2').text('Record Deleted');
+            },
+            error: function (data) {
+				 console.log('Error:', data);
+            }
+        });
+		}
+    });
+	
+	
 });
+
+
 </script>
 
 
